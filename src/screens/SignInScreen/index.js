@@ -1,7 +1,6 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, TextInput } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-import { TextInput } from 'react-native-gesture-handler';
 
 import CustomButton from '../../components/CustomButton';
 
@@ -11,7 +10,10 @@ const LoginScreen = () => {
     return (
         <View style={styles.container}>
             <View style={styles.topBox}>
-                <Text style={styles.titleTop}>LOGIN</Text>
+                <View>
+                
+                    <Text style={styles.titleTop}>LOGIN</Text>
+                </View>
                 <View style={styles.logoBox}>
 
                 </View>

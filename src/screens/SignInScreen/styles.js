@@ -9,15 +9,16 @@ const styles = StyleSheet.create({
     topBox: {
         flex: 1,
         alignItems: 'center',
-        justifyContent: 'space-evenly'
+        justifyContent: 'space-around',
+        paddingBottom: 10,
     },
     titleTop: {
         fontFamily: 'Archivo-Bold',
         fontSize: 30,
     },
     logoBox: {
-        width: 130,
-        height: 130,
+        width: 120,
+        height: 120,
         backgroundColor: '#DE0078'
     },
     selectBox: {
@@ -33,7 +34,7 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     inputBlock: {
-        marginVertical: 30,
+        marginBottom: 10,
         width: '100%',
         alignItems: 'center',
     },
