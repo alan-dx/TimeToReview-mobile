@@ -4,33 +4,44 @@ const screenWidth = Math.round(Dimensions.get('window').width);
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#F5F5F5',
+        backgroundColor: '#FCFCFC',
     },
     topBox: {
+        marginTop: 10,
         flex: 1,
         alignItems: 'center',
         justifyContent: 'space-around',
         paddingBottom: 10,
+    },
+    topBoxLine: {
+        width: '100%',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    backBtn: {
+        position: 'absolute',
+        left: '2%',
+        alignItems: 'center',
+        justifyContent: 'center'
     },
     titleTop: {
         fontFamily: 'Archivo-Bold',
         fontSize: 30,
     },
     logoBox: {
-        width: 120,
-        height: 120,
-        backgroundColor: '#DE0078'
+        marginTop: 5,
+        alignItems: 'center',
+        justifyContent: 'center'
     },
     selectBox: {
-        height: '65%',
-        backgroundColor: '#14E78E',
-        borderTopColor: '#DE0078',
-        borderTopWidth: 2,
+        height: '55%',
+        backgroundColor: '#FCFCFC',
         flexDirection: 'row',
         alignItems: 'center',
     },
     inputGroup: {
-        width: screenWidth,
+        width: screenWidth,//because the KeyboardAwareScrollView => width: '100%' dosen't worked
         alignItems: 'center'
     },
     inputBlock: {
@@ -41,28 +52,29 @@ const styles = StyleSheet.create({
     labelBoxL: {
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'flex-start',
-        width: '100%',
+        width: '90%',
+        alignSelf: 'flex-start',
     },
     labelBoxR: {
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'flex-end',
-        width: '100%',
+        width: '90%',
+        alignSelf: 'flex-end',
     },
     labelFrame: {
         height: 2,
-        width: '35%',
-        backgroundColor: '#DE0078',
+        flex: 1,
+        backgroundColor: '#025CE2',
     },
     label:{
         fontFamily:'Archivo-Bold',
-        color: '#FCFCFC',
-        fontSize: 20,
-        paddingHorizontal: '2%'
+        color: '#303030',
+        fontSize: 18,
+        textAlign: 'center',
+        paddingHorizontal: '1%'
     },
     input: {
-        backgroundColor: '#4EFFB4',
+        backgroundColor: '#E8E8E8',
         width: '80%',
         borderRadius: 15,
         height: 54,
