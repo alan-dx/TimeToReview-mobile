@@ -3,7 +3,7 @@ import api from '../services/api';
 
 const AuthContext = createContext();
 
-export const AuthProvider = ({chidlren}) => {
+export const AuthProvider = (props) => {
     const [token, setToken] = useState(null)
 
     useEffect(() => {
@@ -16,8 +16,8 @@ export const AuthProvider = ({chidlren}) => {
     }
 
     return (
-        <AuthContext.Provider value={{signed: !!token, token, signInContext, signUpContext, logoutContext}}>
-            {chidlren}
+        <AuthContext.Provider value={{signed: token, signInContext}}>
+            {props.children}
         </AuthContext.Provider>
     )
 }
