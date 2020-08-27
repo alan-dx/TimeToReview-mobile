@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import { Animated, View, Text, TextInput, Keyboard } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { BorderlessButton } from 'react-native-gesture-handler';
@@ -8,9 +8,15 @@ import CustomButton from '../../components/CustomButton';
 import Icon from 'react-native-vector-icons/AntDesign';
 import logoImage from '../../assets/images/icons/logo.png';
 
+import AuthContext from '../../contexts/auth';
+
 import styles from './styles';
 
 const LoginScreen = () => {
+
+    const { signInContext } = useContext( AuthContext )
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
 
     const [logo, setLogo] = useState(new Animated.ValueXY({x: 200, y: 200 }))
 
@@ -57,6 +63,10 @@ const LoginScreen = () => {
         navigation.goBack();
     }
 
+    function handleClickSignInButton() {
+        signInContext({email, password})
+    }
+
     return (
         <View style={styles.container}>
             <View style={styles.topBox}>
@@ -87,6 +97,9 @@ const LoginScreen = () => {
                         style={styles.input}
                         placeholder="email@example.com"
                         placeholderTextColor="#565656"
+                        onChangeText={e => setEmail(e)}
+                        value={email}
+                        keyboardType="email-address"
                     />
                 </View>
                 <View style={styles.inputBlock}>
@@ -98,9 +111,12 @@ const LoginScreen = () => {
                         style={styles.input}
                         placeholder="******"
                         placeholderTextColor="#565656"
+                        onChangeText={e => setPassword(e)}
+                        value={password}
+                        secureTextEntry={true}
                     />
                 </View>
-                <CustomButton text="LOGAR" color='#025CE2' />
+                <CustomButton text="LOGAR" color='#025CE2' onPress={handleClickSignInButton}/>
             </KeyboardAwareScrollView>
         </View>
     </View>

@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
     },
     topBox: {
         marginTop: 10,
-        flex: 1,
+        height: '35%',
         alignItems: 'center',
         justifyContent: 'space-around',
         paddingBottom: 10,
@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center'
     },
     selectBox: {
-        height: '55%',
+        flex: 1,
         backgroundColor: '#FCFCFC',
         flexDirection: 'row',
         alignItems: 'center',
@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
     inputGroup: {
         width: screenWidth,//because the KeyboardAwareScrollView => width: '100%' dosen't worked
         alignItems: 'center',
-        height: 400
+        height: 500
     },
     inputBlock: {
         marginBottom: 10,
