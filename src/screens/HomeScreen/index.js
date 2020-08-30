@@ -2,8 +2,10 @@ import React, { useContext } from 'react';
 import { View, Text } from 'react-native';
 
 import styles from './styles';
-import CustomButton from '../../components/CustomButton';
+import Header from '../../components/Header';
 import AuthContext from '../../contexts/auth';
+import Icon from 'react-native-vector-icons/AntDesign';
+import MenuButton from '../../components/MenuButton';
 
 const HomeScreen = () => {
 
@@ -14,9 +16,31 @@ const HomeScreen = () => {
     }
 
     return (
-        <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-            <Text>HOMESCREEN - EM DESENOLVIMENTO...</Text>
-            <CustomButton text="SAIR" color='#025CE2' onPress={handleClickLogoutButton} />
+        <View style={styles.container}>
+            <Header title="MENU" />
+            
+            <View style={styles.graphBox}>
+
+            </View>
+
+            <View style={styles.menuBox}>
+                <View style={styles.menuRow}>
+                    <View style={styles.menuItemBox}>
+                        <MenuButton />
+                    </View>
+                    <View style={styles.menuItemBox}>
+                        <MenuButton />
+                    </View>
+                </View>
+                <View style={styles.menuRow}>
+                    <View style={styles.menuItemBox}>
+                        <MenuButton />
+                    </View>
+                    <View style={styles.menuItemBox}>
+                        <MenuButton />
+                    </View>
+                </View>
+            </View>
         </View>
     )
 }

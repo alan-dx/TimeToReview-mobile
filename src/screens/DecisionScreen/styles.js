@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-evenly'
     },
     titleTop: {
-        fontFamily: 'Archivo-Bold',
+        fontFamily: 'Poppins-Bold',
         fontSize: 30,
     },
     logoBox: {
