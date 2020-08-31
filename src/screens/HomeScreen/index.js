@@ -8,13 +8,35 @@ import Icon from 'react-native-vector-icons/AntDesign';
 import MenuButton from '../../components/MenuButton';
 import Chart from '../../components/Chart';
 import { BorderlessButton } from 'react-native-gesture-handler';
+import { useNavigation } from '@react-navigation/native';
 
 const HomeScreen = () => {
 
+    const navigation = useNavigation()
     const { logoutContext } = useContext(AuthContext);
 
     function handleClickLogoutButton() {
         logoutContext()
+    }
+
+    function handleClickGoToReviewsScreen() {
+        navigation.navigate('ReviewsScreen')
+    }
+
+    function handleClickGoToRoutineScreen() {
+        navigation.navigate('RoutineScreen')
+    }
+
+    function handleClickGoToSubjectScreen() {
+        navigation.navigate('SubjectScreen')
+    }
+
+    function handleClickGoToSettingScreen() {
+        navigation.navigate('SettingScreen')
+    }
+
+    function handleClickGoToPerformanceScreen() {
+        navigation.navigate('PerformanceScreen')
     }
 
     return (
@@ -27,7 +49,7 @@ const HomeScreen = () => {
                 <Text style={styles.graphBoxTitle}>Você possui 47 revisões pendentes!</Text>
                 <Chart />
                 <View style={styles.performanceButtonBox}>
-                    <BorderlessButton style={styles.performanceButton}>
+                    <BorderlessButton onPress={handleClickGoToPerformanceScreen} style={styles.performanceButton}>
                         <Icon name="up" size={28} color="#025CE2" />
                     </BorderlessButton>
                     <Text style={styles.performanceButtonText}>Visualizar desempenho completo</Text>
@@ -37,24 +59,24 @@ const HomeScreen = () => {
             <View style={styles.menuBox}>
                 <View style={styles.menuRow}>
                     <View style={styles.menuItemBox}>
-                        <MenuButton title="Revisões" subtitle="15 Revisões Cadastradas">
+                        <MenuButton onPress={handleClickGoToReviewsScreen} title="Revisões" subtitle="15 Revisões Cadastradas">
                             <Icon name="exception1" size={21} style={{alignSelf: 'flex-end'}} color="#F7F7F7" />
                         </MenuButton>
                     </View>
                     <View style={styles.menuItemBox}>
-                        <MenuButton title="Rotinas" subtitle="7 Rotinas">
+                        <MenuButton onPress={handleClickGoToRoutineScreen} title="Rotinas" subtitle="7 Rotinas">
                             <Icon name="sync" size={20} style={{alignSelf: 'flex-end'}} color="#F7F7F7" />
                         </MenuButton>
                     </View>
                 </View>
                 <View style={styles.menuRow}>
                     <View style={styles.menuItemBox}>
-                        <MenuButton title="Matérias" subtitle="12 Matérias">
+                        <MenuButton onPress={handleClickGoToSubjectScreen} title="Matérias" subtitle="12 Matérias">
                             <Icon name="book" size={23} style={{alignSelf: 'flex-end'}} color="#F7F7F7" />
                         </MenuButton>
                     </View>
                     <View style={styles.menuItemBox}>
-                        <MenuButton title="Configurações">
+                        <MenuButton onPress={handleClickGoToSettingScreen} title="Configurações">
                             <Icon name="setting" size={23} style={{alignSelf: 'flex-end'}} color="#F7F7F7" />
                         </MenuButton>
                     </View>

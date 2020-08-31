@@ -6,7 +6,6 @@ import {
 
 const Chart = () => {
 
-
     return (
         <View >
             <PieChart
