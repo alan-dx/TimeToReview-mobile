@@ -81,7 +81,7 @@ const LoginScreen = () => {
             <View style={styles.topBox}>
                 <View style={styles.topBoxLine}>
                     <BorderlessButton onPress={handleClickBackButton} style={styles.backBtn}>
-                        <Icon name="left" size={29} color="#025CE2" />
+                        <Icon name="left" size={25} color="#025CE2" />
                     </BorderlessButton>
                     <Text style={styles.titleTop}>CADASTRE-SE</Text>
                 </View>

@@ -8,7 +8,8 @@ const AppStack = () => {
     const {signed} = useContext(AuthContext)
 
     return (
-        signed ? <AppRoutes /> : <AuthRoutes/>
+        // signed ? <AppRoutes /> : <AuthRoutes/>
+        <AppRoutes />
     )
 }
 

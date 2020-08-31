@@ -8,7 +8,7 @@ const Header = (props) => {
         <View style={styles.container}>
             <Text style={styles.title}>{props.title}</Text>
             {
-              props.children && <BorderlessButton style={{position: 'absolute', left: '2%', alignItems: 'center', justifyContent: 'center'}}>
+              props.children && <BorderlessButton onPress={props.onPress} style={{position: 'absolute', left: '2%', alignItems: 'center', justifyContent: 'center'}}>
                     {props.children}
                 </BorderlessButton>
             }

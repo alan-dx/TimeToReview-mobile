@@ -6,7 +6,10 @@ import { RectButton } from 'react-native-gesture-handler';
 const MenuButton = (props) => {
     return (
         <RectButton style={styles.container}>
-            <Text style={styles.buttonTitle}>Revisões</Text>
+            <View style={styles.titleBox}>
+                <Text style={styles.buttonTitle}>{props.title}</Text>
+                {props.children}
+            </View>
         </RectButton>
     )
 }

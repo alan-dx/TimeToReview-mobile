@@ -31,8 +31,8 @@ const DecisionLogin = () => {
             </View>
             <View style={styles.selectBox}>
                 <View style={styles.selectContainer}>
-                        <CustomButton text="LOGIN" color='#025CE2' onPress={handleClickNavigateToSignIn} />
-                        <CustomButton text="CADASTRO" color='#303030' onPress={handleClickNavigateToSignUp}/>
+                    <CustomButton text="LOGIN" color='#025CE2' onPress={handleClickNavigateToSignIn} />
+                    <CustomButton text="CADASTRO" color='#303030' onPress={handleClickNavigateToSignUp}/>
                 </View>
                 <Text style={styles.devText}>Por: Alan Almeida</Text>
             </View>
