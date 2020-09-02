@@ -7,7 +7,7 @@ import {
 const Chart = () => {
 
     return (
-        <View >
+        <View>
             <PieChart
                 data={[
                     {

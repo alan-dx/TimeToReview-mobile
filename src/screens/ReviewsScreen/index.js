@@ -1,24 +1,40 @@
-import React from 'react';
-import { View, Text } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, FlatList } from 'react-native';
 import Header from '../../components/Header';
 import styles from './styles';
 import Icon from 'react-native-vector-icons/AntDesign';
 import { useNavigation } from '@react-navigation/native';
+import ReviewContainer from '../../components/ReviewContainer';
+import FloatAddButton from '../../components/FloatAddButton';
 
 const ReviewsScreen = () => {
 
     const navigation = useNavigation()
 
-    function handleClickGoBack() {
+    const [data, setData] = useState([1,2])
+
+    function handlePressGoBack() {
         navigation.goBack()
+    }
+
+    function handlePressGoToAddScreen() {
+        setData([...data, 1])
     }
 
     return (
         <View style={styles.container}>
-            <Header title='REVISÕES' onPress={handleClickGoBack}>
+            <Header title='REVISÕES' onPress={handlePressGoBack}>
                 <Icon name="left" size={25} color="#025CE2" />
             </Header>
-            <Text>Tela de Revisão</Text>
+            <FlatList 
+                style={styles.flatlist} 
+                data={data}
+                renderItem={() => <ReviewContainer />}
+            >
+
+            </FlatList>
+
+            <FloatAddButton onPress={handlePressGoToAddScreen}/>
         </View>
     )
     

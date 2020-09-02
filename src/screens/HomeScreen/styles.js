@@ -12,14 +12,10 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         alignSelf: 'center',
     },
-    graph: {
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
     graphBoxTitle: {
         color: '#303030',
         fontFamily: 'DancingScript-Bold',
-        fontSize: 17,
+        fontSize: 22,
     },
     performanceButtonBox: {
         alignItems: 'center',
