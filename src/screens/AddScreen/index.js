@@ -31,11 +31,15 @@ const AddScreen = () => {
                 <View style={styles.dateTimeBox}>
                     <View style={styles.iconLabelBox}>
                         <Text style={styles.label}>DATA DA PRIMEIRA REVISÃO</Text>
-                        <Icon name="calendar" size={50} color="#303030" />
+                        <BorderlessButton>
+                            <Icon name="calendar" size={50} color="#303030" />
+                        </BorderlessButton>
                     </View>
                     <View style={styles.iconLabelBox}>
                         <Text style={styles.label}s>HORÁRIO DA PRIMEIRA REIVSÃO</Text>
-                        <Icon textAlign="center" name="clockcircleo" size={50} color="#303030"  />
+                        <BorderlessButton>
+                            <Icon textAlign="center" name="clockcircleo" size={50} color="#303030"  />
+                        </BorderlessButton>
                     </View>
                 </View>
                 <View style={styles.inputBox}>
