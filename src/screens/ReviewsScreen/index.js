@@ -18,7 +18,8 @@ const ReviewsScreen = () => {
     }
 
     function handlePressGoToAddScreen() {
-        setData([...data, 1])
+        // setData([...data, 1])
+        navigation.navigate("AddScreen")
     }
 
     return (
