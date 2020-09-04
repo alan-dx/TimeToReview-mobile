@@ -32,10 +32,9 @@ const styles = StyleSheet.create({
         alignSelf: 'center'
     },
     main: {
-        backgroundColor: '#F7F7F7',
         height: '60%',
         width: '100%',
-        justifyContent: "space-evenly"
+        justifyContent: "space-evenly",
     },
     inputBox: {
         alignItems: 'center'
@@ -55,7 +54,12 @@ const styles = StyleSheet.create({
     label: {
         fontFamily: 'Archivo-Bold',
         fontSize: 10,
-        marginBottom: 5
+        marginBottom: 4
+    },
+    labelBottom: {
+        fontFamily: 'Archivo-Bold',
+        fontSize: 11,
+        marginTop: 4
     }
 })
 

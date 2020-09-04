@@ -7,7 +7,7 @@ const Input = (props) => {
         <TextInput
             style={[styles.input, {textAlign: props.textAlign}]}
             placeholder={props.placeholder}
-            placeholderTextColor="#565656"
+            placeholderTextColor="#ABABAB"
             onChangeText={() => {}}
             value={props.value}
             secureTextEntry={true}

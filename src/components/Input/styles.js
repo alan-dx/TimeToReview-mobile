@@ -7,6 +7,8 @@ const styles = StyleSheet.create({
         borderRadius: 15,
         height: 54,
         paddingLeft: 15,
+        fontFamily: 'Archivo-SemiBold',
+        fontSize: 13
     }
 })
 
