@@ -8,9 +8,9 @@ const Input = (props) => {
             style={[styles.input, {textAlign: props.textAlign}]}
             placeholder={props.placeholder}
             placeholderTextColor="#ABABAB"
-            onChangeText={() => {}}
+            onChangeText={(text) => props.onChangeText(text)}
             value={props.value}
-            secureTextEntry={true}
+            secureTextEntry={props.secureTextEntry}
         />
     )
 }

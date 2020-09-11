@@ -8,7 +8,8 @@ const styles = StyleSheet.create({
         height: 54,
         paddingLeft: 15,
         fontFamily: 'Archivo-SemiBold',
-        fontSize: 13
+        fontSize: 13,
+        color: '#303030'
     }
 })
 

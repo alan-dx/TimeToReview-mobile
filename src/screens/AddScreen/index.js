@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { View, Text, KeyboardAvoidingView } from 'react-native';
 import styles from './styles';
 import Icon from 'react-native-vector-icons/AntDesign';
@@ -6,13 +6,68 @@ import { BorderlessButton } from "react-native-gesture-handler"
 import Input from '../../components/Input';
 import { useNavigation } from '@react-navigation/native';
 import PickerInfo from '../../components/Picker';
+import { DTPicker} from '../../components/DateTimePicker';
+import api from '../../services/api';
+
+import AuthContext from '../../contexts/auth';
 
 const AddScreen = () => {
+
+    const { user } = useContext(AuthContext)
+
+    const [titleReview, setTitleReview] = useState('')
+    const [subjectReview, setSubjectReview] = useState('')
+    const [dateTimeReview, setDateTimeReview] = useState(new Date());
+    const [routineReview, setRoutineReview] = useState('')
+
+    const [date, setDate] = useState('');
+    const [hour, setHour] = useState('');
+
+    useEffect(() => {
+
+        let hour = dateTimeReview.getHours()
+        let minutes = dateTimeReview.getMinutes()
+        let date = dateTimeReview.getDate()
+        let month = dateTimeReview.getMonth() + 1
+
+        if (hour < 10) {
+            hour = `0${hour}`
+        }
+        if (minutes < 10) {
+            minutes = `0${minutes}`
+        }
+        if (date < 10) {
+            date = `0${date}`
+        }
+        if (month < 10) {
+            month = `0${month}`
+        }
+
+        setDate(`${date}/${month}`)
+        setHour(`${hour}:${minutes}`)
+
+    }, [dateTimeReview])
 
     const navigation = useNavigation();
 
     function handlePressGoBack() {
         navigation.goBack()
+    }
+
+    function showInfo() {
+        
+        api.post('/createReview', {
+            title: titleReview,
+            date: date,
+            hour: hour,
+            routine: routineReview.value,
+            routine_id: "123456",
+            subject: subjectReview.value,
+            subject_id: "123456"
+        })
+
+        navigation.goBack()
+
     }
 
     return (
@@ -22,7 +77,7 @@ const AddScreen = () => {
                     <BorderlessButton onPress={handlePressGoBack}>
                         <Icon name="close" size={25} color="#F7F7F7" style={styles.iconBack} />
                     </BorderlessButton>
-                    <BorderlessButton onPress={handlePressGoBack}>
+                    <BorderlessButton onPress={showInfo}>
                         <Icon name="check" size={25} color="#F7F7F7" style={styles.iconBack} />
                     </BorderlessButton>
                 </View>
@@ -31,7 +86,7 @@ const AddScreen = () => {
             <View style={styles.main}>
                 <View style={styles.inputBox}>
                     <Text style={styles.inputBoxText}>TÍTULO DA REVISÃO</Text>
-                    <Input textAlign="center" placeholder="EDO DE BERNOULLI" />
+                    <Input value={titleReview} secureTextEntry={false} onChangeText={setTitleReview} textAlign="center" placeholder="EDO DE BERNOULLI" />
                 </View>
                 <View style={styles.inputBox}>
                     <Text style={styles.inputBoxText}>DISCIPLINA DA REVISÃO</Text>
@@ -43,22 +98,18 @@ const AddScreen = () => {
                             {label: 'CIRCUITOS I', value: "CIRCUITOS I"},
                             {label: 'TEC. ENG', value: "TEC. ENG"},
                         ]}
+                        onChangeItem={setRoutineReview}
                     />
                 </View>
                 <View style={styles.dateTimeBox}>
-                    <View style={styles.iconLabelBox}>
-                        <Text style={styles.label}>DATA DA PRIMEIRA REVISÃO</Text>
-                        <BorderlessButton>
-                            <Icon name="calendar" size={50} color="#303030" />
-                        </BorderlessButton>
-                        <Text style={styles.labelBottom}>14/12</Text>
+                    <View style={styles.labelBox}>
+                        <Text style={styles.labelTop}>DATA DA PRIMEIRA REVISÃO</Text>
+                        <Text style={styles.labelTop}>HORÁRIO DA PRIMEIRA REVISÃO</Text>
                     </View>
-                    <View style={styles.iconLabelBox}>
-                        <Text style={styles.label}>HORÁRIO DA PRIMEIRA REVISÃO</Text>
-                        <BorderlessButton>
-                            <Icon textAlign="center" name="clockcircleo" size={50} color="#303030"  />
-                        </BorderlessButton>
-                        <Text style={styles.labelBottom}>14:22</Text>
+                    <DTPicker dateTimeReview={dateTimeReview} onChange={setDateTimeReview}/>
+                    <View style={styles.labelBox}>
+                        <Text style={styles.labelBottom}>{date}</Text>                       
+                        <Text style={styles.labelBottom}>{hour}</Text>                       
                     </View>
                 </View>
                 <View style={styles.inputBox}>
@@ -71,6 +122,7 @@ const AddScreen = () => {
                             {label: '2-6-3-7-25-40', value: "2-6-3-7-25-40"},
                             {label: '4-7-11-17-25-45', value: "4-7-11-17-25-45"},
                         ]}
+                        onChangeItem={setSubjectReview}
                     />
                 </View>
             </View>

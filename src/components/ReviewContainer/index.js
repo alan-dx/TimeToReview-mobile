@@ -3,14 +3,12 @@ import { View, Text} from 'react-native';
 import styles from './styles';
 import { RectButton } from 'react-native-gesture-handler';
 
-const ReviewContainer = () => {
+const ReviewContainer = (props) => {
     return (
         <View style={styles.container}>
+                <View style={[styles.subjectColorMarker, {backgroundColor: 'red'}]} />
             <View style={styles.titleBox}>
-                <Text style={styles.titleReview}>MAPA DE KARNAUGH</Text>
-                <View style={styles.subjectColorMarkerBox}>
-                    <View style={[styles.subjectColorMarker, {backgroundColor: 'red'}]} />
-                </View>
+                <Text style={styles.titleReview}>{props.data.title}</Text>
             </View>
             
             <View style={styles.optionsBox}>

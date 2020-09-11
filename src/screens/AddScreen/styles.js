@@ -44,23 +44,22 @@ const styles = StyleSheet.create({
         fontSize: 15
     },
     dateTimeBox: {
+        flexDirection: 'column',
+    },
+    labelBox: {
         flexDirection: 'row',
-        justifyContent: 'space-around'
+        justifyContent: 'space-around',
     },
-    iconLabelBox: {
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
-    label: {
+    labelTop: {
         fontFamily: 'Archivo-Bold',
         fontSize: 10,
         marginBottom: 4
     },
     labelBottom: {
         fontFamily: 'Archivo-Bold',
-        fontSize: 11,
-        marginTop: 4
-    }
+        fontSize: 10,
+        marginBottom: 4,
+    },
 })
 
 export default styles;

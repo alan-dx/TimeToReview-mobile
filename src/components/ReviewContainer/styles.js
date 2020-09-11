@@ -13,25 +13,26 @@ const styles = StyleSheet.create({
     },
     titleBox: {
         flex: 1,
+        maxWidth: '90%',
         alignItems: 'center',
         justifyContent: 'center',
         borderBottomColor: '#F0F0F0',
         borderBottomWidth: 1,
-        flexDirection: 'row'
+        flexDirection: 'row',
     },
     titleReview: {
         fontFamily: 'Archivo-Bold',
         fontSize: 20
     },
     subjectColorMarker: {
-        width: 18,
-        height: 20,
-        borderBottomLeftRadius: 3,
-        borderBottomRightRadius: 3,
+        width: 5,
+        height: 80,
+        borderBottomLeftRadius: 10,
+        borderTopLeftRadius: 10,
         alignSelf: 'flex-start',
         position: 'absolute',
-        top: -20,
-        left: 15
+        top: 0,
+        left: 0
     },
     optionsBox: {
         flex: 1,

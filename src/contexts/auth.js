@@ -6,14 +6,21 @@ const AuthContext = createContext();
 
 export const AuthProvider = (props) => {
     const [token, setToken] = useState(null)
+    const [user, setUser] = useState(null)
 
     useEffect(() => {
         async function loadStorageData() {
             const storageToken = await AsyncStorage.getItem("@TTR:token")
+            const storageUser = await AsyncStorage.getItem("@TTR:user")
 
             if (storageToken) {
                 setToken(storageToken)
-                api.defaults.headers["Authorization"] = `Bearer ${storageToken}`
+                setUser(JSON.parse(storageUser))
+                api.defaults.headers["Authorization"] = `Bearer ${storageToken}`//VERFICAR A NECESSIDADE DE CAUSAR O LOGOUT QND TOKEN FOR INVÁLIDO
+
+                await api.get('/verifyToken').catch((err) => {
+                    logoutContext()
+                })
             }
         }
 
@@ -25,10 +32,12 @@ export const AuthProvider = (props) => {
         const response = await api.post('/signIn', data)
         
         if (response.data) {
-            const { token } = response.data;
+            const { token, user } = response.data;
             api.defaults.headers["Authorization"] = `Bearer ${token}`
             AsyncStorage.setItem("@TTR:token", token)
+            AsyncStorage.setItem("@TTR:user", JSON.stringify(user))
             setToken(token)
+            setUser(user)
         }
         } catch (error) {
             alert("Senha/Email Incorretos. Verifique e tente novamente!")
@@ -38,7 +47,6 @@ export const AuthProvider = (props) => {
     async function signUpContext(data) {
         try {
             const response = await api.post('/signUp', data)
-            console.log(response.data)
         } catch (error) {
             if (error == "Error: Request failed with status code 400") {
                 alert("Usuário já cadastrado! Verifique os dados e tente novamente.")
@@ -58,8 +66,24 @@ export const AuthProvider = (props) => {
             alert(err)
         }
     };
+
+    async function loadUserReviews(user_id) {
+        try {
+            const response = await api.get('/indexReviews', {
+                params: {
+                    user_id: user_id
+                }
+            })
+
+            return response.data
+
+        } catch (err) {
+            alert(err)
+        }
+    }
+
     return (
-        <AuthContext.Provider value={{signed: token, signInContext, signUpContext, logoutContext}}>
+        <AuthContext.Provider value={{signed: token, user: user, signInContext, signUpContext, logoutContext, loadUserReviews}}>
             {props.children}
         </AuthContext.Provider>
     )
