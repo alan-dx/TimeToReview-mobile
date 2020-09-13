@@ -13,17 +13,17 @@ const ReviewContainer = (props) => {
             
             <View style={styles.optionsBox}>
                 <View style={styles.DateButtonsBox}>
-                    <Text style={styles.labelDateButtons}>HORÁRIO: 14:22</Text>
+                    <Text style={styles.labelDateButtons}>HORÁRIO: {props.data.hour}</Text>
                     <View style={styles.editButtonBox}>
-                        <RectButton style={styles.containerButton}>
+                        <RectButton onPress={props.onPressEdit} style={styles.containerButton}>
                             <Text style={styles.textButton}>EDITAR</Text>
                         </RectButton>
                     </View>
                 </View>
                 <View style={styles.DateButtonsBox}>
-                    <Text style={styles.labelDateButtons}>DATA: 14/12/1998</Text>
+                    <Text style={styles.labelDateButtons}>DATA: {props.data.date}</Text>
                     <View style={styles.checkButtonBox}>
-                        <RectButton style={styles.containerButton}>
+                        <RectButton onPress={props.onPressConclude} style={styles.containerButton}>
                             <Text style={styles.textButton}>CONCLUIR</Text>
                         </RectButton>
                     </View>

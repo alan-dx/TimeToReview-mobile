@@ -5,22 +5,20 @@ import DropDownPicker from 'react-native-dropdown-picker';
 
 const PickerInfo = (props) => {
 
-    // useEffect(() => {
-    //     console.log(props.onChangeItem)
-    // },[])
-
     return (
         <View
             style={{
-            // The solution: Apply zIndex to any device except Android
-            ...(Platform.OS !== 'android' && {
-                zIndex: 10
-            }),          
+                // The solution: Apply zIndex to any device except Android
+                ...(Platform.OS !== 'android' && {
+                    zIndex: 10
+                }),          
             }}
         >
             <DropDownPicker
+            //ESSE VALUE LABEL DO PICKER PODE CAUSAR PROBLEMAS
                 items={props.data}
-                labelStyle={styles.label}  
+                defaultValue={props.defaultValue}
+                labelStyle={styles.label}
                 placeholder={props.placeholder}
                 containerStyle={styles.container}
                 style={styles.picker}

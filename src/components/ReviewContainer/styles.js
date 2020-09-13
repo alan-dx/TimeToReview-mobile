@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
     },
     titleBox: {
         flex: 1,
-        maxWidth: '90%',
+        width: '90%',
         alignItems: 'center',
         justifyContent: 'center',
         borderBottomColor: '#F0F0F0',

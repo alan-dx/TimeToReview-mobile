@@ -10,10 +10,11 @@ import api from '../../services/api';
 
 const ReviewsScreen = (props) => {
 
-    const [data, setData] = useState(null)
-
+    const [data, setData] = useState([])
     const navigation = useNavigation()
 
+    //DO TO => Put the functions of the API in a apart file
+        
     async function loadUserReviews() {
         try {
             const response = await api.get('/indexReviews')
@@ -25,6 +26,7 @@ const ReviewsScreen = (props) => {
     }
 
     useEffect(() => {
+
         const loadDataOnFocusScreen = navigation.addListener('focus', () => {
             loadUserReviews().then((response) => {
                 setData(response)
@@ -34,6 +36,17 @@ const ReviewsScreen = (props) => {
         return loadDataOnFocusScreen;
       }, [navigation]);
 
+    async function handleDeleteReview(id) {
+
+        api.delete('/deleteReview', {
+            params: {
+                id: id
+            }
+        })
+
+        const newData = data.filter(item => item._id != id)
+        setData(newData)
+    }
 
     function handlePressGoBack() {
         navigation.goBack()
@@ -41,7 +54,13 @@ const ReviewsScreen = (props) => {
 
     function handlePressGoToAddScreen() {
         navigation.navigate("AddScreen")
+        console.log(data)
     }
+
+    function handleGoToEditScreen(screenData) {
+        navigation.navigate("EditScreen", screenData)
+    }
+
 
     return (
         <View style={styles.container}>
@@ -53,7 +72,7 @@ const ReviewsScreen = (props) => {
                     style={styles.flatlist} 
                     data={data}
                     keyExtractor={item => item._id}
-                    renderItem={({item}) => <ReviewContainer data={item} />}
+                    renderItem={({item}) => <ReviewContainer data={item} onPressConclude={() => handleDeleteReview(item._id)} onPressEdit={() => handleGoToEditScreen(item)}/>}
                 />
             }
             <FloatAddButton onPress={handlePressGoToAddScreen}/>

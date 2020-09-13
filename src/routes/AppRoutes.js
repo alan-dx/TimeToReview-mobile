@@ -9,6 +9,7 @@ import SettingScreen from '../screens/SettingScreen';
 import SubjectScreen from '../screens/SubjectScreen';
 import PerformanceScreen from '../screens/PerformanceScreen';
 import AddScreen from '../screens/AddScreen';
+import EditScreen from '../screens/EditScreen';
 
 const {Screen, Navigator} = createStackNavigator()
 
@@ -23,6 +24,7 @@ const AppRoutes = () => {
                 <Screen name="PerformanceScreen" component={PerformanceScreen} />
                 <Screen name="SettingScreen" component={SettingScreen} />
                 <Screen name="AddScreen" component={AddScreen} />
+                <Screen name="EditScreen" component={EditScreen} />
             </Navigator>
         </NavigationContainer>
     );

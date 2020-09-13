@@ -9,18 +9,22 @@ import PickerInfo from '../../components/Picker';
 import { DTPicker} from '../../components/DateTimePicker';
 import api from '../../services/api';
 
-const AddScreen = () => {
+const EditScreen = (props) => {
 
-    const [titleReview, setTitleReview] = useState('')
-    const [subjectReview, setSubjectReview] = useState('')
-    const [dateTimeReview, setDateTimeReview] = useState(new Date());
-    const [routineReview, setRoutineReview] = useState('')
+    const dataScreen = props.route.params
+
+    const [titleReview, setTitleReview] = useState(dataScreen.title)
+    const [subjectReview, setSubjectReview] = useState(dataScreen.subject)
+    const [dateTimeReview, setDateTimeReview] = useState(new Date(dataScreen.fullDateTime));//Mandar a data toda e não so formatada PRO BANCO DE DADOS
+    const [routineReview, setRoutineReview] = useState(dataScreen.routine)
 
     const [date, setDate] = useState('');
     const [hour, setHour] = useState('');
 
-    useEffect(() => {
+    const navigation = useNavigation();
 
+    useEffect(() => {
+        console.log(dataScreen)
         let hour = dateTimeReview.getHours()
         let minutes = dateTimeReview.getMinutes()
         let date = dateTimeReview.getDate()
@@ -44,15 +48,14 @@ const AddScreen = () => {
 
     }, [dateTimeReview])
 
-    const navigation = useNavigation();
 
     function handlePressGoBack() {
         navigation.goBack()
     }
 
     function showInfo() {
-
-        api.post('/createReview', {
+        
+        api.put('/editReview', {
             title: titleReview,
             date: date,
             hour: hour,
@@ -61,14 +64,19 @@ const AddScreen = () => {
             routine_id: "123456",
             subject: subjectReview,
             subject_id: "123456"
+        }, {
+            params: {
+                id: dataScreen._id
+            }
         }).then((response) => {
             if (response) {
                 navigation.goBack()
             } else {
                 alert("Houve um erro na edição, tente novamente!")
             }
-        }).catch((err) => console.log(err))
-
+        }).catch((err) => {
+            console.log(err)
+        })
 
     }
 
@@ -83,7 +91,7 @@ const AddScreen = () => {
                         <Icon name="check" size={25} color="#F7F7F7" style={styles.iconBack} />
                     </BorderlessButton>
                 </View>
-                <Text style={styles.headerText}>ADICIONAR REVISÃO</Text>
+                <Text style={styles.headerText}>EDITAR REVISÃO</Text>
             </View>
             <View style={styles.main}>
                 <View style={styles.inputBox}>
@@ -100,6 +108,7 @@ const AddScreen = () => {
                             {label: 'CIRCUITOS I', value: "CIRCUITOS I"},
                             {label: 'TEC. ENG', value: "TEC. ENG"},
                         ]}
+                        defaultValue={dataScreen.subject.value}
                         onChangeItem={setSubjectReview}
                     />
                 </View>
@@ -125,6 +134,7 @@ const AddScreen = () => {
                             {label: '5-7-14-17-25-45', value: "5-7-14-17-25-45"},
                             {label: '6-7-14-17-25-45', value: "6-7-14-17-25-45"},
                         ]}
+                        defaultValue={dataScreen.routine.value}
                         onChangeItem={setRoutineReview}
                     />
                 </View>
@@ -133,4 +143,4 @@ const AddScreen = () => {
     )
 }
 
-export default AddScreen;
+export default EditScreen;
