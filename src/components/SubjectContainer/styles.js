@@ -2,14 +2,14 @@ import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
     container: {
-        height: 80,
         width: '90%',
-        alignItems: 'center',
-        justifyContent: 'center',
+        height: 60,
         backgroundColor: '#FFFFFF',
         alignSelf: 'center',
-        marginTop: 10,
-        borderRadius: 10
+        marginBottom: 10,
+        borderRadius: 10,
+        alignItems: 'center',
+        justifyContent: 'center'
     },
     titleBox: {
         flex: 1,
@@ -20,14 +20,14 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1,
         flexDirection: 'row',
     },
-    titleReview: {
+    titleSubject: {
         fontFamily: 'Archivo-Bold',
-        fontSize: 20,
+        fontSize: 18,
         color: '#303030'
     },
     subjectColorMarker: {
         width: 5,
-        height: 80,
+        height: 60,
         borderBottomLeftRadius: 10,
         borderTopLeftRadius: 10,
         alignSelf: 'flex-start',
@@ -35,29 +35,19 @@ const styles = StyleSheet.create({
         top: 0,
         left: 0
     },
-    optionsBox: {
+    infoBox: {
         flex: 1,
-        width: '95%',
         flexDirection: 'row',
-        justifyContent: 'space-around',
+        alignItems: 'flex-end',
+        justifyContent: 'center',
     },
-    DateButtonsBox: {
-        width: 114,
-    },
-    labelDateButtons: {
-        fontFamily: 'Archivo-SemiBold',
-        color: '#303030',
-        fontSize: 12,
-        alignSelf: 'center'
-    },
-    editButtonBox: {
-        backgroundColor: '#303030',
-        flex: 1,
+    infoButtonBox: {
+        width: '30%',
+        backgroundColor: '#025CE2',
         borderTopRightRadius: 7,
         borderTopLeftRadius: 7,
     },
     containerButton: {
-        flex: 1,
         alignItems: 'center',
         justifyContent: 'center'
     },
@@ -67,13 +57,6 @@ const styles = StyleSheet.create({
         fontFamily: 'Poppins-ExtraBold',
         fontSize: 11
     },
-    checkButtonBox: {
-        backgroundColor: '#025CE2',
-        flex: 1,
-        borderTopRightRadius: 7,
-        borderTopLeftRadius: 7,
-    }
-    
 })
 
 export default styles;

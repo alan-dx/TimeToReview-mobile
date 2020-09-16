@@ -29,18 +29,20 @@ export const AuthProvider = (props) => {
 
     async function signInContext(data) {
         try {
-        const response = await api.post('/signIn', data)
-        
-        if (response.data) {
-            const { token, user } = response.data;
-            api.defaults.headers["Authorization"] = `Bearer ${token}`
-            AsyncStorage.setItem("@TTR:token", token)
-            AsyncStorage.setItem("@TTR:user", JSON.stringify(user))
-            setToken(token)
-            setUser(user)
-        }
+
+            const response = await api.post('/signIn', data)
+            // const teste = await api.get('https://servicodados.ibge.gov.br/api/v1/localidades/distritos/160030312/')
+    
+            if (response.data) {
+                const { token, user } = response.data;
+                api.defaults.headers["Authorization"] = `Bearer ${token}`
+                AsyncStorage.setItem("@TTR:token", token)
+                AsyncStorage.setItem("@TTR:user", JSON.stringify(user))
+                setToken(token)
+                setUser(user)
+            }
         } catch (error) {
-            alert("Senha/Email Incorretos. Verifique e tente novamente!")
+            alert(`Senha/Email Incorretos. Verifique e tente novamente!, ${error}`)
         }
     }
 

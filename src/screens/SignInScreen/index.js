@@ -64,6 +64,7 @@ const LoginScreen = () => {
     }
 
     function handleClickSignInButton() {
+        console.log('aaaaa')
         signInContext({email, password})
     }
 
