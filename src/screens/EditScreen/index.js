@@ -103,10 +103,10 @@ const EditScreen = (props) => {
                     <PickerInfo 
                         placeholder="DISCIPLINA"
                         data={[
-                            {label: 'CÁLCULO III', value: "CÁLCULO III"},
-                            {label: 'FÍSICA III', value: "FÍSICA III"},
-                            {label: 'CIRCUITOS I', value: "CIRCUITOS I"},
-                            {label: 'TEC. ENG', value: "TEC. ENG"},
+                            {label: 'CÁLCULO III', value: "CÁLCULO III", _id: "ahdasdhuqweyqwueyhd"},
+                            {label: 'FÍSICA III', value: "FÍSICA III", _id: "ahdasdhiiqweyqwueyhd"},
+                            {label: 'CIRCUITOS I', value: "CIRCUITOS I", _id: "ahdasdhuqweyqwueiud"},
+                            {label: 'TEC. ENG', value: "TEC. ENG", _id: "ahdasdhuqw87yqwueyhd"},
                         ]}
                         defaultValue={dataScreen.subject.value}
                         onChangeItem={setSubjectReview}

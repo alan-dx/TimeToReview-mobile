@@ -19,6 +19,9 @@ const AddScreen = () => {
     const [date, setDate] = useState('');
     const [hour, setHour] = useState('');
 
+    //NÃO COLOCAR A CHAMADA DE TODAS AS MATÉRIAS CADASTRADAS NO SERVIDOR NA TELA DE ADICIONAR MATÉRIA
+    //FAZER NA TELA DE LISTAGEM DAS MATÉRIAS
+
     useEffect(() => {
 
         let hour = dateTimeReview.getHours()
@@ -52,22 +55,24 @@ const AddScreen = () => {
 
     function showInfo() {
 
-        api.post('/createReview', {
-            title: titleReview,
-            date: date,
-            hour: hour,
-            fullDateTime: dateTimeReview,
-            routine: routineReview,
-            routine_id: "123456",
-            subject: subjectReview,
-            subject_id: "123456"
-        }).then((response) => {
-            if (response) {
-                navigation.goBack()
-            } else {
-                alert("Houve um erro na edição, tente novamente!")
-            }
-        }).catch((err) => console.log(err))
+        console.log(subjectReview._id)
+
+        // api.post('/createReview', {
+        //     title: titleReview,
+        //     date: date,
+        //     hour: hour,
+        //     fullDateTime: dateTimeReview,
+        //     routine: routineReview,
+        //     routine_id: "123456",
+        //     subject: subjectReview,
+        //     subject_id: "123456"
+        // }).then((response) => {
+        //     if (response) {
+        //         navigation.goBack()
+        //     } else {
+        //         alert("Houve um erro na edição, tente novamente!")
+        //     }
+        // }).catch((err) => console.log(err))
 
 
     }
@@ -95,10 +100,10 @@ const AddScreen = () => {
                     <PickerInfo 
                         placeholder="DISCIPLINA"
                         data={[
-                            {label: 'CÁLCULO III', value: "CÁLCULO III"},
-                            {label: 'FÍSICA III', value: "FÍSICA III"},
-                            {label: 'CIRCUITOS I', value: "CIRCUITOS I"},
-                            {label: 'TEC. ENG', value: "TEC. ENG"},
+                            {label: 'CÁLCULO III', value: "CÁLCULO III", _id: "ahdasdhuqweyqwueyhd"},
+                            {label: 'FÍSICA III', value: "FÍSICA III", _id: "ahdasdhiiqweyqwueyhd"},
+                            {label: 'CIRCUITOS I', value: "CIRCUITOS I", _id: "ahdasdhuqweyqwueiud"},
+                            {label: 'TEC. ENG', value: "TEC. ENG", _id: "ahdasdhuqw87yqwueyhd"},
                         ]}
                         onChangeItem={setSubjectReview}
                     />

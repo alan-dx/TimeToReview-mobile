@@ -12,6 +12,9 @@ import { useNavigation } from '@react-navigation/native';
 
 const HomeScreen = () => {
 
+    //OPÇÕES (PRO) => REVISÕES, ROTINAS, MATÉRIAS, LISTAR TODAS AS REVISÕES, CONFIGURAÇÕES, SOBRE
+    //OPÇÕES (BASIC) => REVISÕES, ROTINAS, LISTAR TODAS AS REVISÕES, MATÉRIAS, CONFIGURAÇÕES, TORNE-SE PREMIUM
+
     const navigation = useNavigation()
     const { logoutContext } = useContext(AuthContext);
 

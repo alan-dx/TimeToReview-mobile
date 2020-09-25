@@ -15,7 +15,6 @@ const PickerInfo = (props) => {
             }}
         >
             <DropDownPicker
-            //ESSE VALUE LABEL DO PICKER PODE CAUSAR PROBLEMAS
                 items={props.data}
                 defaultValue={props.defaultValue}
                 labelStyle={styles.label}
@@ -25,7 +24,11 @@ const PickerInfo = (props) => {
                 dropDownStyle={styles.dropdown}
                 activeLabelStyle={{color: '#303030'}}
                 selectedLabelStyle={{color: '#303030'}}
-                onChangeItem={(item) => {props.onChangeItem(item)}}
+                onChangeItem={(item) => {
+                    props.onChangeItem(item)
+                    console.log(item._id)
+                    //A IDEIA É MANDAR APENAS O ID DA MATÉRIA PRO SERVIDOR
+                }}
             />
       </View>
     )
