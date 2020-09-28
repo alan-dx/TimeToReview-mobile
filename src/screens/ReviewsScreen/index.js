@@ -3,7 +3,7 @@ import { View, Text, FlatList } from 'react-native';
 import Header from '../../components/Header';
 import styles from './styles';
 import Icon from 'react-native-vector-icons/AntDesign';
-import { useNavigation } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import ReviewContainer from '../../components/ReviewContainer';
 import FloatAddButton from '../../components/FloatAddButton';
 import api from '../../services/api';
@@ -18,33 +18,34 @@ const ReviewsScreen = (props) => {
     async function loadUserReviews() {
         try {
             const response = await api.get('/indexReviews')
-
             return response.data
         } catch (err) {
             alert(err)
         }
     }
 
-    useEffect(() => {
-
-        const loadDataOnFocusScreen = navigation.addListener('focus', () => {
-            loadUserReviews().then((response) => {
-                setData(response)
-            }).catch((err) => {alert(err)})
+    useEffect(() => {//THIS AVOIDS THE BUG OF EXCESSIVE REQUIREMENTS
+        
+        navigation.addListener('focus', async () => {
+            console.log('arrrow')
+            setData([])//Necessary to solve the bug: No update the sequence on ReviewContainer
+            const newData = await loadUserReviews()
+            setData(newData)
         });
     
-        return loadDataOnFocusScreen;
-      }, [navigation]);
+      }, []);
 
-    async function handleDeleteReview(id) {
+    async function handleConcludeReview(id) {
 
-        api.delete('/deleteReview', {
+        api.post('/concludeReview',null, {
             params: {
                 id: id
             }
+        }).catch((err) => {
+            console.log(err)
         })
 
-        const newData = data.filter(item => item._id != id)
+        const newData = data.filter(item => item._id != id)//to update flatlist, removing the conclude review
         setData(newData)
     }
 
@@ -52,9 +53,9 @@ const ReviewsScreen = (props) => {
         navigation.goBack()
     }
 
+
     function handlePressGoToAddScreen() {
         navigation.navigate("AddScreen")
-        console.log(data)
     }
 
     function handleGoToEditScreen(screenData) {
@@ -72,7 +73,7 @@ const ReviewsScreen = (props) => {
                     style={styles.flatlist} 
                     data={data}
                     keyExtractor={item => item._id}
-                    renderItem={({item}) => <ReviewContainer data={item} onPressConclude={() => handleDeleteReview(item._id)} onPressEdit={() => handleGoToEditScreen(item)}/>}
+                    renderItem={({item}) => <ReviewContainer data={item} onPressConclude={() => handleConcludeReview(item._id)} onPressEdit={() => handleGoToEditScreen(item)}/>}
                 />
             }
             <FloatAddButton onPress={handlePressGoToAddScreen}/>

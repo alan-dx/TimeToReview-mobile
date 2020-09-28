@@ -7,6 +7,9 @@ const AuthContext = createContext();
 export const AuthProvider = (props) => {
     const [token, setToken] = useState(null)
     const [user, setUser] = useState(null)
+    
+    const [routines, setRoutines] = useState([])
+    const [subjects, setSubjects] = useState([])
 
     useEffect(() => {
         async function loadStorageData() {
@@ -23,9 +26,18 @@ export const AuthProvider = (props) => {
                 })
             }
         }
-
         loadStorageData()
     }, [])
+
+    // useEffect(() => {//VERIFICAR A POSSIBILIDADE DE FAZER A REQUISIÇÃO AO ABRIR O APP (economizar dados)
+    //     async function loadServerReviews() {
+    //         api.get('/indexReviews').then((response) => {
+    //             console.log(response)
+    //         })
+    //     }
+
+    //     loadServerReviews()
+    // }, [routines])
 
     async function signInContext(data) {
         try {
@@ -85,7 +97,7 @@ export const AuthProvider = (props) => {
     }
 
     return (
-        <AuthContext.Provider value={{signed: token, user: user, signInContext, signUpContext, logoutContext, loadUserReviews}}>
+        <AuthContext.Provider value={{signed: token, user: user, signInContext, signUpContext, logoutContext, loadUserReviews, routines, setRoutines, subjects, setSubjects}}>
             {props.children}
         </AuthContext.Provider>
     )

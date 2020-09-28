@@ -26,7 +26,6 @@ const PickerInfo = (props) => {
                 selectedLabelStyle={{color: '#303030'}}
                 onChangeItem={(item) => {
                     props.onChangeItem(item)
-                    console.log(item._id)
                     //A IDEIA É MANDAR APENAS O ID DA MATÉRIA PRO SERVIDOR
                 }}
             />

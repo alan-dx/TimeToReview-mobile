@@ -35,7 +35,8 @@ const styles = StyleSheet.create({
     menuBox: {
         flex: 1,
         borderTopColor: '#303030',
-        borderTopWidth: 1
+        borderTopWidth: 1,
+        backgroundColor:'#FFFFFF',
     },
     menuRow: {
         flex: 1,

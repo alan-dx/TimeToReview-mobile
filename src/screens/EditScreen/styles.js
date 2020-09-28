@@ -4,7 +4,6 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: 'center',
-        backgroundColor: '#F7F7F7',
     },
     header: {
         height: '25%',
@@ -12,7 +11,7 @@ const styles = StyleSheet.create({
         width: '100%',
         backgroundColor: '#303030',
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
     },
     iconsBox: {
         width: '96%',
@@ -32,34 +31,86 @@ const styles = StyleSheet.create({
         alignSelf: 'center'
     },
     main: {
-        height: '60%',
+       flex: 1,
         width: '100%',
         justifyContent: "space-evenly",
     },
-    inputBox: {
+    dntReview: {
+        width: '100%',
         alignItems: 'center'
     },
-    inputBoxText: {
-        fontFamily: 'Archivo-Bold',
-        fontSize: 15
-    },
-    dateTimeBox: {
-        flexDirection: 'column',
-    },
-    labelBox: {
+    labelIconBox: {
         flexDirection: 'row',
-        justifyContent: 'space-around',
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    inputBox: {
+        alignItems: 'center',
+    },
+    labelBoxL: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: '90%',
+        alignSelf: 'flex-start',
+    },
+    labelBoxR: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        width: '90%',
+        alignSelf: 'flex-end',
+    },
+    labelFrame: {
+        height: 2,
+        flex: 1,
+        backgroundColor: '#025CE2',
+    },
+    label: {
+        fontFamily: 'Archivo-Bold',
+        fontSize: 15,
+        marginHorizontal: 3
+    },
+    subLabel: {
+        marginTop: 6,
+        color: '#ABABAB',
+        fontSize: 12,
+        fontFamily: 'Archivo-SemiBold'
     },
     labelTop: {
         fontFamily: 'Archivo-Bold',
-        fontSize: 10,
+        fontSize: 15,
         marginBottom: 4
     },
     labelBottom: {
         fontFamily: 'Archivo-Bold',
         fontSize: 10,
-        marginBottom: 4,
+        color: '#ABABAB'
     },
+    timerBox: {
+        alignItems: 'center'
+    },
+    timerInputBox: {
+        width: '100%',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    input: {
+        width: 60,
+        borderRadius: 13,
+        backgroundColor: '#E8E8E8',
+        alignItems: 'center',
+        textAlign: 'center',
+        fontFamily: 'Archivo-SemiBold',
+        fontSize: 13,
+        color: '#303030'
+    },
+    timerSeparator: {
+        fontFamily: 'Archivo-Bold',
+        color: '#303030',
+        fontSize: 15,
+        margin: 7
+    }
 })
 
 export default styles;

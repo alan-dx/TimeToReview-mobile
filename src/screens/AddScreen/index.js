@@ -2,50 +2,23 @@ import React, { useState, useEffect, useContext } from 'react';
 import { View, Text, KeyboardAvoidingView } from 'react-native';
 import styles from './styles';
 import Icon from 'react-native-vector-icons/AntDesign';
-import { BorderlessButton } from "react-native-gesture-handler"
+import { BorderlessButton, TextInput } from "react-native-gesture-handler"
 import Input from '../../components/Input';
 import { useNavigation } from '@react-navigation/native';
 import PickerInfo from '../../components/Picker';
-import { DTPicker} from '../../components/DateTimePicker';
 import api from '../../services/api';
+import AuthContext from '../../contexts/auth';
 
 const AddScreen = () => {
 
+    const {routines, subjects} = useContext(AuthContext)
+
     const [titleReview, setTitleReview] = useState('')
     const [subjectReview, setSubjectReview] = useState('')
-    const [dateTimeReview, setDateTimeReview] = useState(new Date());
     const [routineReview, setRoutineReview] = useState('')
-
-    const [date, setDate] = useState('');
-    const [hour, setHour] = useState('');
-
-    //NÃO COLOCAR A CHAMADA DE TODAS AS MATÉRIAS CADASTRADAS NO SERVIDOR NA TELA DE ADICIONAR MATÉRIA
-    //FAZER NA TELA DE LISTAGEM DAS MATÉRIAS
-
-    useEffect(() => {
-
-        let hour = dateTimeReview.getHours()
-        let minutes = dateTimeReview.getMinutes()
-        let date = dateTimeReview.getDate()
-        let month = dateTimeReview.getMonth() + 1
-
-        if (hour < 10) {
-            hour = `0${hour}`
-        }
-        if (minutes < 10) {
-            minutes = `0${minutes}`
-        }
-        if (date < 10) {
-            date = `0${date}`
-        }
-        if (month < 10) {
-            month = `0${month}`
-        }
-
-        setDate(`${date}/${month}`)
-        setHour(`${hour}:${minutes}`)
-
-    }, [dateTimeReview])
+    const [dateNextSequenceReview, setDateNextSequenceReview] = useState(new Date());
+    const [timerMin, setTimerMin] = useState('')
+    const [timerSeg, setTimerSeg] = useState('')
 
     const navigation = useNavigation();
 
@@ -55,24 +28,21 @@ const AddScreen = () => {
 
     function showInfo() {
 
-        console.log(subjectReview._id)
+        const timer = `${timerMin}:${timerSeg}`
 
-        // api.post('/createReview', {
-        //     title: titleReview,
-        //     date: date,
-        //     hour: hour,
-        //     fullDateTime: dateTimeReview,
-        //     routine: routineReview,
-        //     routine_id: "123456",
-        //     subject: subjectReview,
-        //     subject_id: "123456"
-        // }).then((response) => {
-        //     if (response) {
-        //         navigation.goBack()
-        //     } else {
-        //         alert("Houve um erro na edição, tente novamente!")
-        //     }
-        // }).catch((err) => console.log(err))
+        api.post('/createReview', {
+            title: titleReview,
+            timer: timer,
+            routine_id: routineReview._id,
+            subject_id: subjectReview._id,
+            dateNextSequenceReview: dateNextSequenceReview
+        }).then((response) => {
+            if (response) {
+                navigation.goBack()
+            } else {
+                alert("Houve um erro durante a criação da revisão, tente novamente!")
+            }
+        }).catch((err) => console.log(err))
 
 
     }
@@ -91,48 +61,74 @@ const AddScreen = () => {
                 <Text style={styles.headerText}>ADICIONAR REVISÃO</Text>
             </View>
             <View style={styles.main}>
+                <View style={styles.dntReview}>
+                    <View style={styles.labelIconBox}>
+                        <Icon name="calendar" size={20} color="#303030" style={{marginRight: 3}} />
+                        <Text style={styles.label}>Data da primeira Revisão</Text>
+                    </View>
+                    <Text style={styles.subLabel}>GERADO AUTOMATICAMENTE, PREENCHA OS DEMAIS CAMPOS</Text>
+                </View>
                 <View style={styles.inputBox}>
-                    <Text style={styles.inputBoxText}>TÍTULO DA REVISÃO</Text>
+                    <View style={styles.labelBoxL}>
+                        <View style={styles.labelFrame} />
+                        <Text style={styles.label}>Título da Revisão</Text>
+                    </View>
                     <Input value={titleReview} secureTextEntry={false} onChangeText={setTitleReview} textAlign="center" placeholder="EDO DE BERNOULLI" />
                 </View>
                 <View style={styles.inputBox}>
-                    <Text style={styles.inputBoxText}>DISCIPLINA DA REVISÃO</Text>
+                    <View style={styles.labelBoxR}>
+                        <Text style={styles.label}>Disciplina da Revisão</Text>
+                        <View style={styles.labelFrame} />
+                    </View>
                     <PickerInfo 
                         placeholder="DISCIPLINA"
-                        data={[
-                            {label: 'CÁLCULO III', value: "CÁLCULO III", _id: "ahdasdhuqweyqwueyhd"},
-                            {label: 'FÍSICA III', value: "FÍSICA III", _id: "ahdasdhiiqweyqwueyhd"},
-                            {label: 'CIRCUITOS I', value: "CIRCUITOS I", _id: "ahdasdhuqweyqwueiud"},
-                            {label: 'TEC. ENG', value: "TEC. ENG", _id: "ahdasdhuqw87yqwueyhd"},
-                        ]}
+                        data={subjects}
                         onChangeItem={setSubjectReview}
                     />
                 </View>
-                <View style={styles.dateTimeBox}>
-                    <View style={styles.labelBox}>
-                        <Text style={styles.labelTop}>DATA DA PRIMEIRA REVISÃO</Text>
-                        <Text style={styles.labelTop}>HORÁRIO DA PRIMEIRA REVISÃO</Text>
-                    </View>
-                    <DTPicker dateTimeReview={dateTimeReview} onChange={setDateTimeReview}/>
-                    <View style={styles.labelBox}>
-                        <Text style={styles.labelBottom}>{date}</Text>                       
-                        <Text style={styles.labelBottom}>{hour}</Text>                       
-                    </View>
-                </View>
+
                 <View style={styles.inputBox}>
-                    <Text style={styles.inputBoxText}>ROTINA DE REVISÃO</Text>
+                    <View style={styles.labelBoxL}>
+                        <View style={styles.labelFrame} />
+                        <Text style={styles.label}>Rotina de Revisão</Text>
+                    </View>
                     <PickerInfo 
                         placeholder="1-3-5-7-21-30" 
-                        data={[
-                            {label: '1-3-5-7-21-30', value: "1-3-5-7-21-30"},
-                            {label: '2-6-3-7-25-40', value: "2-6-3-7-25-40"},
-                            {label: '4-7-11-17-25-45', value: "4-7-11-17-25-45"},
-                            {label: '5-7-14-17-25-45', value: "5-7-14-17-25-45"},
-                            {label: '6-7-14-17-25-45', value: "6-7-14-17-25-45"},
-                        ]}
-                        onChangeItem={setRoutineReview}
+                        data={routines}
+                        onChangeItem={(item) => {
+                            const currentDate = new Date()
+                            setRoutineReview(item)
+                            const nextDate = currentDate.getDate() + Number(item.sequence[0])
+                            setDateNextSequenceReview(new Date(currentDate.getFullYear(), currentDate.getMonth(), nextDate, 3))
+                        }}
                     />
                 </View>
+                <View style={styles.timerBox}>
+                    <View style={styles.labelIconBox}>
+                        <Text style={styles.label}>Cronômetro de conlusão</Text>
+                        <Icon name="clockcircleo" size={20} color="#303030" style={{marginLeft: 3}} />
+                    </View>
+                    <View style={styles.timerInputBox}>
+                        <TextInput 
+                            value={timerMin} 
+                            keyboardType="phone-pad" 
+                            onChangeText={(text) => {
+                                setTimerMin(text)
+                                setTimerSeg('00')
+                            }} 
+                            placeholder="MIN" 
+                            style={styles.input}/>
+                        <Text style={styles.timerSeparator}>:</Text>
+                        <TextInput 
+                            value={timerSeg} 
+                            keyboardType="phone-pad" 
+                            onChangeText={(text) => {
+                                setTimerSeg(text)
+                            }} 
+                            placeholder="SEG" 
+                            style={styles.input}/>
+                    </View>
+                </View> 
             </View>
         </KeyboardAvoidingView>
     )
