@@ -24,7 +24,7 @@ const SubjectContainer = (props) => {
                     </RectButton>
                 </View>
                 <View style={[styles.infoButtonBox, {backgroundColor: '#025CE2'}]}>
-                    <RectButton onPress={() => props.onPressDelete} style={styles.containerButton}>
+                    <RectButton onPress={props.onPressDelete} style={styles.containerButton}>
                         <Text style={styles.textButton}>DELETAR</Text>
                     </RectButton>
                 </View>

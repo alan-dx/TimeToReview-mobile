@@ -37,6 +37,7 @@ const EditSubjectScreen = (props) => {
                 }).then((response) => {
                     if (response) {
                         navigation.goBack()
+                        props.route.params.onGoBack(response.data.subject)
                     }
                 }).catch((err) => {
                     alert(err)

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { View, Text } from 'react-native';
 
 import styles from './styles';
@@ -19,6 +19,7 @@ const HomeScreen = () => {
 
     const navigation = useNavigation()
     const { logoutContext, setSubjects, setRoutines } = useContext(AuthContext);
+    const [numberOfReviews, setNumberOfReviews] = useState(0)
 
     useEffect(() => {
         
@@ -64,7 +65,7 @@ const HomeScreen = () => {
             </Header>
             
             <View style={styles.graphBox}>
-                <Text style={styles.graphBoxTitle}>Você possui 47 revisões pendentes!</Text>
+                <Text style={styles.graphBoxTitle}>Você possui {numberOfReviews} revisões pendentes!</Text>
                 {/* NESSE GRÁFICO INDICAR A QUANTIDADE DE REVISÕES POR DIA */}
                 <Chart />
                 <View style={styles.performanceButtonBox}>
