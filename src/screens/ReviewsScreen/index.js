@@ -27,7 +27,6 @@ const ReviewsScreen = (props) => {
     useEffect(() => {//THIS AVOIDS THE BUG OF EXCESSIVE REQUIREMENTS
         
         navigation.addListener('focus', async () => {
-            console.log('arrrow')
             setData([])//Necessary to solve the bug: No update the sequence on ReviewContainer
             const newData = await loadUserReviews()
             setData(newData)
@@ -52,7 +51,6 @@ const ReviewsScreen = (props) => {
     function handlePressGoBack() {
         navigation.goBack()
     }
-
 
     function handlePressGoToAddScreen() {
         navigation.navigate("AddScreen")

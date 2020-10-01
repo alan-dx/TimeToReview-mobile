@@ -6,15 +6,16 @@ import { BorderlessButton, TextInput } from "react-native-gesture-handler"
 import Input from '../../components/Input';
 import { useNavigation } from '@react-navigation/native';
 import ColorPicker from '../../components/ColorPicker';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import api from '../../services/api';
 
-const AddSubjectScreen = (props) => {
+const EditSubjectScreen = (props) => {
+
+    const screenData = props.route.params.screenData
 
     const navigation = useNavigation()
 
-    const [titleSubject, setTitleSubject] = useState('')
-    const [markerSubject, setMarkerSubject] = useState('')
+    const [titleSubject, setTitleSubject] = useState(screenData.label)
+    const [markerSubject, setMarkerSubject] = useState(screenData.marker)
 
     function handlePressGoBack() {
         navigation.goBack()
@@ -25,19 +26,24 @@ const AddSubjectScreen = (props) => {
         if (!titleSubject || !markerSubject) {
             alert("Preencha todos os campos abaixo")
         } else {
-            api.post("/createSubject", {
-                title: titleSubject,
-                marker: markerSubject
-            }).then((response) => {
-                if (response) {
-                    props.route.params.onGoBack(response.data)
-                    navigation.goBack()
-                } else {
-                    alert("Houve um erro durante a criação da disciplina, tente novamente!")
-                }
-            }).catch((err) => {
-                console.log(err)
-            })
+            if ((titleSubject != screenData.label) || (markerSubject != screenData.marker)) {
+                api.put("/editSubject", {
+                    title: titleSubject,
+                    marker: markerSubject
+                },{
+                    params: {
+                        id: screenData._id
+                    }
+                }).then((response) => {
+                    if (response) {
+                        navigation.goBack()
+                    }
+                }).catch((err) => {
+                    alert(err)
+                })
+            } else {
+                navigation.goBack()
+            }
         }
     }
 
@@ -52,7 +58,7 @@ const AddSubjectScreen = (props) => {
                         <Icon name="check" size={25} color="#F7F7F7" style={styles.iconBack} />
                     </BorderlessButton>
                 </View>
-                <Text style={styles.headerText}>CRIAR DISCIPLINA</Text>
+                <Text style={styles.headerText}>EDITAR DISCIPLINA</Text>
             </View>
             <View style={styles.main}>
                     <View style={styles.inputBox}>
@@ -74,4 +80,4 @@ const AddSubjectScreen = (props) => {
     )
 }
 
-export default AddSubjectScreen;
+export default EditSubjectScreen;

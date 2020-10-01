@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import { View, Text } from 'react-native';
+import React, {useContext, useEffect, useState} from 'react';
+import { View, Modal, Text } from 'react-native';
 import Header from '../../components/Header';
 import styles from './styles';
 import Icon from 'react-native-vector-icons/AntDesign';
@@ -7,10 +7,13 @@ import { useNavigation } from '@react-navigation/native';
 import { FlatList } from 'react-native-gesture-handler';
 import FloatAddButton from '../../components/FloatAddButton';
 import SubjectContainer from '../../components/SubjectContainer';
+import AuthContext from '../../contexts/auth';
 
-const SubjectScreen = () => {
+const SubjectScreen = (props) => {
 
-    const [data, setData] = useState([1,2,3])
+    const { subjects } = useContext(AuthContext)
+
+    const [data, setData] = useState(subjects)
 
     const navigation = useNavigation()
 
@@ -19,7 +22,19 @@ const SubjectScreen = () => {
     }
 
     function handlePressGoToAddSubjectScreen() {
-        navigation.navigate("AddSubjectScreen")
+        navigation.navigate("AddSubjectScreen", {
+            onGoBack: updateData
+        })
+    }
+
+    function handlePressGoToEditScreen(screenData) {
+        navigation.navigate("EditSubjectScreen", {
+            screenData: screenData
+        })
+    }
+
+    function updateData(passData) {
+        setData([...data, passData.subject])
     }
 
     return (
@@ -31,7 +46,8 @@ const SubjectScreen = () => {
                 <FlatList
                     style={styles.flatlist}
                     data={data}
-                    renderItem={() => <SubjectContainer onPressInfoButton={() => {}} />}
+                    keyExtractor={ item => item._id}
+                    renderItem={({item}) => <SubjectContainer onPressEdit={() => handlePressGoToEditScreen(item)} data={item} />}
                 />
             }
             <FloatAddButton onPress={handlePressGoToAddSubjectScreen}/>

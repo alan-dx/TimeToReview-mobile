@@ -20,14 +20,15 @@ const EditScreen = (props) => {
     const [titleReview, setTitleReview] = useState(dataScreen.title)
     const [subjectReview, setSubjectReview] = useState(dataScreen.subject_id)
     const [routineReview, setRoutineReview] = useState(dataScreen.routine_id)
-    const [dateNextSequenceReview, setDateNextSequenceReview] = useState(new Date());
+    const [dateNextSequenceReview, setDateNextSequenceReview] = useState(new Date(dataScreen.dateNextSequenceReview));
+    const [currentSequenceReview, setCurrentSequenceReview] = useState(dataScreen.routine_id.sequence[dataScreen.currentSequenceReview])
     const [timerMin, setTimerMin] = useState(min)
     const [timerSeg, setTimerSeg] = useState(seg)
 
     const navigation = useNavigation();
 
     useEffect(() => {
-        console.log(dataScreen)
+        console.log(dataScreen.dateNextSequenceReview)
     }, [])
 
     function handlePressGoBack() {
@@ -64,22 +65,6 @@ const EditScreen = (props) => {
             })
         }
 
-
-        // api.post('/createReview', {
-        //     title: titleReview,
-        //     timer: timer,
-        //     routine_id: routineReview._id,
-        //     subject_id: subjectReview._id,
-        //     dateNextSequenceReview: dateNextSequenceReview
-        // }).then((response) => {
-        //     if (response) {
-        //         navigation.goBack()
-        //     } else {
-        //         alert("Houve um erro durante a criação da revisão, tente novamente!")
-        //     }
-        // }).catch((err) => console.log(err))
-
-
     }
 
     return (
@@ -98,10 +83,17 @@ const EditScreen = (props) => {
             <View style={styles.main}>
                 <View style={styles.dntReview}>
                     <View style={styles.labelIconBox}>
+                        <Icon name="sync" size={20} color="#303030" style={{marginRight: 3}} />
+                        <Text style={styles.label}>Índice de rotina atual:</Text>
+                    </View>
+                    <Text style={styles.subLabel}>{currentSequenceReview}</Text>
+                </View>
+                <View style={styles.dntReview}>
+                    <View style={styles.labelIconBox}>
                         <Icon name="calendar" size={20} color="#303030" style={{marginRight: 3}} />
                         <Text style={styles.label}>Data da próxima Revisão</Text>
                     </View>
-                    <Text style={styles.subLabel}>GERADO AUTOMATICAMENTE, PREENCHA OS DEMAIS CAMPOS</Text>
+                    <Text style={styles.subLabel}>{`${dateNextSequenceReview.getDate()}/${dateNextSequenceReview.getMonth()+1}/${dateNextSequenceReview.getFullYear()}`}</Text>
                 </View>
                 <View style={styles.inputBox}>
                     <View style={styles.labelBoxL}>
@@ -133,10 +125,13 @@ const EditScreen = (props) => {
                         data={routines}
                         defaultValue={routineReview.value}
                         onChangeItem={(item) => {
-                            const currentDate = new Date()
                             setRoutineReview(item)
-                            const nextDate = currentDate.getDate() + Number(item.sequence[0])
-                            setDateNextSequenceReview(new Date(currentDate.getFullYear(), currentDate.getMonth(), nextDate, 3))
+                            if (dataScreen.currentSequenceReview > (item.sequence.length - 1)) {
+                                console.log('aq')
+                                setCurrentSequenceReview(item.sequence[item.sequence.length - 1])
+                            } else {
+                                setCurrentSequenceReview(item.sequence[dataScreen.currentSequenceReview])
+                            }
                         }}
                     />
                 </View>

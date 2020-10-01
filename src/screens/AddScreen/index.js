@@ -16,7 +16,7 @@ const AddScreen = () => {
     const [titleReview, setTitleReview] = useState('')
     const [subjectReview, setSubjectReview] = useState('')
     const [routineReview, setRoutineReview] = useState('')
-    const [dateNextSequenceReview, setDateNextSequenceReview] = useState(new Date());
+    const [dateNextSequenceReview, setDateNextSequenceReview] = useState('');
     const [timerMin, setTimerMin] = useState('')
     const [timerSeg, setTimerSeg] = useState('')
 
@@ -26,23 +26,28 @@ const AddScreen = () => {
         navigation.goBack()
     }
 
+
     function showInfo() {
-
+        
         const timer = `${timerMin}:${timerSeg}`
-
-        api.post('/createReview', {
-            title: titleReview,
-            timer: timer,
-            routine_id: routineReview._id,
-            subject_id: subjectReview._id,
-            dateNextSequenceReview: dateNextSequenceReview
-        }).then((response) => {
-            if (response) {
-                navigation.goBack()
-            } else {
-                alert("Houve um erro durante a criação da revisão, tente novamente!")
-            }
-        }).catch((err) => console.log(err))
+        
+        if (!titleReview || !subjectReview || !routineReview || !timerSeg || !timerMin ) {
+            alert("Preencha todos os campos!")
+        } else {
+            api.post('/createReview', {
+                title: titleReview,
+                timer: timer,
+                routine_id: routineReview._id,
+                subject_id: subjectReview._id,
+                dateNextSequenceReview: dateNextSequenceReview
+            }).then((response) => {
+                if (response) {
+                    navigation.goBack()
+                } else {
+                    alert("Houve um erro durante a criação da revisão, tente novamente!")
+                }
+            }).catch((err) => console.log(err))
+        }
 
 
     }
@@ -64,20 +69,20 @@ const AddScreen = () => {
                 <View style={styles.dntReview}>
                     <View style={styles.labelIconBox}>
                         <Icon name="calendar" size={20} color="#303030" style={{marginRight: 3}} />
-                        <Text style={styles.label}>Data da primeira Revisão</Text>
+                        <Text style={styles.label}>DATA DA PRIMEIRA REVISÃO</Text>
                     </View>
-                    <Text style={styles.subLabel}>GERADO AUTOMATICAMENTE, PREENCHA OS DEMAIS CAMPOS</Text>
+                    <Text style={styles.subLabel}>{dateNextSequenceReview == "" ? "GERADA AUTOMATICAMENTE AO SELECIONAR UMA ROTINA" : `${dateNextSequenceReview.getDate()}/${dateNextSequenceReview.getMonth()}/${dateNextSequenceReview.getFullYear()}` }</Text>
                 </View>
                 <View style={styles.inputBox}>
                     <View style={styles.labelBoxL}>
                         <View style={styles.labelFrame} />
-                        <Text style={styles.label}>Título da Revisão</Text>
+                        <Text style={styles.label}>TÍTULO DA REVISÃO</Text>
                     </View>
                     <Input value={titleReview} secureTextEntry={false} onChangeText={setTitleReview} textAlign="center" placeholder="EDO DE BERNOULLI" />
                 </View>
                 <View style={styles.inputBox}>
                     <View style={styles.labelBoxR}>
-                        <Text style={styles.label}>Disciplina da Revisão</Text>
+                        <Text style={styles.label}>DISCIPLINA DA REVISÃO</Text>
                         <View style={styles.labelFrame} />
                     </View>
                     <PickerInfo 
@@ -90,7 +95,7 @@ const AddScreen = () => {
                 <View style={styles.inputBox}>
                     <View style={styles.labelBoxL}>
                         <View style={styles.labelFrame} />
-                        <Text style={styles.label}>Rotina de Revisão</Text>
+                        <Text style={styles.label}>ROTINA DE REVISÃO</Text>
                     </View>
                     <PickerInfo 
                         placeholder="1-3-5-7-21-30" 
@@ -105,7 +110,7 @@ const AddScreen = () => {
                 </View>
                 <View style={styles.timerBox}>
                     <View style={styles.labelIconBox}>
-                        <Text style={styles.label}>Cronômetro de conlusão</Text>
+                        <Text style={styles.label}>CRÔNOMETRO DE CONCLUSÃO</Text>
                         <Icon name="clockcircleo" size={20} color="#303030" style={{marginLeft: 3}} />
                     </View>
                     <View style={styles.timerInputBox}>

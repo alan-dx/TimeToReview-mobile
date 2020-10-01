@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 const styles = StyleSheet.create({
     container: {
         width: '90%',
-        height: 60,
+        height: 80,
         backgroundColor: '#FFFFFF',
         alignSelf: 'center',
         marginBottom: 10,
@@ -25,9 +25,15 @@ const styles = StyleSheet.create({
         fontSize: 18,
         color: '#303030'
     },
+    label: {
+        fontFamily: 'Archivo-Bold',
+        fontSize: 11,
+        color: '#303030',
+        justifyContent: 'flex-end',
+    },
     subjectColorMarker: {
         width: 5,
-        height: 60,
+        height: 80,
         borderBottomLeftRadius: 10,
         borderTopLeftRadius: 10,
         alignSelf: 'flex-start',
@@ -36,14 +42,13 @@ const styles = StyleSheet.create({
         left: 0
     },
     infoBox: {
-        flex: 1,
+        width: '100%',
         flexDirection: 'row',
         alignItems: 'flex-end',
-        justifyContent: 'center',
+        justifyContent: 'space-evenly',
     },
     infoButtonBox: {
         width: '30%',
-        backgroundColor: '#025CE2',
         borderTopRightRadius: 7,
         borderTopLeftRadius: 7,
     },
