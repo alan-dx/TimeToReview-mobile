@@ -9,7 +9,14 @@ export const AuthProvider = (props) => {
     const [user, setUser] = useState(null)
     
     const [routines, setRoutines] = useState([])
-    const [subjects, setSubjects] = useState([])
+    const [subjects, setSubjects] = useState(null)
+    const [reviews, setReviews] = useState([])
+    const [allReviews, setAllReviews] = useState([])
+
+    async function loadServerData() {
+        console.log('requisição')
+        return await api.get('/listUser')
+    }
 
     useEffect(() => {
         async function loadStorageData() {
@@ -17,10 +24,9 @@ export const AuthProvider = (props) => {
             const storageUser = await AsyncStorage.getItem("@TTR:user")
 
             if (storageToken) {
-                setToken(storageToken)
                 setUser(JSON.parse(storageUser))
+                setToken(storageToken)
                 api.defaults.headers["Authorization"] = `Bearer ${storageToken}`//VERFICAR A NECESSIDADE DE CAUSAR O LOGOUT QND TOKEN FOR INVÁLIDO
-
                 await api.get('/verifyToken').catch((err) => {
                     logoutContext()
                 })
@@ -29,21 +35,10 @@ export const AuthProvider = (props) => {
         loadStorageData()
     }, [])
 
-    // useEffect(() => {//VERIFICAR A POSSIBILIDADE DE FAZER A REQUISIÇÃO AO ABRIR O APP (economizar dados)
-    //     async function loadServerReviews() {
-    //         api.get('/indexReviews').then((response) => {
-    //             console.log(response)
-    //         })
-    //     }
-
-    //     loadServerReviews()
-    // }, [routines])
-
     async function signInContext(data) {
         try {
 
             const response = await api.post('/signIn', data)
-            // const teste = await api.get('https://servicodados.ibge.gov.br/api/v1/localidades/distritos/160030312/')
     
             if (response.data) {
                 const { token, user } = response.data;
@@ -97,7 +92,7 @@ export const AuthProvider = (props) => {
     }
 
     return (
-        <AuthContext.Provider value={{signed: token, user: user, signInContext, signUpContext, logoutContext, loadUserReviews, routines, setRoutines, subjects, setSubjects}}>
+        <AuthContext.Provider value={{signed: token, user: user, signInContext, signUpContext, logoutContext, loadUserReviews, routines, setRoutines, subjects, setSubjects, reviews, setReviews, loadServerData, allReviews, setAllReviews}}>
             {props.children}
         </AuthContext.Provider>
     )

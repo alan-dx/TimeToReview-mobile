@@ -7,6 +7,7 @@ const Input = (props) => {
         <TextInput
             style={[styles.input, {textAlign: props.textAlign}]}
             placeholder={props.placeholder}
+            keyboardType={props.keyboardType || "default"}
             placeholderTextColor="#ABABAB"
             onChangeText={(text) => props.onChangeText(text)}
             value={props.value}

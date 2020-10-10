@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { View, Text } from 'react-native';
 
 import styles from './styles';
@@ -9,7 +9,7 @@ import Icon2 from 'react-native-vector-icons/Feather';
 import MenuButton from '../../components/MenuButton';
 import Chart from '../../components/Chart';
 import { BorderlessButton } from 'react-native-gesture-handler';
-import { useNavigation } from '@react-navigation/native';
+import { useFocusEffect, useIsFocused, useNavigation } from '@react-navigation/native';
 import api from '../../services/api';
 
 const HomeScreen = () => {
@@ -18,21 +18,13 @@ const HomeScreen = () => {
     //OPÇÕES (BASIC) => REVISÕES, ROTINAS, LISTAR TODAS AS REVISÕES, MATÉRIAS, CONFIGURAÇÕES, TORNE-SE PREMIUM
 
     const navigation = useNavigation()
-    const { logoutContext, setSubjects, setRoutines } = useContext(AuthContext);
-    const [numberOfReviews, setNumberOfReviews] = useState(0)
+    const { logoutContext, reviews } = useContext(AuthContext);
+    const [numberOfReviews, setNumberOfReviews] = useState(reviews.length)
+    const [isLoading, setIsLoading] = useState(false)
 
     useEffect(() => {
-        
-        navigation.addListener('focus', async () => {
-            await api.get('/listUser').then((response) => {
-                if (response) {
-                    setSubjects(response.data.subjects)
-                    setRoutines(response.data.routines)
-                }
-            })
-        })
-        
-    }, [navigation])
+        console.log(reviews)
+    }, [])
 
     function handleClickLogoutButton() {
         logoutContext()
@@ -58,60 +50,65 @@ const HomeScreen = () => {
         navigation.navigate('PerformanceScreen')
     }
 
+    const homeDash = <>
+        <Header title="MENU" onPress={handleClickLogoutButton}>
+            <Icon name="logout" size={22} color="#025CE2" />
+        </Header>
+        
+        <View style={styles.graphBox}>
+            <Text style={styles.graphBoxTitle}>Você possui {numberOfReviews} revisões pendentes!</Text>
+            {/* NESSE GRÁFICO INDICAR A QUANTIDADE DE REVISÕES POR DIA */}
+            <Chart />
+            <View style={styles.performanceButtonBox}>
+                <BorderlessButton onPress={handleClickGoToPerformanceScreen} style={styles.performanceButton}>
+                    <Icon name="up" size={25} color="#025CE2" />
+                </BorderlessButton>
+                <Text style={styles.performanceButtonText}>Visualizar desempenho completo</Text>
+            </View>
+        </View>
+
+        <View style={styles.menuBox}>
+            <View style={styles.menuRow}>
+                <View style={styles.menuItemBox}>
+                    <MenuButton onPress={handleClickGoToReviewsScreen} title="Revisões" subtitle="15 Revisões Cadastradas">
+                        <Icon name="exception1" size={22} color="#303030" />
+                    </MenuButton>
+                </View>
+                <View style={styles.menuItemBox}>
+                    <MenuButton onPress={handleClickGoToRoutineScreen} title="Rotinas" subtitle="7 Rotinas">
+                        <Icon name="sync" size={22} color="#303030" />
+                    </MenuButton>
+                </View>
+                <View style={styles.menuItemBox}>
+                    <MenuButton onPress={handleClickGoToRoutineScreen} title="Todas Revisões" subtitle="7 Rotinas">
+                        <Icon name="profile" size={22} color="#303030" />
+                    </MenuButton>
+                </View>
+            </View>
+            <View style={styles.menuRow}>
+                <View style={styles.menuItemBox}>
+                    <MenuButton onPress={handleClickGoToSubjectScreen} title="Matérias" subtitle="12 Matérias">
+                        <Icon name="book" size={22} color="#303030" />
+                    </MenuButton>
+                </View>
+                <View style={styles.menuItemBox}>
+                    <MenuButton onPress={handleClickGoToSettingScreen} title="Seja Premium">
+                        <Icon2 name="trending-up" size={22} color="#303030" />
+                    </MenuButton>
+                </View>
+                <View style={styles.menuItemBox}>
+                    <MenuButton onPress={handleClickGoToSettingScreen} title="Configurações">
+                        <Icon name="setting" size={23} color="#303030" />
+                    </MenuButton>
+                </View>
+            </View>
+        </View>
+    </>
+    const landing = <><Text>Carregando</Text></>
+
     return (
         <View style={styles.container}>
-            <Header title="MENU" onPress={handleClickLogoutButton}>
-                <Icon name="logout" size={22} color="#025CE2" />
-            </Header>
-            
-            <View style={styles.graphBox}>
-                <Text style={styles.graphBoxTitle}>Você possui {numberOfReviews} revisões pendentes!</Text>
-                {/* NESSE GRÁFICO INDICAR A QUANTIDADE DE REVISÕES POR DIA */}
-                <Chart />
-                <View style={styles.performanceButtonBox}>
-                    <BorderlessButton onPress={handleClickGoToPerformanceScreen} style={styles.performanceButton}>
-                        <Icon name="up" size={28} color="#025CE2" />
-                    </BorderlessButton>
-                    <Text style={styles.performanceButtonText}>Visualizar desempenho completo</Text>
-                </View>
-            </View>
-
-            <View style={styles.menuBox}>
-                <View style={styles.menuRow}>
-                    <View style={styles.menuItemBox}>
-                        <MenuButton onPress={handleClickGoToReviewsScreen} title="Revisões" subtitle="15 Revisões Cadastradas">
-                            <Icon name="exception1" size={22} color="#303030" />
-                        </MenuButton>
-                    </View>
-                    <View style={styles.menuItemBox}>
-                        <MenuButton onPress={handleClickGoToRoutineScreen} title="Rotinas" subtitle="7 Rotinas">
-                            <Icon name="sync" size={22} color="#303030" />
-                        </MenuButton>
-                    </View>
-                    <View style={styles.menuItemBox}>
-                        <MenuButton onPress={handleClickGoToRoutineScreen} title="Todas Revisões" subtitle="7 Rotinas">
-                            <Icon name="profile" size={22} color="#303030" />
-                        </MenuButton>
-                    </View>
-                </View>
-                <View style={styles.menuRow}>
-                    <View style={styles.menuItemBox}>
-                        <MenuButton onPress={handleClickGoToSubjectScreen} title="Matérias" subtitle="12 Matérias">
-                            <Icon name="book" size={22} color="#303030" />
-                        </MenuButton>
-                    </View>
-                    <View style={styles.menuItemBox}>
-                        <MenuButton onPress={handleClickGoToSettingScreen} title="Seja Premium">
-                            <Icon2 name="trending-up" size={22} color="#303030" />
-                        </MenuButton>
-                    </View>
-                    <View style={styles.menuItemBox}>
-                        <MenuButton onPress={handleClickGoToSettingScreen} title="Configurações">
-                            <Icon name="setting" size={23} color="#303030" />
-                        </MenuButton>
-                    </View>
-                </View>
-            </View>
+            {!isLoading ? homeDash : <Text>Carregando</Text>}
         </View>
     )
 }

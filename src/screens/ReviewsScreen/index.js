@@ -3,36 +3,18 @@ import { View, Text, FlatList } from 'react-native';
 import Header from '../../components/Header';
 import styles from './styles';
 import Icon from 'react-native-vector-icons/AntDesign';
-import { useFocusEffect, useNavigation } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import ReviewContainer from '../../components/ReviewContainer';
 import FloatAddButton from '../../components/FloatAddButton';
 import api from '../../services/api';
+import AuthContext from '../../contexts/auth';
 
 const ReviewsScreen = (props) => {
 
-    const [data, setData] = useState([])
+    const { reviews, setReviews, setSubjects } = useContext(AuthContext)
+
+    const [data, setData] = useState(reviews)
     const navigation = useNavigation()
-
-    //DO TO => Put the functions of the API in a apart file
-        
-    async function loadUserReviews() {
-        try {
-            const response = await api.get('/indexReviews')
-            return response.data
-        } catch (err) {
-            alert(err)
-        }
-    }
-
-    useEffect(() => {//THIS AVOIDS THE BUG OF EXCESSIVE REQUIREMENTS
-        
-        navigation.addListener('focus', async () => {
-            setData([])//Necessary to solve the bug: No update the sequence on ReviewContainer
-            const newData = await loadUserReviews()
-            setData(newData)
-        });
-    
-      }, []);
 
     async function handleConcludeReview(id) {
 
@@ -41,11 +23,12 @@ const ReviewsScreen = (props) => {
                 id: id
             }
         }).catch((err) => {
-            console.log(err)
+            alert(err)
         })
 
         const newData = data.filter(item => item._id != id)//to update flatlist, removing the conclude review
         setData(newData)
+        setReviews(newData)
     }
 
     function handlePressGoBack() {
@@ -53,13 +36,36 @@ const ReviewsScreen = (props) => {
     }
 
     function handlePressGoToAddScreen() {
-        navigation.navigate("AddScreen")
+        navigation.navigate("AddScreen", {
+            onGoBack: handleUpdateDataOnAdd
+        })
+    }
+
+    function handleUpdateDataOnAdd(passData) {
+        setData([...data, passData])
+        setReviews([...reviews, passData])
     }
 
     function handleGoToEditScreen(screenData) {
-        navigation.navigate("EditScreen", screenData)
+        navigation.navigate("EditScreen", {
+            screenData: screenData,
+            onGoBack: handleUpdateDataOnEdit
+        })
     }
 
+    function handleUpdateDataOnEdit(passData) {
+        const newData = data
+        setData([])
+        const index = data.findIndex(item => item._id == passData._id)
+        newData[index] = passData
+        setData(newData)
+        setReviews(newData)
+        
+
+        //TERÁ QUE FAZER A MODIFICAÇÃO NO ARRAY DE MATÉRIAS COMO FOI FEITO NA TELA DE SUBJECTSCREEN, POIS NO CASO DE TROCA DE MATÉRIA VOCÊ TERA QUE REMOVER DO
+        //ASSOCIATED REVIEWS DA MATÉRIA ANTERIOR E ADD NA NOVA MATÉRIA
+        //ISSO TERÁ RELEVÂNCIA DURANTE A GERAÇÃO DOS GRÁFICOS
+    }
 
     return (
         <View style={styles.container}>

@@ -11,9 +11,9 @@ import AuthContext from '../../contexts/auth';
 
 const EditScreen = (props) => {
 
-    const dataScreen = props.route.params
+    const dataScreen = props.route.params.screenData
 
-    const {routines, subjects} = useContext(AuthContext)
+    const {routines, subjects, setSubjects } = useContext(AuthContext)
 
     const [min,seg] = dataScreen.timer.split(':')
 
@@ -28,7 +28,7 @@ const EditScreen = (props) => {
     const navigation = useNavigation();
 
     useEffect(() => {
-        console.log(dataScreen.dateNextSequenceReview)
+        console.log(subjects)
     }, [])
 
     function handlePressGoBack() {
@@ -55,7 +55,7 @@ const EditScreen = (props) => {
                 }
             }).then((response) => {
                 if (response) {
-                    console.log(response)
+                    props.route.params.onGoBack(response.data.review)
                     navigation.goBack()
                 } else {
                     alert("Houve um erro durante a edição da revisão, tente novamente!")
@@ -63,6 +63,30 @@ const EditScreen = (props) => {
             }).catch((err) => {
                 alert(err)
             })
+        }
+
+        if (subjectReview._id != dataScreen.subject_id._id) {//REPRESENTA A MODIFICAÇÃO DA MATÉRIA, MODIFICA APENAS O NÚMERO DE REVISÕES ASSOCIADAS NA TELA DE MATÉRIAS
+            //TENTAR USAR O MAP AO INVES DO setSubjects
+            const newSubjects = subjects
+
+            const indexOldSubject = subjects.findIndex(item => item._id == dataScreen.subject_id._id)
+            const indexNewSubject = subjects.findIndex(item => item._id == subjectReview._id)
+
+            newSubjects[indexOldSubject].associatedReviews = newSubjects[indexOldSubject].associatedReviews.filter(item => item != dataScreen._id)
+            newSubjects[indexNewSubject].associatedReviews.push(dataScreen._id)
+
+            setSubjects(newSubjects)
+
+        }
+
+        if(routineReview._id != dataScreen.routine_id._id) {//REPRESENTA A MODIFICAÇÃO DA MATÉRIA, MODIFICA APENAS O NÚMERO DE REVISÕES ASSOCIADAS NA TELA DE MATÉRIAS
+            const newRoutines = routines
+
+            const indexOldRoutine = routines.findIndex(item => item._id == dataScreen.routine_id._id)
+            const indexNewRoutine = routines.findIndex(item => item._id == routineReview._id)
+
+            newRoutines[indexOldRoutine].associatedReviews = newRoutines[indexOldRoutine].associatedReviews.filter(item => item != dataScreen._id)
+            newRoutines[indexNewRoutine].associatedReviews.push(dataScreen._id)
         }
 
     }
@@ -111,7 +135,10 @@ const EditScreen = (props) => {
                         placeholder="DISCIPLINA"
                         data={subjects}
                         defaultValue={subjectReview.value}
-                        onChangeItem={setSubjectReview}
+                        onChangeItem={item => {
+                            setSubjectReview(item)
+                            console.log(item)
+                        }}
                     />
                 </View>
 

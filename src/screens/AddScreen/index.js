@@ -9,7 +9,7 @@ import PickerInfo from '../../components/Picker';
 import api from '../../services/api';
 import AuthContext from '../../contexts/auth';
 
-const AddScreen = () => {
+const AddScreen = (props) => {
 
     const {routines, subjects} = useContext(AuthContext)
 
@@ -26,10 +26,10 @@ const AddScreen = () => {
         navigation.goBack()
     }
 
-
     function showInfo() {
         
         const timer = `${timerMin}:${timerSeg}`
+        const currentDate = new Date()
         
         if (!titleReview || !subjectReview || !routineReview || !timerSeg || !timerMin ) {
             alert("Preencha todos os campos!")
@@ -43,12 +43,14 @@ const AddScreen = () => {
             }).then((response) => {
                 if (response) {
                     navigation.goBack()
+                    if (dateNextSequenceReview.getDate() == currentDate.getDate()) {
+                        props.route.params.onGoBack(response.data)
+                    }
                 } else {
                     alert("Houve um erro durante a criação da revisão, tente novamente!")
                 }
             }).catch((err) => console.log(err))
         }
-
 
     }
 

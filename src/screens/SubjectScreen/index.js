@@ -12,8 +12,7 @@ import api from '../../services/api';
 
 const SubjectScreen = (props) => {
 
-    const { subjects } = useContext(AuthContext)
-
+    const { subjects, setSubjects, reviews, allReviews } = useContext(AuthContext)
     const [data, setData] = useState(subjects)
 
     const navigation = useNavigation()
@@ -30,6 +29,7 @@ const SubjectScreen = (props) => {
 
     function handleUpdateDataOnAdd(passData) {
         setData([...data, passData.subject])
+        setSubjects([...subjects, passData.subject])
     }
 
     function handlePressGoToEditScreen(screenData) {
@@ -40,11 +40,25 @@ const SubjectScreen = (props) => {
     }
 
     function handleUpdateDataOnEdit(passData) {
+        
+        allReviews.map(item => {//VERIFICAR A POSSIBILIDADE DE USAR PARA ATUALIZAR A FLATLIST OU A SUBJECTS NO CONTEXTO
+            //PARA ATUALIZAR A MATÉRIA DENTRO DA REVISÃO A QUAL ESSA ESTA ASSOCIADA, SEM PRECISAR FAZER UMA REQUISIÇÃO
+            if (item.subject_id._id == passData._id) {
+                item.subject_id = passData
+            }
+        })
+        reviews.map(item => {
+            if (item.subject_id._id == passData._id) {
+                item.subject_id = passData
+            }
+        })
         const newData = data
         setData([])//For some reason, it is necessary to do this to update the list, perhaps because I am using the method findIndex
-        const index = newData.findIndex(item => item._id == passData._id)
-        newData[index] = passData
+        const indexData = newData.findIndex(item => item._id == passData._id)
+        newData[indexData] = passData
+        
         setData(newData)
+        setSubjects(newData)
     }
 
     function handlePressDeleteSubject(subject) {
@@ -58,6 +72,7 @@ const SubjectScreen = (props) => {
                     alert("Matéria deletada com sucesso!")
                     const newData = data.filter(item => item._id != subject._id)
                     setData(newData)
+                    setSubjects(newData)
                 }
             }).catch((err) => {
                 alert(err)

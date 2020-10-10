@@ -20,23 +20,26 @@ const styles = StyleSheet.create({
     performanceButtonBox: {
         alignItems: 'center',
         justifyContent: 'center',
-        marginBottom: 10
+        marginBottom: 10,
     },
     performanceButton: {
         alignItems: 'center',
         justifyContent: 'center',
-        marginBottom: -7
+        marginBottom: -5,
+        padding: 2,
+        backgroundColor: '#FFFFFF',
+        borderRadius: 30
     },
     performanceButtonText: {
         color: '#303030',
-        fontFamily: 'Archivo-Bold',
+        fontFamily: 'Archivo-SemiBold',
         fontSize: 20,
     },
     menuBox: {
         flex: 1,
-        borderTopColor: '#303030',
-        borderTopWidth: 1,
-        backgroundColor:'#FFFFFF',
+        paddingHorizontal: 5,
+        paddingBottom: 3,
+        backgroundColor:'#F7F7F7',
     },
     menuRow: {
         flex: 1,

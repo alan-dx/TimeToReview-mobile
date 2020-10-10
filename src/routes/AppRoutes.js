@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import {NavigationContainer} from '@react-navigation/native';
+import AuthContext from '../contexts/auth';
 
 import HomeScreen from '../screens/HomeScreen';
 import ReviewsScreen from '../screens/ReviewsScreen';
@@ -12,13 +13,16 @@ import AddScreen from '../screens/AddScreen';
 import EditScreen from '../screens/EditScreen';
 import AddSubjectScreen from '../screens/AddSubjectScreen';
 import EditSubjectScreen from '../screens/EditSubjectScreen';
+import PreLoadScreen from '../screens/PreLoadScreen';
 
 const {Screen, Navigator} = createStackNavigator()
 
 const AppRoutes = () => {
+
     return (
         <NavigationContainer>
             <Navigator screenOptions={{ headerShown: false }} mode= 'card'>
+                <Screen name="PreLoadScreen" component={PreLoadScreen} />
                 <Screen name="HomeScreen" component={HomeScreen} />
                 <Screen name="ReviewsScreen" component={ReviewsScreen} />
                 <Screen name="RoutineScreen" component={RoutineScreen} />

@@ -42,10 +42,11 @@ const styles = StyleSheet.create({
         justifyContent: 'space-around',
     },
     DateButtonsBox: {
-        width: 114,
+        width: '30%',
     },
     labelDateButtons: {
-        fontFamily: 'Archivo-SemiBold',
+        marginBottom: -2,
+        fontFamily: 'Poppins-Bold',
         color: '#303030',
         fontSize: 12,
         alignSelf: 'center'
