@@ -16,6 +16,7 @@ import EditSubjectScreen from '../screens/EditSubjectScreen';
 import PreLoadScreen from '../screens/PreLoadScreen';
 import AllReviewsScreen from '../screens/AllReviewsScreen';
 import Header from '../components/Header';
+import BePremiumScreen from '../screens/BePremiumScreen';
 
 const {Screen, Navigator} = createStackNavigator()
 
@@ -36,16 +37,78 @@ const AppRoutes = () => {
                         header: () => <Header title="MENU" showLogout color="#F5F5F5" />
                     }}
                 />
-                <Screen name="ReviewsScreen" component={ReviewsScreen} />
-                <Screen name="RoutineScreen" component={RoutineScreen} />
-                <Screen name="SubjectScreen" component={SubjectScreen} />
-                <Screen name="PerformanceScreen" component={PerformanceScreen} />
-                <Screen name="SettingScreen" component={SettingScreen} />
-                <Screen name="AddScreen" component={AddScreen} />
-                <Screen name="EditScreen" component={EditScreen} />
-                <Screen name="AddSubjectScreen" component={AddSubjectScreen} />
-                <Screen name="EditSubjectScreen" component={EditSubjectScreen} />
-                <Screen name="AllReviewsScreen" component={AllReviewsScreen} />
+                <Screen 
+                    name="ReviewsScreen" 
+                    component={ReviewsScreen}
+                    options={{
+                        headerShown: true,
+                        header: () => <Header title="REVISÕES" color="#F5F5F5" />
+                    }}
+                />
+                <Screen 
+                    name="RoutineScreen" 
+                    component={RoutineScreen} 
+                    options={{
+                        headerShown: true,
+                        header: () => <Header title="ROTINAS" color="#F5F5F5" />
+                    }} 
+                />
+                <Screen 
+                    name="SubjectScreen" 
+                    component={SubjectScreen} 
+                    options={{
+                        headerShown: true,
+                        header: () => <Header title="MATÉRIAS" color="#F5F5F5" />
+                    }} 
+                />
+                <Screen 
+                    name="PerformanceScreen" 
+                    component={PerformanceScreen}
+                    options={{
+                        headerShown: true,
+                        header: () => <Header title="DESEMPENHO" color="#F5F5F5" />
+                    }} 
+                />
+                <Screen 
+                    name="SettingScreen" 
+                    component={SettingScreen}
+                    options={{
+                        headerShown: true,
+                        header: () => <Header title="CONFIGURAÇÕES" color="#F5F5F5" />
+                    }} 
+                />
+                <Screen 
+                    name="BePremiumScreen" 
+                    component={BePremiumScreen}
+                    options={{
+                        headerShown: true,
+                        header: () => <Header title="Seja Premium" color="#F5F5F5" />
+                    }} 
+                />
+                <Screen 
+                    name="AddScreen" 
+                    component={AddScreen} 
+                />
+                <Screen 
+                    name="EditScreen" 
+                    component={EditScreen} 
+                />
+                <Screen 
+                    name="AddSubjectScreen" 
+                    component={AddSubjectScreen} 
+                />
+                <Screen 
+                    name="EditSubjectScreen" 
+                    component={EditSubjectScreen}
+                />
+                <Screen 
+                    name="AllReviewsScreen" 
+                    component={AllReviewsScreen}
+                    options={{
+                        headerShown: true,
+                        header: () => <Header title="TODAS REVISÕES" color="#F5F5F5" />
+                    }} 
+                />
             </Navigator>
         </NavigationContainer>
     );

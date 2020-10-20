@@ -3,7 +3,7 @@ import { View, Text } from 'react-native';
 import styles from './styles';
 import { useNavigation } from '@react-navigation/native';
 
-const SettingScreen = () => {
+const BePremiumScreen = () => {
 
     const navigation = useNavigation()
 
@@ -13,10 +13,10 @@ const SettingScreen = () => {
 
     return (
         <View style={styles.container}>
-            <Text>Tela de Configurações</Text>
+            <Text>Tela de Premium</Text>
         </View>
     )
     
 }
 
-export default SettingScreen;
+export default BePremiumScreen;

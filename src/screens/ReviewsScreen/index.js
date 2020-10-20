@@ -75,9 +75,6 @@ const ReviewsScreen = (props) => {
 
     return (
         <View style={styles.container}>
-            <Header title='REVISÕES' onPress={handlePressGoBack}>
-                <Icon name="left" size={25} color="#025CE2" />
-            </Header>
             {data != null &&
                 <FlatList 
                     style={styles.flatlist} 

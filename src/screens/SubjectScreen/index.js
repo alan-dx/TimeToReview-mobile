@@ -87,9 +87,6 @@ const SubjectScreen = (props) => {
 
     return (
         <View style={styles.container}>
-            <Header title='MATÉRIAS' onPress={handleClickGoBack}>
-                <Icon name="left" size={25} color="#025CE2" />
-            </Header>
             {data != null && 
                 <FlatList
                     style={styles.flatlist}

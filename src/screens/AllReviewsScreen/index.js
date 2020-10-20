@@ -41,11 +41,6 @@ const AllReviewsScreen = (props) => {
         props.route.params.onGoBack(allReviews)
     }
 
-    // function handleUpdateDataOnAdd(passData) {
-    //     setData([...data, passData])
-    //     setReviews([...reviews, passData])
-    // }
-
     function handleGoToEditScreen(screenData) {
         navigation.navigate("EditScreen", {
             screenData: screenData,
@@ -54,24 +49,18 @@ const AllReviewsScreen = (props) => {
     }
 
     function handleUpdateDataOnEdit(passData) {
-        // const newData = data
-        // setData([])
-        // const index = data.findIndex(item => item._id == passData._id)
-        // newData[index] = passData
-        // setData(newData)
+        console.log(passData)
+        const newData = data
+        setData([])
+        const index = data.findIndex(item => item._id == passData._id)
+        newData[index] = passData
+        setData(newData)
         // setReviews(newData)
         
-
-        //TERÁ QUE FAZER A MODIFICAÇÃO NO ARRAY DE MATÉRIAS COMO FOI FEITO NA TELA DE SUBJECTSCREEN, POIS NO CASO DE TROCA DE MATÉRIA VOCÊ TERA QUE REMOVER DO
-        //ASSOCIATED REVIEWS DA MATÉRIA ANTERIOR E ADD NA NOVA MATÉRIA
-        //ISSO TERÁ RELEVÂNCIA DURANTE A GERAÇÃO DOS GRÁFICOS
     }
 
     return (
         <View style={styles.container}>
-            <Header title='TODAS REVISÕES' onPress={handlePressGoBack}>
-                <Icon name="left" size={25} color="#025CE2" />
-            </Header>
             {data != null &&
                 <FlatList 
                     style={styles.flatlist} 

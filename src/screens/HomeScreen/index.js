@@ -18,23 +18,21 @@ const HomeScreen = () => {
     //OPÇÕES (BASIC) => REVISÕES, ROTINAS, LISTAR TODAS AS REVISÕES, MATÉRIAS, CONFIGURAÇÕES, TORNE-SE PREMIUM
 
     const navigation = useNavigation()
-    const { logoutContext, reviews, allReviews, setReviews, setAllReviews } = useContext(AuthContext);
+    const { reviews, allReviews, setReviews, setAllReviews } = useContext(AuthContext);
     const [numberOfReviews, setNumberOfReviews] = useState(0)
     const [isLoading, setIsLoading] = useState(false)
 
-    useEffect(() => {
+    useFocusEffect(
+        useCallback(() => {
             console.log('joe')
             const currentDate = new Date()
             currentDate.setHours(3,0,0,0)
             const filteredReviews = allReviews.filter(item => new Date(item.dateNextSequenceReview) <= currentDate)
-            console.log(filteredReviews)
+            // console.log(filteredReviews)
             setReviews(filteredReviews)
-            setNumberOfReviews(filteredReviews.length)
-    }, [])
-
-    function handleClickLogoutButton() {
-        logoutContext()
-    }
+            setNumberOfReviews(filteredReviews.length)//Causa o looping
+        }, [allReviews])
+    )
 
     function handleClickGoToReviewsScreen() {
         navigation.navigate('ReviewsScreen', {
@@ -56,6 +54,10 @@ const HomeScreen = () => {
 
     function handleClickGoToPerformanceScreen() {
         navigation.navigate('PerformanceScreen')
+    }
+
+    function handleGoToBePremiumScreen() {
+        navigation.navigate('BePremiumScreen')
     }
 
     function handleUpdateDataOnBack(data) {
@@ -93,34 +95,34 @@ const HomeScreen = () => {
             <View style={styles.menuRow}>
                 <View style={styles.menuItemBox}>
                     <MenuButton color="#FFF" textColor="#606060" onPress={handleClickGoToReviewsScreen} title="Revisões" subtitle="15 Revisões Cadastradas">
-                        <Icon name="exception1" size={25} color="#303030" />
+                        <Icon name="exception1" size={23} color="#303030" />
                     </MenuButton>
                 </View>
                 <View style={styles.menuItemBox}>
                     <MenuButton color="#FFF" textColor="#606060" onPress={handleClickGoToRoutineScreen} title="Rotinas" subtitle="7 Rotinas">
-                        <Icon name="sync" size={25} color="#303030" />
+                        <Icon name="sync" size={23} color="#303030" />
                     </MenuButton>
                 </View>
                 <View style={styles.menuItemBox}>
                     <MenuButton color="#FFF" textColor="#606060" onPress={handleClickGoToAllReviewsScreen} title="Todas Revisões" subtitle="7 Rotinas">
-                        <Icon name="profile" size={25} color="#303030" />
+                        <Icon name="profile" size={23} color="#303030" />
                     </MenuButton>
                 </View>
             </View>
             <View style={styles.menuRow}>
                 <View style={styles.menuItemBox}>
                     <MenuButton color="#FFF" textColor="#606060" onPress={handleClickGoToSubjectScreen} title="Matérias" subtitle="12 Matérias">
-                        <Icon name="book" size={25} color="#303030" />
+                        <Icon name="book" size={23} color="#303030" />
                     </MenuButton>
                 </View>
                 <View style={styles.menuItemBox}>
-                    <MenuButton color="#FFF" textColor="#606060" onPress={handleClickGoToSettingScreen} title="Seja Premium">
-                        <Icon2 name="trending-up" size={25} color="#303030" />
+                    <MenuButton color="#FFF" textColor="#606060" onPress={handleGoToBePremiumScreen} title="Seja Premium">
+                        <Icon2 name="trending-up" size={23} color="#303030" />
                     </MenuButton>
                 </View>
                 <View style={styles.menuItemBox}>
                     <MenuButton color="#FFF" textColor="#606060" onPress={handleClickGoToSettingScreen} title="Configurações">
-                        <Icon name="setting" size={25} color="#303030" />
+                        <Icon name="setting" size={23} color="#303030" />
                     </MenuButton>
                 </View>
             </View>

@@ -55,8 +55,6 @@ const EditScreen = (props) => {
                 }
             }).then((response) => {
                 if (response) {
-                    console.log(response.data.review)
-
                     const index = allReviews.findIndex(item => item._id == response.data.review._id)
                     const newAllReviews = allReviews
                     newAllReviews[index] = response.data.review
