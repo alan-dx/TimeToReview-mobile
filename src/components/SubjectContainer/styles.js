@@ -9,7 +9,9 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         borderRadius: 10,
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+
+        elevation: 2
     },
     titleBox: {
         flex: 1,

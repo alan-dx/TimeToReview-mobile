@@ -12,12 +12,12 @@ const SubjectContainer = (props) => {
             </View>
             <Text style={styles.label}>{props.data.associatedReviews.length} REVISÕES ASSOCIADAS</Text>
             <View style={styles.infoBox}>
-                <View style={[styles.infoButtonBox, {backgroundColor: '#303030'}]}>
+                <View style={[styles.infoButtonBox, {backgroundColor: '#60c3eb'}]}>
                     <RectButton onPress={props.onPressEdit} style={styles.containerButton}>
                         <Text style={styles.textButton}>EDITAR</Text>
                     </RectButton>
                 </View>
-                <View style={[styles.infoButtonBox, {backgroundColor: '#025CE2'}]}>
+                <View style={[styles.infoButtonBox, {backgroundColor: '#e74e36'}]}>
                     <RectButton onPress={props.onPressDelete} style={styles.containerButton}>
                         <Text style={styles.textButton}>DELETAR</Text>
                     </RectButton>

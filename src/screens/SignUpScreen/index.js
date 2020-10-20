@@ -30,12 +30,12 @@ const LoginScreen = () => {
     function keyboardDidShow() {
         Animated.parallel([
             Animated.timing(logo.x, {
-                toValue: 110,
+                toValue: 160,
                 duration: 100,
                 useNativeDriver: false
             }),
             Animated.timing(logo.y, {
-                toValue: 110,
+                toValue: 160,
                 duration: 100,
                 useNativeDriver: false
             }),
@@ -79,12 +79,6 @@ const LoginScreen = () => {
     return (
         <KeyboardAvoidingView style={styles.container}>
             <View style={styles.topBox}>
-                <View style={styles.topBoxLine}>
-                    <BorderlessButton onPress={handleClickBackButton} style={styles.backBtn}>
-                        <Icon name="left" size={25} color="#025CE2" />
-                    </BorderlessButton>
-                    <Text style={styles.titleTop}>CADASTRE-SE</Text>
-                </View>
                 <View style={styles.logoBox}>
                     <Animated.Image source={logoImage} style={{width: logo.x, height: logo.y}} />
                 </View>
@@ -152,7 +146,7 @@ const LoginScreen = () => {
                         secureTextEntry={true}
                     />
                 </View>
-                <CustomButton text="CADASTRAR" color='#025CE2' onPress={handleClickSignUpButton} />
+                <CustomButton text="CADASTRAR" color='#60c3eb' onPress={handleClickSignUpButton} />
             </KeyboardAwareScrollView>
         </View>
     </KeyboardAvoidingView>

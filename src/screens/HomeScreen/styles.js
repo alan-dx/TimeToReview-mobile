@@ -6,40 +6,59 @@ const styles = StyleSheet.create({
     },
     graphBox: {
         height: '55%',
-        backgroundColor:'#F7F7F7',
+        backgroundColor:'#F5F5F5',
+
         alignItems: 'center',
         justifyContent: 'space-between',
-        alignItems: 'center',
-        alignSelf: 'center',
     },
     graphBoxTitle: {
         color: '#303030',
         fontFamily: 'DancingScript-Bold',
         fontSize: 22,
     },
+    performanceBox: {
+        position: 'relative',
+        alignItems: 'center',
+        marginBottom: 2,
+    },
     performanceButtonBox: {
+        borderRadius: 8,
+        backgroundColor: '#FFF',
+
+        position: 'absolute',
+        bottom: 25,
+        alignSelf: 'center',
         alignItems: 'center',
         justifyContent: 'center',
-        marginBottom: 10,
+
+        elevation: 4
     },
     performanceButton: {
+        backgroundColor: '#60c3eb',
+        borderRadius: 8,
+        width: 35,
+        height: 35,
+
         alignItems: 'center',
-        justifyContent: 'center',
-        marginBottom: -5,
-        padding: 2,
-        backgroundColor: '#FFFFFF',
-        borderRadius: 30
+        justifyContent: 'center'
     },
     performanceButtonText: {
         color: '#303030',
         fontFamily: 'Archivo-SemiBold',
-        fontSize: 20,
+        fontSize: 18,
+
+        marginTop: 20
     },
     menuBox: {
+        backgroundColor:'#FFFF',
+        borderTopRightRadius: 20,
+        borderTopLeftRadius: 20,
+
         flex: 1,
         paddingHorizontal: 5,
         paddingBottom: 3,
-        backgroundColor:'#F7F7F7',
+
+        elevation: 4
     },
     menuRow: {
         flex: 1,

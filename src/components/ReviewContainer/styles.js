@@ -8,8 +8,10 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         backgroundColor: '#FFFFFF',
         alignSelf: 'center',
-        marginTop: 10,
-        borderRadius: 10
+        marginBottom: 10,
+        borderRadius: 10,
+
+        elevation: 2
     },
     titleBox: {
         flex: 1,
@@ -52,7 +54,7 @@ const styles = StyleSheet.create({
         alignSelf: 'center'
     },
     editButtonBox: {
-        backgroundColor: '#303030',
+        backgroundColor: '#60c3eb',
         flex: 1,
         borderTopRightRadius: 7,
         borderTopLeftRadius: 7,
@@ -69,7 +71,7 @@ const styles = StyleSheet.create({
         fontSize: 11
     },
     checkButtonBox: {
-        backgroundColor: '#025CE2',
+        backgroundColor: '#e74e36',
         flex: 1,
         borderTopRightRadius: 7,
         borderTopLeftRadius: 7,

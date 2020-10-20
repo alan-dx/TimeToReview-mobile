@@ -12,7 +12,7 @@ const PreLoadScreen = () => {
         loadServerData().then((response) => {
             setSubjects(response.data.subjects)
             setRoutines(response.data.routines)
-            setReviews(response.data.filterReviews)
+            // setReviews(response.data.filterReviews)
             setAllReviews(response.data.reviews)
             navigation.navigate("HomeScreen")
         }).catch((err) => {

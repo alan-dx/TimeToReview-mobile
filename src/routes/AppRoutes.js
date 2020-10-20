@@ -14,6 +14,8 @@ import EditScreen from '../screens/EditScreen';
 import AddSubjectScreen from '../screens/AddSubjectScreen';
 import EditSubjectScreen from '../screens/EditSubjectScreen';
 import PreLoadScreen from '../screens/PreLoadScreen';
+import AllReviewsScreen from '../screens/AllReviewsScreen';
+import Header from '../components/Header';
 
 const {Screen, Navigator} = createStackNavigator()
 
@@ -22,8 +24,18 @@ const AppRoutes = () => {
     return (
         <NavigationContainer>
             <Navigator screenOptions={{ headerShown: false }} mode= 'card'>
-                <Screen name="PreLoadScreen" component={PreLoadScreen} />
-                <Screen name="HomeScreen" component={HomeScreen} />
+                <Screen 
+                    name="PreLoadScreen" 
+                    component={PreLoadScreen} 
+                />
+                <Screen 
+                    name="HomeScreen" 
+                    component={HomeScreen} 
+                    options={{
+                        headerShown: true,
+                        header: () => <Header title="MENU" showLogout color="#F5F5F5" />
+                    }}
+                />
                 <Screen name="ReviewsScreen" component={ReviewsScreen} />
                 <Screen name="RoutineScreen" component={RoutineScreen} />
                 <Screen name="SubjectScreen" component={SubjectScreen} />
@@ -33,6 +45,7 @@ const AppRoutes = () => {
                 <Screen name="EditScreen" component={EditScreen} />
                 <Screen name="AddSubjectScreen" component={AddSubjectScreen} />
                 <Screen name="EditSubjectScreen" component={EditSubjectScreen} />
+                <Screen name="AllReviewsScreen" component={AllReviewsScreen} />
             </Navigator>
         </NavigationContainer>
     );

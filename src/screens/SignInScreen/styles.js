@@ -4,7 +4,7 @@ const screenWidth = Math.round(Dimensions.get('window').width);
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#FCFCFC',
+        backgroundColor: '#FFFFFF',
     },
     topBox: {
         marginTop: 10,
@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
     },
     selectBox: {
         height: '55%',
-        backgroundColor: '#FCFCFC',
+        backgroundColor: '#FFFFFF',
         flexDirection: 'row',
         alignItems: 'center',
     },
@@ -62,14 +62,14 @@ const styles = StyleSheet.create({
         alignSelf: 'flex-end',
     },
     labelFrame: {
-        height: 2,
+        height: 1,
         flex: 1,
-        backgroundColor: '#025CE2',
+        backgroundColor: '#60c3eb',
     },
     label:{
         fontFamily:'Archivo-Bold',
         color: '#303030',
-        fontSize: 18,
+        fontSize: 15,
         textAlign: 'center',
         paddingHorizontal: '1%'
     },

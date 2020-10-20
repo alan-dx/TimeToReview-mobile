@@ -10,7 +10,7 @@ import MenuButton from '../../components/MenuButton';
 import Chart from '../../components/Chart';
 import { BorderlessButton } from 'react-native-gesture-handler';
 import { useFocusEffect, useIsFocused, useNavigation } from '@react-navigation/native';
-import api from '../../services/api';
+
 
 const HomeScreen = () => {
 
@@ -18,12 +18,18 @@ const HomeScreen = () => {
     //OPÇÕES (BASIC) => REVISÕES, ROTINAS, LISTAR TODAS AS REVISÕES, MATÉRIAS, CONFIGURAÇÕES, TORNE-SE PREMIUM
 
     const navigation = useNavigation()
-    const { logoutContext, reviews } = useContext(AuthContext);
-    const [numberOfReviews, setNumberOfReviews] = useState(reviews.length)
+    const { logoutContext, reviews, allReviews, setReviews, setAllReviews } = useContext(AuthContext);
+    const [numberOfReviews, setNumberOfReviews] = useState(0)
     const [isLoading, setIsLoading] = useState(false)
 
     useEffect(() => {
-        console.log(reviews)
+            console.log('joe')
+            const currentDate = new Date()
+            currentDate.setHours(3,0,0,0)
+            const filteredReviews = allReviews.filter(item => new Date(item.dateNextSequenceReview) <= currentDate)
+            console.log(filteredReviews)
+            setReviews(filteredReviews)
+            setNumberOfReviews(filteredReviews.length)
     }, [])
 
     function handleClickLogoutButton() {
@@ -31,7 +37,9 @@ const HomeScreen = () => {
     }
 
     function handleClickGoToReviewsScreen() {
-        navigation.navigate('ReviewsScreen')
+        navigation.navigate('ReviewsScreen', {
+            onGoBack: handleUpdateDataOnBack
+        })
     }
 
     function handleClickGoToRoutineScreen() {
@@ -50,19 +58,33 @@ const HomeScreen = () => {
         navigation.navigate('PerformanceScreen')
     }
 
+    function handleUpdateDataOnBack(data) {
+        const currentDate = new Date()
+        currentDate.setHours(3,0,0,0)
+        const filteredReviews = data.filter(item => new Date(item.dateNextSequenceReview) <= currentDate)
+        setAllReviews(data)
+        console.log(data)
+        setReviews(filteredReviews)
+        setNumberOfReviews(filteredReviews.length)
+    }
+
+    function handleClickGoToAllReviewsScreen() {
+        navigation.navigate("AllReviewsScreen", {
+            onGoBack: handleUpdateDataOnBack
+        })
+    }
+
     const homeDash = <>
-        <Header title="MENU" onPress={handleClickLogoutButton}>
-            <Icon name="logout" size={22} color="#025CE2" />
-        </Header>
-        
         <View style={styles.graphBox}>
             <Text style={styles.graphBoxTitle}>Você possui {numberOfReviews} revisões pendentes!</Text>
             {/* NESSE GRÁFICO INDICAR A QUANTIDADE DE REVISÕES POR DIA */}
             <Chart />
-            <View style={styles.performanceButtonBox}>
-                <BorderlessButton onPress={handleClickGoToPerformanceScreen} style={styles.performanceButton}>
-                    <Icon name="up" size={25} color="#025CE2" />
-                </BorderlessButton>
+            <View style={styles.performanceBox}>
+                <View style={styles.performanceButtonBox}>
+                    <BorderlessButton onPress={handleClickGoToPerformanceScreen} style={styles.performanceButton}>
+                        <Icon name="up" size={20} color="#FFF" />
+                    </BorderlessButton>
+                </View>
                 <Text style={styles.performanceButtonText}>Visualizar desempenho completo</Text>
             </View>
         </View>
@@ -70,35 +92,35 @@ const HomeScreen = () => {
         <View style={styles.menuBox}>
             <View style={styles.menuRow}>
                 <View style={styles.menuItemBox}>
-                    <MenuButton onPress={handleClickGoToReviewsScreen} title="Revisões" subtitle="15 Revisões Cadastradas">
-                        <Icon name="exception1" size={22} color="#303030" />
+                    <MenuButton color="#FFF" textColor="#606060" onPress={handleClickGoToReviewsScreen} title="Revisões" subtitle="15 Revisões Cadastradas">
+                        <Icon name="exception1" size={25} color="#303030" />
                     </MenuButton>
                 </View>
                 <View style={styles.menuItemBox}>
-                    <MenuButton onPress={handleClickGoToRoutineScreen} title="Rotinas" subtitle="7 Rotinas">
-                        <Icon name="sync" size={22} color="#303030" />
+                    <MenuButton color="#FFF" textColor="#606060" onPress={handleClickGoToRoutineScreen} title="Rotinas" subtitle="7 Rotinas">
+                        <Icon name="sync" size={25} color="#303030" />
                     </MenuButton>
                 </View>
                 <View style={styles.menuItemBox}>
-                    <MenuButton onPress={handleClickGoToRoutineScreen} title="Todas Revisões" subtitle="7 Rotinas">
-                        <Icon name="profile" size={22} color="#303030" />
+                    <MenuButton color="#FFF" textColor="#606060" onPress={handleClickGoToAllReviewsScreen} title="Todas Revisões" subtitle="7 Rotinas">
+                        <Icon name="profile" size={25} color="#303030" />
                     </MenuButton>
                 </View>
             </View>
             <View style={styles.menuRow}>
                 <View style={styles.menuItemBox}>
-                    <MenuButton onPress={handleClickGoToSubjectScreen} title="Matérias" subtitle="12 Matérias">
-                        <Icon name="book" size={22} color="#303030" />
+                    <MenuButton color="#FFF" textColor="#606060" onPress={handleClickGoToSubjectScreen} title="Matérias" subtitle="12 Matérias">
+                        <Icon name="book" size={25} color="#303030" />
                     </MenuButton>
                 </View>
                 <View style={styles.menuItemBox}>
-                    <MenuButton onPress={handleClickGoToSettingScreen} title="Seja Premium">
-                        <Icon2 name="trending-up" size={22} color="#303030" />
+                    <MenuButton color="#FFF" textColor="#606060" onPress={handleClickGoToSettingScreen} title="Seja Premium">
+                        <Icon2 name="trending-up" size={25} color="#303030" />
                     </MenuButton>
                 </View>
                 <View style={styles.menuItemBox}>
-                    <MenuButton onPress={handleClickGoToSettingScreen} title="Configurações">
-                        <Icon name="setting" size={23} color="#303030" />
+                    <MenuButton color="#FFF" textColor="#606060" onPress={handleClickGoToSettingScreen} title="Configurações">
+                        <Icon name="setting" size={25} color="#303030" />
                     </MenuButton>
                 </View>
             </View>

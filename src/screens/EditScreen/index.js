@@ -13,7 +13,7 @@ const EditScreen = (props) => {
 
     const dataScreen = props.route.params.screenData
 
-    const {routines, subjects, setSubjects } = useContext(AuthContext)
+    const {routines, subjects, setSubjects, allReviews, setAllReviews } = useContext(AuthContext)
 
     const [min,seg] = dataScreen.timer.split(':')
 
@@ -55,6 +55,14 @@ const EditScreen = (props) => {
                 }
             }).then((response) => {
                 if (response) {
+                    console.log(response.data.review)
+
+                    const index = allReviews.findIndex(item => item._id == response.data.review._id)
+                    const newAllReviews = allReviews
+                    newAllReviews[index] = response.data.review
+
+                    setAllReviews(newAllReviews)
+
                     props.route.params.onGoBack(response.data.review)
                     navigation.goBack()
                 } else {

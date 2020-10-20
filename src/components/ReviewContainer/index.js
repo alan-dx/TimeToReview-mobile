@@ -31,7 +31,7 @@ const ReviewContainer = (props) => {
                     <Text style={styles.labelDateButtons}>{sequence}</Text>
                     <View style={styles.checkButtonBox}>
                         <RectButton onPress={props.onPressConclude} style={styles.containerButton}>
-                            <Text style={styles.textButton}>CONCLUIR</Text>
+                            <Text style={styles.textButton}>{props.titleRightButton}</Text>
                         </RectButton>
                     </View>
                 </View>

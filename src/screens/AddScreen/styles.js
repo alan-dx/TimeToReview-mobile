@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
         alignSelf: 'center'
     },
     main: {
-       flex: 1,
+        flex: 1,
         width: '100%',
         justifyContent: "space-evenly",
     },
@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
         alignSelf: 'flex-end',
     },
     labelFrame: {
-        height: 2,
+        height: 1,
         flex: 1,
         backgroundColor: '#025CE2',
     },

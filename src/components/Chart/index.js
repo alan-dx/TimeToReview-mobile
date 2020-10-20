@@ -1,59 +1,60 @@
 import React from 'react';
 import {View, Text, Dimensions} from 'react-native';
 import {
-    PieChart
+    PieChart,
+    LineChart
   } from "react-native-chart-kit";
 
 const Chart = () => {
 
     return (
         <View>
-            <PieChart
-                data={[
+            <LineChart
+                data={{
+                    labels: ["Seg", "Tera", "Qua", "Qui", "Sex", "Sáb", "Dom"],
+                    datasets: [
                     {
-                        name: "SEGUNDA",
-                        population: 40,
-                        color: "#fa4",
-                        legendFontColor: "#7F7F7F",
-                        legendFontSize: 10
-                    },
-                    {
-                        name: "TERÇA",
-                        population: 10,
-                        color: "#ff2",
-                        legendFontColor: "#7F7F7F",
-                        legendFontSize: 10
-                    },
-                    {
-                        name: "QUARTA",
-                        population: 10,
-                        color: "#623",
-                        legendFontColor: "#7F7F7F",
-                        legendFontSize: 10
-                    },
-                    {
-                        name: "QUINTA",
-                        population: 30,
-                        color: "#af98",
-                        legendFontColor: "#7F7F7F",
-                        legendFontSize: 10
-                    },
-                  ]}
-                width={Dimensions.get('screen').width} // from react-native
-                height={250}
-                accessor="population"
-                chartConfig={{
-                    backgroundGradientFrom: "#F7F7F7",
-                    backgroundGradientFromOpacity: 0,
-                    backgroundGradientTo: "#F7F7F7",
-                    backgroundGradientToOpacity: 0.5,
-                    color: (opacity = 1) => `rgba(10, 10, 10, ${opacity})`,
-                    strokeWidth: 2, // optional, default 3
-                    barPercentage: 0.5,
-                    useShadowColorFromDataset: false, // optional
+                        data: [
+                            10,
+                            7,
+                            6,
+                            9,
+                            8,
+                            15,
+                            12,
+                        ]
+                    }
+                    ],
+                    legend: ["Número de revisões/dia"]
                 }}
-                absolute
-                paddingLeft="15"
+                width={Dimensions.get("window").width * 0.95} // from react-native
+                height={220}
+                yAxisInterval={1} // optional, defaults to 1
+                fromZero
+                onDataPointClick={(a,b,c) => alert(a,b,c) }
+                chartConfig={{
+                    backgroundColor: "#FFF",
+                    backgroundGradientFrom: "#FFF",
+                    backgroundGradientTo: "#FCFCFC",
+                    decimalPlaces: 0, // optional, defaults to 2dp
+                    color: (opacity = 1) => `rgba(231, 78, 54, ${opacity})`,
+                    labelColor: (opacity = 1) => `rgba(48, 48, 48, ${opacity})`,
+                    style: {
+                        borderRadius: 20,
+                    },
+                    propsForDots: {
+                        r: "5",
+                        strokeWidth: "1",
+                        stroke: "#303030"
+                    }
+                }}
+                bezier
+                style={{
+                    marginVertical: 8,
+                    borderRadius: 20,
+                    elevation: 2
+                }}
+
             />
         </View>
     )

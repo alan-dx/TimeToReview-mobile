@@ -11,7 +11,7 @@ import AuthContext from '../../contexts/auth';
 
 const AddScreen = (props) => {
 
-    const {routines, subjects} = useContext(AuthContext)
+    const {routines, subjects, setAllReviews, allReviews} = useContext(AuthContext)
 
     const [titleReview, setTitleReview] = useState('')
     const [subjectReview, setSubjectReview] = useState('')
@@ -43,6 +43,8 @@ const AddScreen = (props) => {
             }).then((response) => {
                 if (response) {
                     navigation.goBack()
+                    console.log(response.data)
+                    setAllReviews([...allReviews, response.data])
                     if (dateNextSequenceReview.getDate() == currentDate.getDate()) {
                         props.route.params.onGoBack(response.data)
                     }

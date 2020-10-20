@@ -40,18 +40,19 @@ const SubjectScreen = (props) => {
     }
 
     function handleUpdateDataOnEdit(passData) {
-        
+
+        //map is working here, wtf?
         allReviews.map(item => {//VERIFICAR A POSSIBILIDADE DE USAR PARA ATUALIZAR A FLATLIST OU A SUBJECTS NO CONTEXTO
             //PARA ATUALIZAR A MATÉRIA DENTRO DA REVISÃO A QUAL ESSA ESTA ASSOCIADA, SEM PRECISAR FAZER UMA REQUISIÇÃO
             if (item.subject_id._id == passData._id) {
                 item.subject_id = passData
             }
         })
-        reviews.map(item => {
-            if (item.subject_id._id == passData._id) {
-                item.subject_id = passData
-            }
-        })
+        // reviews.map(item => {
+        //     if (item.subject_id._id == passData._id) {
+        //         item.subject_id = passData
+        //     }
+        // })
         const newData = data
         setData([])//For some reason, it is necessary to do this to update the list, perhaps because I am using the method findIndex
         const indexData = newData.findIndex(item => item._id == passData._id)

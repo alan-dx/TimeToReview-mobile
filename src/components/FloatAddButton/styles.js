@@ -5,12 +5,14 @@ const styles = StyleSheet.create({
         width: 75,
         height: 75,
         borderRadius: 40,
-        backgroundColor: '#025CE2',
+        backgroundColor: '#60c3eb',
         position: 'absolute',
         bottom: '5%',
         right: '6%',
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+
+        elevation: 7
     }
 })
 

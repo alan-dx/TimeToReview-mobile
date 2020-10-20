@@ -11,7 +11,7 @@ import AuthContext from '../../contexts/auth';
 import api from '../../services/api';
 import MyModal from '../../components/MyModal';
 
-const RoutineScreen = () => {
+const RoutineScreen = (props) => {
 
     const {routines, setRoutines, reviews, allReviews} = useContext(AuthContext)
 
@@ -23,7 +23,7 @@ const RoutineScreen = () => {
     const [dataToEdit, setDataToEdit] = useState('')
 
     function handleClickGoBack() {
-        navigation.goBack()
+        navigation.goBack()///THE PROBLEM, HE DON'T DESTROY THE BACK SCREEN
     }
 
     function handleOpenAddModal() {
@@ -101,15 +101,17 @@ const RoutineScreen = () => {
             setData(newData)
 
             allReviews.map(item => {
+                //EDITA AS INFORMAÇÕES DENTRO DAS REVISÕES QUE ESTAO ASSOCIADAS A ESSA ROTINA
                 if (item.routine_id._id == dataToEdit) {
+                    console.log('jablau')
                     item.routine_id = response.data.routine
                 }
             } )
-            reviews.map(item => {
-                if (item.routine_id._id == dataToEdit) {
-                    item.routine_id = response.data.routine
-                }
-            } )
+            // reviews.map(item => {
+            //     if (item.routine_id._id == dataToEdit) {
+            //         item.routine_id = response.data.routine
+            //     }
+            // })
 
             setModalEditVisible(false)
             setSequenceRoutine('')
