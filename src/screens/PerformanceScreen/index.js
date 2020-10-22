@@ -1,9 +1,11 @@
 import React from 'react';
-import { View, Text } from 'react-native';
-import Header from '../../components/Header';
+import { View, Text, ScrollView } from 'react-native';
 import styles from './styles';
-import Icon from 'react-native-vector-icons/AntDesign';
 import { useNavigation } from '@react-navigation/native';
+
+import ChartLine from '../../components/ChartLine';
+import ChartPie from '../../components/ChartPie';
+import ChartBar from '../../components/ChartBar';
 
 const PerformanceScreen = () => {
 
@@ -15,10 +17,12 @@ const PerformanceScreen = () => {
 
     return (
         <View style={styles.container}>
-            <Header title='MEU DESEMPENHO' onPress={handleClickGoBack}>
-                <Icon name="left" size={25} color="#025CE2" />
-            </Header>
-            <Text>Tela de Performance</Text>
+            <ScrollView scrollEnabled contentContainerStyle={styles.scrollContainer}>
+                <ChartLine />
+                <Text>Número de revisões por matéria</Text>
+                <ChartPie />
+                <ChartBar />
+            </ScrollView>
         </View>
     )
     

@@ -1,43 +1,42 @@
 import React from 'react';
 import {View, Text, Dimensions} from 'react-native';
 import {
-    PieChart,
     LineChart
   } from "react-native-chart-kit";
 
-const Chart = () => {
+const ChartBar = () => {
 
     return (
-        <View>
+        <View >
             <LineChart
                 data={{
-                    labels: ["Seg", "Tera", "Qua", "Qui", "Sex", "Sáb", "Dom"],
+                    labels: ["Seg", "Ter", "Qua", "Qui", "Sex", "Sáb", "Dom"],
                     datasets: [
                     {
                         data: [
                             10,
-                            7,
-                            6,
-                            9,
-                            8,
-                            15,
+                            2,
                             12,
+                            4,
+                            5,
+                            12,
+                            1,
                         ]
                     }
                     ],
-                    legend: ["Número de revisões/dia"]
+                    legend: ["Horas revisadas/dia"]
                 }}
                 width={Dimensions.get("window").width * 0.95} // from react-native
                 height={220}
                 yAxisInterval={1} // optional, defaults to 1
                 fromZero
-                onDataPointClick={(a,b,c) => alert(a,b,c) }
+                onDataPointClick={() => alert() }
                 chartConfig={{
                     backgroundColor: "#FFF",
                     backgroundGradientFrom: "#FFF",
                     backgroundGradientTo: "#FCFCFC",
                     decimalPlaces: 0, // optional, defaults to 2dp
-                    color: (opacity = 1) => `rgba(231, 78, 54, ${opacity})`,
+                    color: (opacity = 1) => `rgba(96, 195, 235, ${opacity})`,
                     labelColor: (opacity = 1) => `rgba(48, 48, 48, ${opacity})`,
                     style: {
                         borderRadius: 20,
@@ -48,9 +47,8 @@ const Chart = () => {
                         stroke: "#303030"
                     }
                 }}
-                bezier
                 style={{
-                    marginVertical: 8,
+                    marginVertical: 10,
                     borderRadius: 20,
                     elevation: 2
                 }}
@@ -60,4 +58,4 @@ const Chart = () => {
     )
 }
 
-export default Chart;
+export default ChartBar;

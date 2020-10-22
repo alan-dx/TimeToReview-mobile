@@ -15,6 +15,7 @@ const styles = StyleSheet.create({
     titleTop: {
         fontFamily: 'Poppins-Bold',
         fontSize: 30,
+        color: '#303030'
     },
     logoBox: {
         marginTop: 5,

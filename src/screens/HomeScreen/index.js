@@ -7,7 +7,7 @@ import AuthContext from '../../contexts/auth';
 import Icon from 'react-native-vector-icons/AntDesign';
 import Icon2 from 'react-native-vector-icons/Feather';
 import MenuButton from '../../components/MenuButton';
-import Chart from '../../components/Chart';
+import Chart from '../../components/ChartLine';
 import { BorderlessButton } from 'react-native-gesture-handler';
 import { useFocusEffect, useIsFocused, useNavigation } from '@react-navigation/native';
 
