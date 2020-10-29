@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
         height: '25%',
         maxHeight: 250,
         width: '100%',
-        backgroundColor: '#303030',
+        backgroundColor: '#e74e36',
         alignItems: 'center',
         justifyContent: 'center',
     },
@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
     labelFrame: {
         height: 1,
         flex: 1,
-        backgroundColor: '#025CE2',
+        backgroundColor: '#60c3eb',
     },
     label: {
         fontFamily: 'Archivo-Bold',

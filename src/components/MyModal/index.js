@@ -14,7 +14,7 @@ const MyModal = (props) => {
         >
             <View style={styles.modalBox}>
                 <View style={styles.modalCard}>
-                    <View style={styles.modalHeader}>
+                    <View style={[styles.modalHeader, {backgroundColor: props.modalTitle == 'ADICIONAR ROTINA'?'#e74e36':'#60c3eb'}]}>
                         <TouchableHighlight style={{borderRadius: 20, padding: 1}} underlayColor={'#404040'} onPress={() => props.handleCloseModal()}>
                             <Icon name="close" size={20} color="#F7F7F7" style={styles.iconBack} />
                         </TouchableHighlight>

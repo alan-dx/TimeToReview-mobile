@@ -18,7 +18,6 @@ const styles = StyleSheet.create({
         height: 50,
         borderTopLeftRadius: 10,
         borderTopRightRadius: 10,
-        backgroundColor: '#303030',
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: "space-around"

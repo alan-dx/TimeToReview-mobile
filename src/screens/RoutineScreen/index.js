@@ -39,18 +39,25 @@ const RoutineScreen = (props) => {
 
     function handleCloseModalAndAdd() {
 
-        api.post('/createRoutine', {
-            sequence: sequenceRoutine
-        }).then((response) => {
-            console.log(response.data.routine)
-            setData([...data, response.data.routine])
-            setRoutines([...data, response.data.routine])
+        if (sequenceRoutine) {
+            api.post('/createRoutine', {
+                sequence: sequenceRoutine
+            }).then((response) => {
+                console.log(response.data.routine)
+                setData([...data, response.data.routine])
+                setRoutines([...data, response.data.routine])
+                setModalAddVisible(false)
+                setSequenceRoutine('')
+                setDataToEdit('')
+            }).catch((err) => {
+                alert(err)
+            })
+        } else {
             setModalAddVisible(false)
             setSequenceRoutine('')
             setDataToEdit('')
-        }).catch((err) => {
-            alert(err)
-        })
+        }
+
     }
 
     function handlePressDeleteRoutine(routine) {
@@ -85,40 +92,48 @@ const RoutineScreen = (props) => {
     }
 
     function handleCloseModalAndEdit() {
-        api.put('/editRoutine', {
-            sequence: sequenceRoutine
-        }, {
-            params: {
-                id: dataToEdit
-            }
-        }).then((response) => {
 
-            const newData = data
-            setData([])
-            const index = newData.findIndex(item => item._id == dataToEdit)
-            newData[index] = response.data.routine
-            setRoutines(newData)
-            setData(newData)
-
-            allReviews.map(item => {
-                //EDITA AS INFORMAÇÕES DENTRO DAS REVISÕES QUE ESTAO ASSOCIADAS A ESSA ROTINA
-                if (item.routine_id._id == dataToEdit) {
-                    console.log('jablau')
-                    item.routine_id = response.data.routine
+        if (sequenceRoutine) {
+            console.log('here')
+            api.put('/editRoutine', {
+                sequence: sequenceRoutine
+            }, {
+                params: {
+                    id: dataToEdit
                 }
-            } )
-            // reviews.map(item => {
-            //     if (item.routine_id._id == dataToEdit) {
-            //         item.routine_id = response.data.routine
-            //     }
-            // })
-
+            }).then((response) => {
+    
+                const newData = data
+                setData([])
+                const index = newData.findIndex(item => item._id == dataToEdit)
+                newData[index] = response.data.routine
+                setRoutines(newData)
+                setData(newData)
+    
+                allReviews.map(item => {
+                    //EDITA AS INFORMAÇÕES DENTRO DAS REVISÕES QUE ESTAO ASSOCIADAS A ESSA ROTINA
+                    if (item.routine_id._id == dataToEdit) {
+                        item.routine_id = response.data.routine
+                    }
+                } )
+                // reviews.map(item => {
+                //     if (item.routine_id._id == dataToEdit) {
+                //         item.routine_id = response.data.routine
+                //     }
+                // })
+    
+                setModalEditVisible(false)
+                setSequenceRoutine('')
+                setDataToEdit('')
+            }).catch((err) => {
+                alert(err)
+            })
+        } else {
+            alert('ROTINA NÃO EDITADA. Você não pode criar uma rotina sem uma sequência de revisão, preencha todos os campos corretamente!')
             setModalEditVisible(false)
             setSequenceRoutine('')
             setDataToEdit('')
-        }).catch((err) => {
-            alert(err)
-        })
+        }
     }
 
     return (

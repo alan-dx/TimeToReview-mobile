@@ -27,10 +27,6 @@ const EditScreen = (props) => {
 
     const navigation = useNavigation();
 
-    useEffect(() => {
-        console.log(subjects)
-    }, [])
-
     function handlePressGoBack() {
         navigation.goBack()
     }
