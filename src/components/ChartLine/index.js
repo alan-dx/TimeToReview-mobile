@@ -5,7 +5,7 @@ import {
     LineChart
   } from "react-native-chart-kit";
 
-const ChartLine = () => {
+const ChartLine = (props) => {
 
     return (
         <View >
@@ -28,7 +28,7 @@ const ChartLine = () => {
                     legend: ["Número de revisões/dia"]
                 }}
                 width={Dimensions.get("window").width * 0.95} // from react-native
-                height={220}
+                height={props.height}
                 yAxisInterval={1} // optional, defaults to 1
                 fromZero
                 onDataPointClick={() => alert() }
@@ -50,9 +50,8 @@ const ChartLine = () => {
                 }}
                 bezier
                 style={{
-                    marginVertical: 10,
                     borderRadius: 20,
-                    elevation: 2
+                    elevation: props.elevation
                 }}
 
             />

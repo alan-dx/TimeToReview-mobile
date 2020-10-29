@@ -27,7 +27,7 @@ const ChartBar = () => {
                     legend: ["Horas revisadas/dia"]
                 }}
                 width={Dimensions.get("window").width * 0.95} // from react-native
-                height={220}
+                height={300}
                 yAxisInterval={1} // optional, defaults to 1
                 fromZero
                 onDataPointClick={() => alert() }
@@ -48,9 +48,8 @@ const ChartBar = () => {
                     }
                 }}
                 style={{
-                    marginVertical: 10,
+                    marginVertical: 0,
                     borderRadius: 20,
-                    elevation: 2
                 }}
 
             />

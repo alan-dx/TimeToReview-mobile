@@ -80,7 +80,7 @@ const HomeScreen = () => {
         <View style={styles.graphBox}>
             <Text style={styles.graphBoxTitle}>Você possui {numberOfReviews} revisões pendentes!</Text>
             {/* NESSE GRÁFICO INDICAR A QUANTIDADE DE REVISÕES POR DIA */}
-            <Chart />
+            <Chart height={220} elevation={2} />
             <View style={styles.performanceBox}>
                 <View style={styles.performanceButtonBox}>
                     <BorderlessButton onPress={handleClickGoToPerformanceScreen} style={styles.performanceButton}>

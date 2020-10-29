@@ -11,7 +11,7 @@ import AuthContext from '../../contexts/auth';
 
 const ReviewsScreen = (props) => {
 
-    const { reviews, allReviews, setReviews, setSubjects, setAllReviews } = useContext(AuthContext)
+    const { reviews, allReviews, setRoutines, setAllReviews } = useContext(AuthContext)
 
     const [data, setData] = useState(reviews)
     const navigation = useNavigation()
@@ -50,8 +50,6 @@ const ReviewsScreen = (props) => {
 
     function handleUpdateDataOnAdd(passData) {
         setData([...data, passData])
-        // setReviews([...reviews, passData])
-        // setAllReviews([...allReviews, passData])
     }
 
     function handleGoToEditScreen(screenData) {
@@ -67,10 +65,6 @@ const ReviewsScreen = (props) => {
         const index = data.findIndex(item => item._id == passData._id)
         newData[index] = passData
         setData(newData)
-
-        //TERÁ QUE FAZER A MODIFICAÇÃO NO ARRAY DE MATÉRIAS COMO FOI FEITO NA TELA DE SUBJECTSCREEN, POIS NO CASO DE TROCA DE MATÉRIA VOCÊ TERA QUE REMOVER DO
-        //ASSOCIATED REVIEWS DA MATÉRIA ANTERIOR E ADD NA NOVA MATÉRIA
-        //ISSO TERÁ RELEVÂNCIA DURANTE A GERAÇÃO DOS GRÁFICOS
     }
 
     return (

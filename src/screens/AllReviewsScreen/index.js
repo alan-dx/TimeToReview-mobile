@@ -10,7 +10,7 @@ import AuthContext from '../../contexts/auth';
 
 const AllReviewsScreen = (props) => {
 
-    const { allReviews, setReviews, setAllReviews } = useContext(AuthContext)
+    const { allReviews, setAllReviews, subjects, setSubjects, routines, setRoutines } = useContext(AuthContext)
 
     const [data, setData] = useState(allReviews)
     const navigation = useNavigation()
@@ -19,11 +19,11 @@ const AllReviewsScreen = (props) => {
     //     console.log(allReviews)
     // }, [])
 
-    async function handleConcludeReview(id) {
+    async function handleDeleteReview(review) {
 
         api.delete('/deleteReview', {
             params: {
-                id: id
+                id: review._id
             }
         }).then((response) => {
             alert("Revisão deletada com sucesso!")
@@ -31,9 +31,21 @@ const AllReviewsScreen = (props) => {
             alert(err)
         })
 
-        const newData = data.filter(item => item._id != id)//to update flatlist
+        const newData = data.filter(item => item._id != review._id)//to update flatlist
         setData(newData)
         setAllReviews(newData)
+
+        const newSubjects = subjects
+        const indexSubject = subjects.findIndex(item => item._id == review.subject_id._id)
+        newSubjects[indexSubject].associatedReviews = subjects[indexSubject].associatedReviews.filter(item => review._id != item)
+        // console.log(subjects[index].associatedReviews.filter(item => review._id != item))
+
+        const newRoutines = routines
+        const indexRoutine = routines.findIndex(item => item._id == review.routine_id._id)
+        newRoutines[indexRoutine].associatedReviews = routines[indexRoutine].associatedReviews.filter(item => review._id != item)
+
+        setSubjects(newSubjects)
+        setRoutines(newRoutines)
     }
 
     function handlePressGoBack() {
@@ -66,7 +78,7 @@ const AllReviewsScreen = (props) => {
                     style={styles.flatlist} 
                     data={data}
                     keyExtractor={item => item._id}
-                    renderItem={({item}) => <ReviewContainer titleRightButton="DELETAR" data={item} onPressConclude={() => handleConcludeReview(item._id)} onPressEdit={() => handleGoToEditScreen(item)}/>}
+                    renderItem={({item}) => <ReviewContainer titleRightButton="DELETAR" data={item} onPressConclude={() => handleDeleteReview(item)} onPressEdit={() => handleGoToEditScreen(item)}/>}
                 />
             }
         </View>
