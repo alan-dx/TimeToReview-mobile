@@ -1,11 +1,10 @@
 import React, {useState, useEffect, useContext} from 'react';
 import { Animated, View, Text, TextInput, Keyboard } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-import { BorderlessButton } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
+import NetInfo from '@react-native-community/netinfo';
 
 import CustomButton from '../../components/CustomButton';
-import Icon from 'react-native-vector-icons/AntDesign';
 import logoImage from '../../assets/images/icons/logo.png';
 
 import AuthContext from '../../contexts/auth';
@@ -18,11 +17,21 @@ const LoginScreen = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
+    const navigation = useNavigation();
+
     const [logo, setLogo] = useState(new Animated.ValueXY({x: 200, y: 200 }))
 
     useEffect(() => {
         keyBoardDidShowListener = Keyboard.addListener('keyboardDidShow', keyboardDidShow)
         keyBoardDidHideListener = Keyboard.addListener('keyboardDidHide', keyboardDidHide)
+
+        NetInfo.fetch().then(state => {
+            console.log("Is connected?", state.isConnected);
+            if (!state.isConnected) {
+                alert('Verifique sua conexão com a internet e tente novamente!')
+                navigation.goBack()
+            }
+        })
     }, [])
 
     function keyboardDidShow() {
@@ -57,14 +66,15 @@ const LoginScreen = () => {
         ]).start()
     }
 
-    const navigation = useNavigation();
 
     function handleClickBackButton() {
         navigation.goBack();
     }
 
     function handleClickSignInButton() {
-        signInContext({email, password})
+        signInContext({email, password}).then(() => {
+            navigation.goBack()
+        })
     }
 
     return (

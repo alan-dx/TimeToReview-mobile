@@ -14,7 +14,6 @@ export const AuthProvider = (props) => {
     const [allReviews, setAllReviews] = useState([])
 
     async function loadServerData() {
-        console.log('requisição')
         return await api.get('/listUser')
     }
 
@@ -26,9 +25,9 @@ export const AuthProvider = (props) => {
             if (storageToken) {
                 setUser(JSON.parse(storageUser))
                 setToken(storageToken)
-                api.defaults.headers["Authorization"] = `Bearer ${storageToken}`//VERFICAR A NECESSIDADE DE CAUSAR O LOGOUT QND TOKEN FOR INVÁLIDO
+                api.defaults.headers["Authorization"] = `Bearer ${storageToken}`
                 await api.get('/verifyToken').catch((err) => {
-                    logoutContext()
+                    logoutContext() //logout user when the token is invalid
                 })
             }
         }
@@ -55,7 +54,10 @@ export const AuthProvider = (props) => {
 
     async function signUpContext(data) {
         try {
-            const response = await api.post('/signUp', data)
+            return await api.post('/signUp', data).then(response => {
+                console.log(response.data)                    
+                alert('Usuário cadastrado com sucesso')
+            })
         } catch (error) {
             if (error == "Error: Request failed with status code 400") {
                 alert("Usuário já cadastrado! Verifique os dados e tente novamente.")

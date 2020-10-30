@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
         display: "flex",
     },
     devText: {
-        color: '#242424',
+        color: '#606060',
         position: 'absolute',
         bottom: 5
     }

@@ -1,11 +1,10 @@
 import React, {useState, useEffect, useContext} from 'react';
-import { Animated, View, Text, TextInput, Image, KeyboardAvoidingView, Keyboard } from 'react-native';
+import { Animated, View, Text, TextInput, KeyboardAvoidingView, Keyboard } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-import { BorderlessButton } from 'react-native-gesture-handler';
 import { useNavigation } from '@react-navigation/native';
+import NetInfo from '@react-native-community/netinfo';
 
 import CustomButton from '../../components/CustomButton';
-import Icon from 'react-native-vector-icons/AntDesign';
 import logoImage from '../../assets/images/icons/logo.png';
 
 import AuthContext from '../../contexts/auth';
@@ -25,6 +24,14 @@ const LoginScreen = () => {
     useEffect(() => {
         keyBoardDidShowListener = Keyboard.addListener('keyboardDidShow', keyboardDidShow)
         keyBoardDidHideListener = Keyboard.addListener('keyboardDidHide', keyboardDidHide)
+
+        NetInfo.fetch().then(state => {
+            console.log("Is connected?", state.isConnected);
+            if (!state.isConnected) {
+                alert('Verifique sua conexão com a internet e tente novamente!')
+                navigation.goBack()
+            }
+        })
     }, [])
 
     function keyboardDidShow() {
@@ -61,16 +68,13 @@ const LoginScreen = () => {
 
     const navigation = useNavigation();
 
-    function handleClickBackButton() {
-        navigation.goBack();
-    }
-
     function handleClickSignUpButton() {
         if (password != cPassword) {
             return alert("As senhas não conferem! Verifique e tente novamente.")
         }
         if (password && cPassword && name && email) {
             signUpContext({name, email, password})
+            navigation.goBack()
         } else {
             alert("Você precisa preencher todos os campos antes de continuar!")
         }
@@ -107,7 +111,7 @@ const LoginScreen = () => {
                 <View style={styles.inputBlock}>
                     <View style={styles.labelBoxL}>
                         <View style={styles.labelFrame} />
-                        <Text style={styles.label}>Seu email</Text>
+                        <Text style={styles.label}>Seu Email</Text>
                     </View>
                     <TextInput
                         style={styles.input}

@@ -85,20 +85,20 @@ const AddScreen = (props) => {
                 <View style={styles.dntReview}>
                     <View style={styles.labelIconBox}>
                         <Icon name="calendar" size={20} color="#303030" style={{marginRight: 3}} />
-                        <Text style={styles.label}>DATA DA PRIMEIRA REVISÃO</Text>
+                        <Text style={styles.label}>Data da primeira Revisão</Text>
                     </View>
                     <Text style={styles.subLabel}>{dateNextSequenceReview == "" ? "GERADA AUTOMATICAMENTE AO SELECIONAR UMA ROTINA" : `${dateNextSequenceReview.getDate()}/${dateNextSequenceReview.getMonth()}/${dateNextSequenceReview.getFullYear()}` }</Text>
                 </View>
                 <View style={styles.inputBox}>
                     <View style={styles.labelBoxL}>
                         <View style={styles.labelFrame} />
-                        <Text style={styles.label}>TÍTULO DA REVISÃO</Text>
+                        <Text style={styles.label}>Título da Revisão</Text>
                     </View>
                     <Input value={titleReview} secureTextEntry={false} onChangeText={setTitleReview} textAlign="center" placeholder="EDO DE BERNOULLI" />
                 </View>
                 <View style={styles.inputBox}>
                     <View style={styles.labelBoxR}>
-                        <Text style={styles.label}>DISCIPLINA DA REVISÃO</Text>
+                        <Text style={styles.label}>Disciplina da Revisão</Text>
                         <View style={styles.labelFrame} />
                     </View>
                     <PickerInfo 
@@ -111,7 +111,7 @@ const AddScreen = (props) => {
                 <View style={styles.inputBox}>
                     <View style={styles.labelBoxL}>
                         <View style={styles.labelFrame} />
-                        <Text style={styles.label}>ROTINA DE REVISÃO</Text>
+                        <Text style={styles.label}>Rotina da Revisão</Text>
                     </View>
                     <PickerInfo 
                         placeholder="1-3-5-7-21-30" 
@@ -126,7 +126,7 @@ const AddScreen = (props) => {
                 </View>
                 <View style={styles.timerBox}>
                     <View style={styles.labelIconBox}>
-                        <Text style={styles.label}>CRÔNOMETRO DE CONCLUSÃO</Text>
+                        <Text style={styles.label}>Cronômetro de conclusão</Text>
                         <Icon name="clockcircleo" size={20} color="#303030" style={{marginLeft: 3}} />
                     </View>
                     <View style={styles.timerInputBox}>

@@ -94,7 +94,6 @@ const RoutineScreen = (props) => {
     function handleCloseModalAndEdit() {
 
         if (sequenceRoutine) {
-            console.log('here')
             api.put('/editRoutine', {
                 sequence: sequenceRoutine
             }, {

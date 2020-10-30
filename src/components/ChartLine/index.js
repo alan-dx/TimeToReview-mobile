@@ -1,11 +1,11 @@
-import React from 'react';
-import {View, Text, Dimensions} from 'react-native';
-import {
-    PieChart,
-    LineChart
-  } from "react-native-chart-kit";
+import React, {useState} from 'react';
+import {View, Dimensions} from 'react-native';
+import { LineChart } from "react-native-chart-kit";
+import Svg, { Text, Circle} from 'react-native-svg';
 
 const ChartLine = (props) => {
+
+    const [tooltipPos, setTooltipPos] = useState({ x:0, y:0, visible:false, value:0 })
 
     return (
         <View >
@@ -31,7 +31,42 @@ const ChartLine = (props) => {
                 height={props.height}
                 yAxisInterval={1} // optional, defaults to 1
                 fromZero
-                onDataPointClick={() => alert() }
+                decorator={() => {
+                    return tooltipPos.visible ? <View>
+                        <Svg>
+                            <Circle cx={tooltipPos.x} cy={tooltipPos.y} r="13" width="30" height="30" fill="#e74e36" stroke="#303030"/>
+                            <Text
+                                fill="white"
+                                stroke="white"
+                                fontSize="13"
+                                x={tooltipPos.x}
+                                y={tooltipPos.y + 5}
+                                textAnchor="middle"
+                            >
+                                {tooltipPos.value}
+                            </Text>
+                        </Svg>
+                    </View> : null
+                }}
+                onDataPointClick={(data) => {
+                    // check if we have clicked on the same point again
+                    let isSamePoint = (tooltipPos.x === data.x && tooltipPos.y ===  data.y)
+
+                    // if clicked on the same point again toggle visibility
+                    // else,render tooltip to new position and update its value
+                    isSamePoint ? setTooltipPos((previousState)=> {
+                        return {
+                                ...previousState, 
+                                value: data.value,
+                                visible: !previousState.visible
+                            }
+                        })
+                        : 
+                        setTooltipPos({x: data.x, 
+                            value: data.value, y: data.y,
+                            visible: true
+                    });
+                }}
                 chartConfig={{
                     backgroundColor: "#FFF",
                     backgroundGradientFrom: "#FFF",
