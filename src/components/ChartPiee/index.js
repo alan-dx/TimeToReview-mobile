@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  AppRegistry,
   StyleSheet,
   Text,
   View,
@@ -11,10 +10,18 @@ import {PieChart} from 'react-native-charts-wrapper';
 
 class ChartPiee extends React.Component {
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+    let data = []
+    let colors = []
+    
+    props.data.map(({label, associatedReviews, marker}) => {
+      data.push({label, value: associatedReviews.length})
+      colors.push(processColor(marker))
+    })
 
     this.state = {
+      passData: props.data,
       legend: {
         enabled: true,
         textSize: 10,
@@ -27,18 +34,10 @@ class ChartPiee extends React.Component {
       },
       data: {
         dataSets: [{
-          values: [{value: 19, label: 'CÁLCULO G'},
-            {value: 44, label: 'FÍSICA III'},
-            {value: 13, label: 'MEC.SÓLIDOS'},
-            {value: 41, label: 'CIRCUITOS 1'},
-            {value: 35, label: 'TEC. MATERIAIS'},
-            {value: 29, label: 'CDA'},
-            {value: 17, label: 'SISPOT 1'},
-            {value: 20, label: 'LEGISLAÇÂO'},
-          ],
+          values: data,
           label: '',
           config: {
-            colors: [processColor('#C0FF8C'), processColor('#FFF78C'), processColor('#FFD08C'), processColor('#e1a213'), processColor('#FF8C9D'), processColor('#881fa2'), processColor('#22f123'), processColor('#77faff')],
+            colors: colors,
             valueTextSize: 13,
             valueTextColor: processColor('#303030'),
             sliceSpace: 5,
