@@ -13,6 +13,7 @@ const Header = (props) => {
 
     function handleGoBack() {
         navigation.goBack()
+        props.route?.params.onGoBack()
     }
 
     function handleLogout() {

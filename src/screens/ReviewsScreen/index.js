@@ -1,8 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { View, Text, FlatList } from 'react-native';
-import Header from '../../components/Header';
 import styles from './styles';
-import Icon from 'react-native-vector-icons/AntDesign';
 import { useNavigation } from '@react-navigation/native';
 import ReviewContainer from '../../components/ReviewContainer';
 import FloatAddButton from '../../components/FloatAddButton';
@@ -11,7 +9,7 @@ import AuthContext from '../../contexts/auth';
 
 const ReviewsScreen = (props) => {
 
-    const { reviews, allReviews, setRoutines, setAllReviews } = useContext(AuthContext)
+    const { reviews, allReviews, setRoutines, setAllReviews, performance, setPerformance } = useContext(AuthContext)
 
     const [data, setData] = useState(reviews)
     const navigation = useNavigation()
@@ -32,9 +30,11 @@ const ReviewsScreen = (props) => {
             alert(err)
         })
 
+        const currentDate = new Date()
         const newData = data.filter(item => item._id != id)//to update flatlist, removing the conclude review
         setData(newData)
-
+        performance[currentDate.getDay()].reviews++
+        setPerformance(performance)
     }
 
     function handlePressGoBack() {
@@ -49,6 +49,7 @@ const ReviewsScreen = (props) => {
     }
 
     function handleUpdateDataOnAdd(passData) {
+        console.log('essa karalha aq')
         setData([...data, passData])
     }
 

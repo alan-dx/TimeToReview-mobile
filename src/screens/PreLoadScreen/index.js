@@ -5,7 +5,7 @@ import AuthContext from '../../contexts/auth';
 
 const PreLoadScreen = () => {
 
-    const { setSubjects, setRoutines, setReviews, setAllReviews, loadServerData} = useContext(AuthContext);
+    const { setSubjects, setRoutines, setAllReviews, loadServerData, setPerformance} = useContext(AuthContext);
     const navigation = useNavigation()
 
     useEffect(() => {
@@ -14,6 +14,7 @@ const PreLoadScreen = () => {
             setRoutines(response.data.routines)
             // setReviews(response.data.filterReviews)
             setAllReviews(response.data.reviews)
+            setPerformance(response.data.performance)
             navigation.navigate("HomeScreen")
         }).catch((err) => {
             console.log(err)

@@ -2,7 +2,6 @@ import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { View, Text } from 'react-native';
 
 import styles from './styles';
-import Header from '../../components/Header';
 import AuthContext from '../../contexts/auth';
 import Icon from 'react-native-vector-icons/AntDesign';
 import Icon2 from 'react-native-vector-icons/Feather';
@@ -17,26 +16,30 @@ const HomeScreen = () => {
     //OPÇÕES (PRO) => REVISÕES, ROTINAS, MATÉRIAS, LISTAR TODAS AS REVISÕES, CONFIGURAÇÕES, SOBRE
     //OPÇÕES (BASIC) => REVISÕES, ROTINAS, LISTAR TODAS AS REVISÕES, MATÉRIAS, CONFIGURAÇÕES, TORNE-SE PREMIUM
 
+    //Gambi? => As react navigation goBack does not cause the screen to render again, the chart was not updating. That was the only functional solution I found.
+
     const navigation = useNavigation()
-    const { reviews, allReviews, setReviews, setAllReviews } = useContext(AuthContext);
+    const { performance, setPerformance, allReviews, setReviews, setAllReviews } = useContext(AuthContext);
     const [numberOfReviews, setNumberOfReviews] = useState(0)
     const [isLoading, setIsLoading] = useState(false)
+    const [dataChart, setDataChart] = useState(performance)
+    const [loadingChart, setLoadingChart] = useState(true)
 
     useFocusEffect(
         useCallback(() => {
-            console.log('joe')
+            console.log('homescreen')
             const currentDate = new Date()
             currentDate.setHours(3,0,0,0)
             const filteredReviews = allReviews.filter(item => new Date(item.dateNextSequenceReview) <= currentDate)
-            // console.log(filteredReviews)
             setReviews(filteredReviews)
-            setNumberOfReviews(filteredReviews.length)//Causa o looping
+            setNumberOfReviews(filteredReviews.length)
+            setLoadingChart(true)//Gambi
         }, [allReviews])
     )
 
     function handleClickGoToReviewsScreen() {
         navigation.navigate('ReviewsScreen', {
-            onGoBack: handleUpdateDataOnBack
+            onGoBack: handleUpdateChartOnBack
         })
     }
 
@@ -60,27 +63,19 @@ const HomeScreen = () => {
         navigation.navigate('BePremiumScreen')
     }
 
-    function handleUpdateDataOnBack(data) {
-        const currentDate = new Date()
-        currentDate.setHours(3,0,0,0)
-        const filteredReviews = data.filter(item => new Date(item.dateNextSequenceReview) <= currentDate)
-        setAllReviews(data)
-        console.log(data)
-        setReviews(filteredReviews)
-        setNumberOfReviews(filteredReviews.length)
+    function handleUpdateChartOnBack() {
+        setLoadingChart(false)//Gambi
     }
 
     function handleClickGoToAllReviewsScreen() {
-        navigation.navigate("AllReviewsScreen", {
-            onGoBack: handleUpdateDataOnBack
-        })
+        navigation.navigate("AllReviewsScreen")
     }
 
     const homeDash = <>
         <View style={styles.graphBox}>
             <Text style={styles.graphBoxTitle}>Você possui {numberOfReviews} revisões pendentes!</Text>
             {/* NESSE GRÁFICO INDICAR A QUANTIDADE DE REVISÕES POR DIA */}
-            <Chart height={220} elevation={2} />
+            {loadingChart ? <Chart height={220} elevation={2} data={dataChart} /> : <Text>Atualizando...</Text>}
             <View style={styles.performanceBox}>
                 <View style={styles.performanceButtonBox}>
                     <BorderlessButton onPress={handleClickGoToPerformanceScreen} style={styles.performanceButton}>

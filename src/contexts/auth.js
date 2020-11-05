@@ -12,6 +12,7 @@ export const AuthProvider = (props) => {
     const [subjects, setSubjects] = useState(null)
     const [reviews, setReviews] = useState([])
     const [allReviews, setAllReviews] = useState([])
+    const [performance, setPerformance] = useState([])
 
     async function loadServerData() {
         return await api.get('/listUser')
@@ -94,7 +95,7 @@ export const AuthProvider = (props) => {
     }
 
     return (
-        <AuthContext.Provider value={{signed: token, user: user, signInContext, signUpContext, logoutContext, loadUserReviews, routines, setRoutines, subjects, setSubjects, reviews, setReviews, loadServerData, allReviews, setAllReviews}}>
+        <AuthContext.Provider value={{signed: token, user: user, signInContext, signUpContext, logoutContext, loadUserReviews, routines, setRoutines, subjects, setSubjects, reviews, setReviews, loadServerData, allReviews, setAllReviews, performance, setPerformance}}>
             {props.children}
         </AuthContext.Provider>
     )

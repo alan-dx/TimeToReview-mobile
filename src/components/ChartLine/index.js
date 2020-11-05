@@ -1,28 +1,31 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState, useContext} from 'react';
 import {View, Dimensions} from 'react-native';
 import { LineChart } from "react-native-chart-kit";
 import Svg, { Text, Circle} from 'react-native-svg';
+import AuthContext from '../../contexts/auth';
 
 const ChartLine = (props) => {
 
+    const { performance } = useContext(AuthContext)
     const [tooltipPos, setTooltipPos] = useState({ x:0, y:0, visible:false, value:0 })
+    const [data, setData] = useState(props.data.map(({reviews}) => {
+        return reviews
+    }))
+    // const [data, setData] = useState([]) //Possible solution to Gambi [1]: 
+
+    // useEffect(() => { //Possible solution to Gambi [1]: Don't work beacause a error in react-native-svg lib
+    //     setData(performance)
+    //     console.log('effect')
+    // }, [performance])
 
     return (
         <View >
             <LineChart
                 data={{
-                    labels: ["Seg", "Ter", "Qua", "Qui", "Sex", "Sáb", "Dom"],
+                    labels: ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"],
                     datasets: [
                     {
-                        data: [
-                            10,
-                            7,
-                            6,
-                            9,
-                            8,
-                            15,
-                            12,
-                        ]
+                        data: data
                     }
                     ],
                     legend: ["Número de revisões/dia"]

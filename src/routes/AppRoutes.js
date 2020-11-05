@@ -40,10 +40,15 @@ const AppRoutes = () => {
                 <Screen 
                     name="ReviewsScreen" 
                     component={ReviewsScreen}
-                    options={{
+                    options={({ navigation, route }) => ({
                         headerShown: true,
-                        header: () => <Header title="REVISÕES" color="#F5F5F5" />
-                    }}
+                        header: () => <Header route={route} navigation={navigation} title="REVISÕES" color="#F5F5F5" />
+                      })}
+                    // options={{
+                    //     headerShown: true,
+                    //     header: () => <Header title="REVISÕES" color="#F5F5F5" />
+                    // }}
+                
                 />
                 <Screen 
                     name="RoutineScreen" 
