@@ -1,5 +1,5 @@
-import React, { useContext } from 'react';
-import {View, Text} from 'react-native';
+import React, { useCallback, useContext, useEffect } from 'react';
+import {View, Text, BackHandler} from 'react-native';
 import styles from './styles';
 import { BorderlessButton } from  'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/AntDesign';
@@ -15,6 +15,13 @@ const Header = (props) => {
         navigation.goBack()
         props.route?.params.onGoBack()
     }
+
+    useEffect(//Call goBack function many times
+        useCallback(() => {
+            BackHandler.addEventListener('hardwareBackPress', () => {
+                props.route?.params.onGoBack()
+            })
+        }),[])
 
     function handleLogout() {
         logoutContext();

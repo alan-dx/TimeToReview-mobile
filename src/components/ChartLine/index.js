@@ -2,11 +2,9 @@ import React, {useEffect, useState, useContext} from 'react';
 import {View, Dimensions} from 'react-native';
 import { LineChart } from "react-native-chart-kit";
 import Svg, { Text, Circle} from 'react-native-svg';
-import AuthContext from '../../contexts/auth';
 
 const ChartLine = (props) => {
 
-    const { performance } = useContext(AuthContext)
     const [tooltipPos, setTooltipPos] = useState({ x:0, y:0, visible:false, value:0 })
     const [data, setData] = useState(props.data.map(({reviews}) => {
         return reviews

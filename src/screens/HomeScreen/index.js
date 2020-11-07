@@ -33,6 +33,7 @@ const HomeScreen = () => {
             const filteredReviews = allReviews.filter(item => new Date(item.dateNextSequenceReview) <= currentDate)
             setReviews(filteredReviews)
             setNumberOfReviews(filteredReviews.length)
+            // setLoadingChart(false)
             setLoadingChart(true)//Gambi
         }, [allReviews])
     )
@@ -64,6 +65,7 @@ const HomeScreen = () => {
     }
 
     function handleUpdateChartOnBack() {
+        console.log('aaa')
         setLoadingChart(false)//Gambi
     }
 

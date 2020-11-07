@@ -1,5 +1,4 @@
 import React from 'react';
-import {View, Text} from 'react-native';
 import { RectButton } from 'react-native-gesture-handler';
 import styles from './styles';
 import Icon from 'react-native-vector-icons/AntDesign';
