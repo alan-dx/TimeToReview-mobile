@@ -14,6 +14,13 @@ const PreLoadScreen = () => {
             setRoutines(response.data.routines)
             // setReviews(response.data.filterReviews)
             setAllReviews(response.data.reviews)
+
+            response.data.performance.forEach(item => {
+                item.cycles.forEach(sub => {
+                    sub.chronometer = new Date(sub.chronometer)
+                })
+            })
+            
             setPerformance(response.data.performance)
             navigation.navigate("HomeScreen")
         }).catch((err) => {

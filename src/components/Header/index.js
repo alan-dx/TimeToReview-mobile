@@ -12,16 +12,45 @@ const Header = (props) => {
     const { logoutContext } = useContext(AuthContext);
 
     function handleGoBack() {
-        navigation.goBack()
-        props.route?.params.onGoBack()
+        if (props.title == "REVISÕES") {
+            props.route?.params.onGoBack()
+    
+            if (props.route?.params.finishCycleActive) {//EM OUTRAS TELAS PASSE SEMPRE COMO TRUE
+                navigation.goBack()
+            } else {
+                alert("Há um ciclo em execução, finalize-o primeiro!")
+            }
+        } else {
+            navigation.goBack()
+        }
     }
 
     useEffect(//Call goBack function many times
-        useCallback(() => {
-            BackHandler.addEventListener('hardwareBackPress', () => {
-                props.route?.params.onGoBack()
-            })
-        }),[])
+        () => {
+            if (props.title == "REVISÕES") {
+                BackHandler.addEventListener('hardwareBackPress', () => {
+                    return true
+                })
+            } else {
+                BackHandler.removeEventListener('hardwareBackPress')
+            }
+            // console.log('OK', props.route?.params.finishCycleActive)
+            // if (props.title == "REVISÕES") {
+            //     console.log(props.title)
+            //     if (props.route?.params.finishCycleActive) {
+            //         BackHandler.addEventListener('hardwareBackPress', () => {
+            //             console.log('1')
+            //             props.route?.params.onGoBack()
+            //         })
+            //     } else if (props.route?.params.finishCycleActive != undefined) {
+            //         BackHandler.addEventListener('hardwareBackPress', () => {
+            //             console.log(props.route?.params.finishCycleActive)
+            //             alert("Há um ciclo em execução, finalize-o primeiro!")
+            //             return true
+            //         })
+            //     }
+            // }
+        },[props.route?.params.finishCycleActive])
 
     function handleLogout() {
         logoutContext();

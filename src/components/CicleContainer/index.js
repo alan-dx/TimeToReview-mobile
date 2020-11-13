@@ -1,15 +1,18 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, Dimensions } from 'react-native';
 import styles from './styles';
 import { RectButton } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/AntDesign';
 import Icon2 from 'react-native-vector-icons/Entypo';
+import timeFormat from '../../utils/formatDateTime';
 
 const CicleContainer = (props) => {
 
-    useEffect(() => {
-        console.log(props.data.item)
-    }, [])
+    // useEffect(() => {
+    //     console.log(props.data.item)
+    // }, [])
+
+    //PASSAR A TIMEFORMAT PARA AQ
 
     return (
         <View style={styles.timerBox}>
@@ -37,7 +40,7 @@ const CicleContainer = (props) => {
             <View style={styles.timerChronometerBox}>
                 <Text style={styles.timerText2}>Período</Text>
                 <View style={styles.timerChronometer}>
-                    <Text style={styles.timerText}>{props.data.item.chronometer}</Text>
+                    <Text style={styles.timerText}>{timeFormat(props.data.item.chronometer.getUTCHours(),props.data.item.chronometer.getUTCMinutes(),props.data.item.chronometer.getUTCSeconds())}</Text>
                 </View>
             </View>
         </View>

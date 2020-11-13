@@ -1,30 +1,36 @@
-import React, { useState, useContext, useEffect } from 'react';
-import { View, FlatList, Text } from 'react-native';
+import React, { useState, useContext, useEffect, useRef } from 'react';
+import { View, FlatList, ToastAndroid } from 'react-native';
 import styles from './styles';
 import { useNavigation } from '@react-navigation/native';
 import ReviewContainer from '../../components/ReviewContainer';
 import FloatAddButton from '../../components/FloatAddButton';
 import api from '../../services/api';
 import AuthContext from '../../contexts/auth';
-import { RectButton } from 'react-native-gesture-handler';
-import Icon from 'react-native-vector-icons/AntDesign';
-import Icon2 from 'react-native-vector-icons/Entypo';
 import CicleContainer from '../../components/CicleContainer';
+import timeFormat from '../../utils/formatDateTime';
+import AsyncStorage from '@react-native-community/async-storage';
+
 
 const ReviewsScreen = (props) => {
+
+    // new Date(new Date().setUTCHours(0,0,0,0)) keep the hour in year-month-dayT00:00:00.000Z
+
+    const currentDate = new Date()
 
     const { reviews, allReviews, setAllReviews, performance, setPerformance } = useContext(AuthContext)
 
     const [data, setData] = useState(reviews)
-    const [dataCycles, setDataCycles] = useState([{init: '00:00', finish: '00:00', reviews: 0, chronometer: '00:00', do: false}])
+    const [dataCycles, setDataCycles] = useState(performance[currentDate.getDay()].cycles)
     const navigation = useNavigation()
     const [startController, setStartController] = useState(true)
-    const [chronometer, setChronometer] = useState('00:00')
     const [reviewInitTime, setReviewInitTime] = useState(new Date())
-    const [reviewInitTimeShow, setReviewInitTimeShow] = useState('00:00')
-    const [reviewFinishTime, setReviewFinishTime] = useState(new Date())
-    const [reviewFinishTimeShow, setReviewFinishTimeShow] = useState('00:00')
 
+    const cycleFlatList = useRef(null)
+
+    useEffect(() => {
+        console.log(startController)
+        navigation.setParams({finishCycleActive: startController})//EM OUTRAS TELAS, TALVEZ SEJA NECESSÁRIO PASSAR SEMPRE COMO TRUE
+    }, [startController])
 
     async function handleConcludeReview(id) {
 
@@ -82,51 +88,50 @@ const ReviewsScreen = (props) => {
         setData(newData)
     }
 
-    function timeFormat(hour, minute) {
-        console.log(hour, minute)
-        let hourReturn = hour
-        let minuteReturn = minute
+    async function handleStartPauseController() {
         
-        if (hour < 10) {
-            hourReturn = `0${hour}`
-        }
-        if (minute < 10) {
-            minuteReturn = `0${minute}`
-        }   
-
-        return `${hourReturn}:${minuteReturn}`
-
-    }
-
-    function handleStartPauseController() {
         const currentDate = new Date()
+
         if (startController) {
+
             setStartController(false)
             setReviewInitTime(currentDate)
-            // dataCycles[dataCycles.length - 1].init = `${currentDate.getHours()}:${currentDate.getMinutes()}`
-            dataCycles[dataCycles.length - 1].init = timeFormat(currentDate.getHours(), currentDate.getMinutes())
+            dataCycles[dataCycles.length - 1].init = timeFormat(currentDate.getHours(), currentDate.getMinutes(), currentDate.getSeconds())
 
             setDataCycles(dataCycles)
-            setReviewInitTimeShow(`${currentDate.getHours()}:${currentDate.getMinutes()}`)
-        } else {
-            setStartController(true)
-            setReviewFinishTime(currentDate)
-            setReviewFinishTimeShow(`${currentDate.getHours()}:${currentDate.getMinutes()}`)
-            console.log(reviewInitTime, reviewFinishTime)
-            // setChronometer(`${currentDate.getHours() - currentDate.getHours()}:${currentDate.getMinutes() - reviewInitTime.getMinutes()}`)
-            //SE A HORA FOR MAIOR, SIGNIFICA Q OS MINUTOS PODEM DAR NEGATIVO
-            //CRIAR O SCROLL COM COMPONENTES FALSOS
-            dataCycles[dataCycles.length - 1].finish = timeFormat(currentDate.getHours(), currentDate.getMinutes())
-            dataCycles[dataCycles.length - 1].do = true
-            dataCycles[dataCycles.length - 1].chronometer = timeFormat(currentDate.getHours() - reviewInitTime.getHours(), currentDate.getMinutes() - reviewInitTime.getMinutes())
 
-            setDataCycles([...dataCycles, {
-                init: '00:00', 
-                finish: '00:00', 
+            ToastAndroid.show('Ciclo iniciado!', 1500)
+
+        } else {
+
+            setStartController(true)
+
+            let chronometer = new Date(currentDate - reviewInitTime)
+            dataCycles[dataCycles.length - 1].finish = timeFormat(currentDate.getHours(), currentDate.getMinutes(), currentDate.getSeconds())
+            dataCycles[dataCycles.length - 1].do = true
+            dataCycles[dataCycles.length - 1].chronometer = chronometer
+
+            dataCycles.push({
+                init: '00:00:00', 
+                finish: '00:00:00', 
                 reviews: 0, 
-                chronometer: '00:00',
+                chronometer: new Date(new Date().setUTCHours(0,0,0,0)),
                 do: false
-            }])
+            })
+
+            // setDataCycles(dataCycles)
+
+            await api.post('/concludeCycle', {
+                day: currentDate.getDay(),
+                cycles: dataCycles
+            }).then((response) => {
+                console.log(response.data)
+            }).catch((err) => {
+                alert(err)
+            })
+
+            ToastAndroid.show('Novo ciclo criado!', 1600)
+
         }
     }
 
@@ -134,9 +139,11 @@ const ReviewsScreen = (props) => {
         <View style={styles.container}>
             <FlatList
                 horizontal
+                ref={cycleFlatList}
                 style={styles.flatlistCycle}
                 data={dataCycles}
-                
+                keyExtractor={(item, index) => `${index}`}
+                onContentSizeChange={() => cycleFlatList.current.scrollToEnd()}
                 renderItem={item => 
                     <CicleContainer
                         data={item}

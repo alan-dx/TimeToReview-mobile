@@ -1,18 +1,17 @@
-export function formatHour(hour) {
-    const hourFormated = `0${hour}`
-
-    return  hourFormated
-}
-
-export function formatMinutes(minutes) {
-
-    const minutesFormated = `0${minutes}`
+export default function timeFormat(hour, minute, seconds) {
+    let hourReturn = hour
+    let minuteReturn = minute
+    let secondsReturn = seconds ? seconds : '00'
     
-    return minutesFormated;
-}
+    if (hour < 10) {
+        hourReturn = `0${hour}`
+    }
+    if (minute < 10) {
+        minuteReturn = `0${minute}`
+    }
+    if (seconds < 10) {
+        secondsReturn = `0${seconds}`
+    }
 
-export function formatDate(date) {
-    const dateFormated = `0${date}`
-
-    return dateFormated
+    return `${hourReturn}:${minuteReturn}:${secondsReturn}`
 }

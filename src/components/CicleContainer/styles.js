@@ -22,12 +22,12 @@ const styles = StyleSheet.create({
     timerText: {
         color: '#F5F5F5',
         fontFamily: 'Archivo-Bold',
-        fontSize: 15,
+        fontSize: 14,
     },
     timerText2: {
         color: '#303030',
         fontFamily: 'Archivo-Bold',
-        fontSize: 13,
+        fontSize: 12,
         textAlign: 'center'
     },
     timerController: {

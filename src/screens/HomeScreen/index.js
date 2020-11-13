@@ -66,6 +66,8 @@ const HomeScreen = () => {
 
     function handleUpdateChartOnBack() {
         console.log('aaa')
+        const currentDate = new Date()
+        console.log(performance[currentDate.getDay()])
         setLoadingChart(false)//Gambi
     }
 
@@ -81,7 +83,7 @@ const HomeScreen = () => {
             <View style={styles.performanceBox}>
                 <View style={styles.performanceButtonBox}>
                     <BorderlessButton onPress={handleClickGoToPerformanceScreen} style={styles.performanceButton}>
-                        <Icon name="up" size={20} color="#FFF" />
+                        <Icon name="barchart" size={22} color="#FFF" />
                     </BorderlessButton>
                 </View>
                 <Text style={styles.performanceButtonText}>Visualizar desempenho completo</Text>
