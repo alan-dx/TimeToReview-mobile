@@ -33,10 +33,12 @@ const ReviewsScreen = (props) => {
     }, [startController])
 
     async function handleConcludeReview(id) {
+        const currentDate = new Date()
 
         api.post('/concludeReview',null, {
             params: {
-                id: id
+                id: id,
+                date: currentDate
             }
         }).then((response) => {
             const newAllReviews = allReviews
@@ -48,7 +50,6 @@ const ReviewsScreen = (props) => {
             alert(err)
         })
 
-        const currentDate = new Date()
         const newData = data.filter(item => item._id != id)//to update flatlist, removing the conclude review
         setData(newData)
         dataCycles[dataCycles.length - 1].reviews++

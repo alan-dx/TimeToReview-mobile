@@ -17,6 +17,11 @@ const Header = (props) => {
     
             if (props.route?.params.finishCycleActive) {//EM OUTRAS TELAS PASSE SEMPRE COMO TRUE
                 navigation.goBack()
+                BackHandler.addEventListener("hardwareBackPress", () => {// Make the hardware back button back again in another screens,
+                    //put this below in useEffect make the app close, because do a double goBack
+                    navigation.goBack()
+                    return false
+                })
             } else {
                 alert("Há um ciclo em execução, finalize-o primeiro!")
             }
@@ -29,11 +34,11 @@ const Header = (props) => {
         () => {
             if (props.title == "REVISÕES") {
                 BackHandler.addEventListener('hardwareBackPress', () => {
-                    return true
+                    return true//Disable hardware back button 
                 })
-            } else {
-                BackHandler.removeEventListener('hardwareBackPress')
             }
+
+            //ISSO CAUSA UMA INCOSISTÊNCIA, PQ A FUNÇÃO PASSADA NO LISTENER ACABA SENDO CHAMADA NAS OUTRAS TELAS TB
             // console.log('OK', props.route?.params.finishCycleActive)
             // if (props.title == "REVISÕES") {
             //     console.log(props.title)
@@ -42,7 +47,7 @@ const Header = (props) => {
             //             console.log('1')
             //             props.route?.params.onGoBack()
             //         })
-            //     } else if (props.route?.params.finishCycleActive != undefined) {
+            //     } else if (props.route?.params.finishCycleActive != undefined) { //CHAMA NA PRIMEIRA ENTRADA, POIS FINISHCYCLEACTIVE VEM COMO UNDEFINED
             //         BackHandler.addEventListener('hardwareBackPress', () => {
             //             console.log(props.route?.params.finishCycleActive)
             //             alert("Há um ciclo em execução, finalize-o primeiro!")
@@ -50,7 +55,7 @@ const Header = (props) => {
             //         })
             //     }
             // }
-        },[props.route?.params.finishCycleActive])
+        },[])
 
     function handleLogout() {
         logoutContext();

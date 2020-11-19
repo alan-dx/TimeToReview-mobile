@@ -4,7 +4,69 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#F5F5F5'
+    },
+    header: {
+        height: '30%',
 
+        alignItems: 'center',
+        justifyContent: 'space-evenly',
+    },
+    profilePhotoBox: {
+        height: 150,
+        width: 150,
+        borderRadius: 100,
+        backgroundColor: '#FFF',
+        elevation: 2,
+
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    profileName: {
+        color: '#303030',
+        fontFamily: 'DancingScript-Bold',
+        fontSize: 25,
+    },
+    profileEmail: {
+        color: '#707070',
+        fontFamily: 'Poppins-Normal',
+        fontSize: 14
+    },
+    body: {
+        borderTopRightRadius: 20,
+        borderTopLeftRadius: 20,
+        backgroundColor: '#FFF',
+        
+        flex: 1,
+        marginTop: 10,
+        paddingTop: 14,
+
+        elevation: 4
+    },
+    optionContainer: {
+        height: 40,
+        borderRadius: 20,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginHorizontal: 15,
+        marginBottom: 8,
+    },
+    optionText: {
+        color: '#303030',
+        fontFamily: 'Archivo-SemiBold',
+        fontSize: 15
+    },
+    devBox: {
+        flex: 1,
+        justifyContent: 'flex-end',
+        alignItems: 'center',
+        paddingBottom: 10
+    },
+    devBoxButtons: {
+        flexDirection: 'row', 
+        width: '50%',
+        justifyContent: 'space-evenly',
+        marginTop: 3,
     }
 })
 

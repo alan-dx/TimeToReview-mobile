@@ -5,11 +5,16 @@ import AuthContext from '../../contexts/auth';
 
 const PreLoadScreen = () => {
 
-    const { setSubjects, setRoutines, setAllReviews, loadServerData, setPerformance} = useContext(AuthContext);
+    const { setSubjects, setUser, setRoutines, setAllReviews, loadServerData, setPerformance, logoutContext} = useContext(AuthContext);
     const navigation = useNavigation()
 
     useEffect(() => {
         loadServerData().then((response) => {
+            setUser({
+                name: response.data.name,
+                email: response.data.email,
+                reminderTime: response.data.reminderTime
+            })
             setSubjects(response.data.subjects)
             setRoutines(response.data.routines)
             // setReviews(response.data.filterReviews)
@@ -22,9 +27,14 @@ const PreLoadScreen = () => {
             })
             
             setPerformance(response.data.performance)
-            navigation.navigate("HomeScreen")
+            navigation.reset({
+                index: 0,
+                routes: [{name: "HomeScreen"}]
+            })
         }).catch((err) => {
             console.log(err)
+            alert("Houve um erro ao carregar as informações, verifique sua conexão!")
+            logoutContext()
         })
     }, [])
 

@@ -15,16 +15,20 @@ export const AuthProvider = (props) => {
     const [performance, setPerformance] = useState([])
 
     async function loadServerData() {
-        return await api.get('/listUser')
+        const currentDate = new Date()
+
+        return await api.post('/listUser', {
+            date: currentDate
+        })
     }
 
     useEffect(() => {
         async function loadStorageData() {
             const storageToken = await AsyncStorage.getItem("@TTR:token")
-            const storageUser = await AsyncStorage.getItem("@TTR:user")
+            // const storageUser = await AsyncStorage.getItem("@TTR:user")
 
             if (storageToken) {
-                setUser(JSON.parse(storageUser))
+                // setUser(JSON.parse(storageUser))
                 setToken(storageToken)
                 api.defaults.headers["Authorization"] = `Bearer ${storageToken}`
                 await api.get('/verifyToken').catch((err) => {
@@ -41,12 +45,12 @@ export const AuthProvider = (props) => {
             const response = await api.post('/signIn', data)
     
             if (response.data) {
-                const { token, user } = response.data;
+                const { token } = response.data;
                 api.defaults.headers["Authorization"] = `Bearer ${token}`
                 AsyncStorage.setItem("@TTR:token", token)
-                AsyncStorage.setItem("@TTR:user", JSON.stringify(user))
+                // AsyncStorage.setItem("@TTR:user", JSON.stringify(user))
                 setToken(token)
-                setUser(user)
+                // setUser(user)
             }
         } catch (error) {
             alert(`Senha/Email Incorretos. Verifique e tente novamente!, ${error}`)
@@ -95,7 +99,7 @@ export const AuthProvider = (props) => {
     }
 
     return (
-        <AuthContext.Provider value={{signed: token, user: user, signInContext, signUpContext, logoutContext, loadUserReviews, routines, setRoutines, subjects, setSubjects, reviews, setReviews, loadServerData, allReviews, setAllReviews, performance, setPerformance}}>
+        <AuthContext.Provider value={{signed: token, user: user, setUser, signInContext, signUpContext, logoutContext, loadUserReviews, routines, setRoutines, subjects, setSubjects, reviews, setReviews, loadServerData, allReviews, setAllReviews, performance, setPerformance}}>
             {props.children}
         </AuthContext.Provider>
     )

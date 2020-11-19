@@ -39,7 +39,7 @@ class ChartPiee extends React.Component {
           config: {
             colors: colors,
             valueTextSize: 13,
-            valueTextColor: processColor('#303030'),
+            valueTextColor: processColor('#FFF'),
             sliceSpace: 5,
             selectionShift: 13,
             // xValuePosition: "OUTSIDE_SLICE",

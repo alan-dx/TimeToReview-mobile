@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 5,
         paddingBottom: 3,
 
-        elevation: 7
+        elevation: 4
     },
     menuRow: {
         flex: 1,

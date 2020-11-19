@@ -1,31 +1,25 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, Dimensions} from 'react-native';
 import {LineChart} from "react-native-chart-kit";
 import Svg, { Text, Circle} from 'react-native-svg';
 
-const ChartBar = () => {
+const ChartBar = (props) => {
 
     const [tooltipPos, setTooltipPos] = useState({ x:0, y:0, visible:false, value:0 })
 
     return (
         <View >
             <LineChart
+                //ZERAR OS GRÁFICOS DE TEMPO
+
                 data={{
-                    labels: ["Seg", "Ter", "Qua", "Qui", "Sex", "Sáb", "Dom"],
+                    labels: ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"],
                     datasets: [
                     {
-                        data: [
-                            10,
-                            2,
-                            12,
-                            4,
-                            5,
-                            12,
-                            1,
-                        ]
+                        data: props.data
                     }
                     ],
-                    legend: ["Horas revisadas/dia"]
+                    legend: ["Minutos revisados/dia"]
                 }}
                 width={Dimensions.get("window").width * 0.95} // from react-native
                 height={300}
@@ -34,7 +28,7 @@ const ChartBar = () => {
                 decorator={() => {
                     return tooltipPos.visible ? <View>
                         <Svg>
-                            <Circle cx={tooltipPos.x} cy={tooltipPos.y} r="13" width="30" height="30" fill="#60c3eb" stroke="#303030"/>
+                            <Circle cx={tooltipPos.x} cy={tooltipPos.y} r="13" width="40" height="40" fill="#60c3eb" stroke="#303030"/>
                             <Text
                                 fill="white"
                                 stroke="white"
