@@ -17,12 +17,14 @@ const SettingScreen = () => {
     const [timeHour, setTimeHour] = useState(new Date(user.reminderTime).getHours())
     const [timeMin, setTimeMin] = useState(new Date(user.reminderTime).getMinutes())
 
+    //ADICIONAR O PUSH NOTIFICATIONS
+
     function handleContactWhatsapp() {
-        Linking.canOpenURL(`whatsapp://app`).then((res) => {
+        Linking.canOpenURL(`whatsapp://send?phone=${1111}`).then((res) => {
             if (!res) {
                 alert("Você não possui esse aplicativo!")
             } else {
-                Linking.openURL(`whatsapp://app`)
+                Linking.openURL(`whatsapp://send?phone=${1111}`)
             }
         })
     }
@@ -38,11 +40,11 @@ const SettingScreen = () => {
     }
 
     function handleContactInstagram() {
-        Linking.canOpenURL(`instagram://app`).then((res) => {
+        Linking.canOpenURL(`instagram://user?username=alan_almj`).then((res) => {
             if (!res) {
                 alert("Você não possui esse aplicativo!")
             } else {
-                Linking.openURL(`instagram://app`)
+                Linking.openURL(`instagram://user?username=alan_almj`)
             }
         })
     }
