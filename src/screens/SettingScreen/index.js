@@ -9,6 +9,8 @@ import AuthContext from '../../contexts/auth';
 import { RectButton } from 'react-native-gesture-handler';
 import TimeModal from '../../components/TimeModal';
 import api from '../../services/api';
+import notifications from '../../services/notifications';
+import PushNotification from 'react-native-push-notification';
 
 const SettingScreen = () => {
 
@@ -55,10 +57,32 @@ const SettingScreen = () => {
         api.post("/setTimeReminder", {
             date: new Date(0,0,0,timeHour, timeMin)
         }).then((res) => {
-            user.reminderTime = res.data.reminderTime
+            const currentDate = new Date()
+            const reminderTime = new Date(res.data.reminderTime)
+            user.reminderTime = reminderTime
+
             setUser(user)
-            setTimeHour(new Date(res.data.reminderTime).getHours())
-            setTimeMin(new Date(res.data.reminderTime).getMinutes())
+            setTimeHour(reminderTime.getHours())
+            setTimeMin(reminderTime.getMinutes())
+
+            PushNotification.cancelAllLocalNotifications()
+
+            //Para remover o aviso no dia em que foi setado bote + 1 no dia
+
+            notifications
+                .configure()
+                .localNotificationSchedule(
+                {
+                    channelId: "default-channel-id",
+                    title:'TimeToReview!',
+                    message:`É hora de revisar, vamos lá? Não deixe pra depois...`,
+                    date: new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate(), reminderTime.getHours(), reminderTime.getMinutes(), reminderTime.getSeconds()),
+                    vibrate:500,
+                    priority: "high",
+                    repeatType: "day",
+                    allowWhileIdle: true
+                }
+        )
         }).catch((err) => {
             alert(err, "Houve um erro durante a edição do horário, tente novamente!")
         })

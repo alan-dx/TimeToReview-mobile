@@ -2,6 +2,7 @@ import React, { useCallback, useContext, useEffect } from 'react';
 import { View, Text } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import AuthContext from '../../contexts/auth';
+import notifications from '../../services/notifications';
 
 const PreLoadScreen = () => {
 
@@ -10,6 +11,9 @@ const PreLoadScreen = () => {
 
     useEffect(() => {
         loadServerData().then((response) => {
+            
+            // const reminderTime = new Date(response.data.reminderTime)
+
             setUser({
                 name: response.data.name,
                 email: response.data.email,
@@ -31,6 +35,26 @@ const PreLoadScreen = () => {
                 index: 0,
                 routes: [{name: "HomeScreen"}]
             })
+
+            console.log(response.data.reminderTime)
+
+            // console.log(currentDate.getDate())
+            // console.log(new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate(), reminderTime.getHours(), reminderTime.getMinutes(), reminderTime.getSeconds()))
+
+            // notifications
+            //     .configure()
+            //     .localNotificationSchedule(
+            //     {
+            //         channelId: "default-channel-id",
+            //         title:'TimeToReview!',
+            //         message:`É hora de revisar, vamos lá?`,
+            //         date: new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate(), reminderTime.getHours(), reminderTime.getMinutes(), reminderTime.getSeconds()),
+            //         vibrate:500,
+            //         priority: "high",
+            //         allowWhileIdle: true
+            //     }
+            // )
+
         }).catch((err) => {
             console.log(err)
             alert("Houve um erro ao carregar as informações, verifique sua conexão!")

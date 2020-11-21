@@ -10,14 +10,13 @@ import AuthContext from '../../contexts/auth';
 
 const AllReviewsScreen = (props) => {
 
+    //PARA FAZER O FILTRO UTILIZE DOIS CAMPOS (ROTINAS E MATÉRIAS), QUANDO SELECIONAR UMA ROTINA/MATÉRIA
+    //PARA FILTRAR A LISTA EDITE O DATA DO FLATLIST FILTRANDO AS REVISÕES
+
     const { allReviews, setAllReviews, subjects, setSubjects, routines, setRoutines } = useContext(AuthContext)
 
     const [data, setData] = useState(allReviews)
     const navigation = useNavigation()
-
-    // useEffect(() => {
-    //     console.log(allReviews)
-    // }, [])
 
     async function handleDeleteReview(review) {
 
