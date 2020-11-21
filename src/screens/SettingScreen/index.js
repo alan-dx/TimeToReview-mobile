@@ -53,7 +53,7 @@ const SettingScreen = () => {
 
     function handleCloseTimeModal() {
         setHandleTimeModal(false)
-
+        alert(`${timeHour} + ${timeMin}`)
         api.post("/setTimeReminder", {
             date: new Date(0,0,0,timeHour, timeMin)
         }).then((res) => {

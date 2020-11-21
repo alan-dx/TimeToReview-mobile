@@ -24,6 +24,7 @@ const TimeModal = (props) => {
 
     function handleSelectTime(e, data, fun) {
         let posY = e.nativeEvent.contentOffset.y
+        alert(`${posY} data: ${data[posY/30]}`)
         fun(data[posY/30])
     }
 
@@ -52,6 +53,7 @@ const TimeModal = (props) => {
                     <View style={styles.scrollBox}>
                         <Text style={styles.scrollLabel}>Selecione um horário</Text>
                         <View style={styles.timerScroll}>
+                            {/* O TAMANHO DO SCROLL DA INCOMBATIVEL COM ALGUNS DISPOSITIVOS, ESTA RECEBENDO VALORES QUEBRADOS */}
                             <View style={styles.scrollSelectItemLeft} />
                             <View style={styles.scrollSelectItemRight} />
                                 <ScrollView

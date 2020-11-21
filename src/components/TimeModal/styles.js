@@ -42,6 +42,7 @@ const styles = StyleSheet.create({
     timerScroll: {
         height: 90,
         width: 85,
+        backgroundColor: 'red',
 
         alignItems: 'center',
         flexDirection: 'row',
