@@ -26,12 +26,10 @@ const PerformanceScreen = () => {
             let teste = 0;
             cycles.forEach(({chronometer}) => {
                 teste = teste + ((chronometer.getMinutes() * 60) + chronometer.getSeconds())/60
-                console.log(teste)
                 tempArray[index] = parseFloat(teste.toFixed(2))
             })
         })
 
-        console.log(tempArray)
 
         setDataChronometerChart(tempArray)
 

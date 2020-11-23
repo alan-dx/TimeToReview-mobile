@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        position: 'relative'
+        position: 'relative',
     },
     scrollLabel: {
         fontSize: 17,
@@ -42,21 +42,18 @@ const styles = StyleSheet.create({
     timerScroll: {
         height: 90,
         width: 85,
-        backgroundColor: 'red',
-
         alignItems: 'center',
         flexDirection: 'row',
     },
     scrollItem:{
         width: 40,
         height: 30,
-        
         alignItems: 'center'
     },
     scrollText: {
         fontFamily: 'Archivo-Bold',
         fontSize: 18,
-        color: '#303030'
+        color: '#303030',
     },
     scrollSelectItemLeft: {
         width: 40,

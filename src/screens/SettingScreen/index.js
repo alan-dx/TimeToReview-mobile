@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { View, Image, Text, Linking } from 'react-native';
+import { View, Image, Text, Linking, Alert, ToastAndroid } from 'react-native';
 import styles from './styles';
-import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Feather';
 import Icon2 from 'react-native-vector-icons/AntDesign';
 import Icon3 from 'react-native-vector-icons/FontAwesome';
@@ -11,15 +10,16 @@ import TimeModal from '../../components/TimeModal';
 import api from '../../services/api';
 import notifications from '../../services/notifications';
 import PushNotification from 'react-native-push-notification';
+import { useNavigation } from '@react-navigation/native';
 
 const SettingScreen = () => {
+
+    const navigation = useNavigation()
 
     const { user, setUser } = useContext(AuthContext)
     const [handleTimeModal, setHandleTimeModal] = useState(false)
     const [timeHour, setTimeHour] = useState(new Date(user.reminderTime).getHours())
     const [timeMin, setTimeMin] = useState(new Date(user.reminderTime).getMinutes())
-
-    //ADICIONAR O PUSH NOTIFICATIONS
 
     function handleContactWhatsapp() {
         Linking.canOpenURL(`whatsapp://send?phone=${1111}`).then((res) => {
@@ -53,7 +53,6 @@ const SettingScreen = () => {
 
     function handleCloseTimeModal() {
         setHandleTimeModal(false)
-        alert(`${timeHour} + ${timeMin}`)
         api.post("/setTimeReminder", {
             date: new Date(0,0,0,timeHour, timeMin)
         }).then((res) => {
@@ -89,6 +88,27 @@ const SettingScreen = () => {
 
     }
 
+    function handleCleanCharts() {
+        Alert.alert(
+            "Atenção!",
+            "Você tem certeza que deseja zerar os gráficos de desempenho? Essa ação é realizada automaticamente toda segunda-feira.",
+            [
+              {
+                text: "Cancelar",
+                onPress: () => console.log("Cancel Pressed"),
+                style: "cancel"
+              },
+              { text: "Confirmar", onPress: () => {
+                api.get('/resetCharts').then((response) => {
+                    ToastAndroid.show('Gráficos e ciclos resetados!', 600)
+                    navigation.navigate("PreLoadScreen")
+                }).catch((err) => alert(err))
+              }}
+            ],
+            { cancelable: false }
+          );
+    }
+
     return (
         <View style={styles.container}>
             <View style={styles.header}>
@@ -99,15 +119,15 @@ const SettingScreen = () => {
                 <Text style={styles.profileEmail}>{user.email}</Text>
             </View>
             <View style={styles.body}>
-                <RectButton style={styles.optionContainer}>
-                    <Text style={styles.optionText}>Zerar gráficos de desempenho</Text>
+                <RectButton style={styles.optionContainer} onPress={handleCleanCharts}>
+                    <Text style={styles.optionText}>Zerar dados de desempenho</Text>
                     <Icon name="chevron-right" size={20} color="#60c3eb" />
                 </RectButton>
                 <RectButton style={styles.optionContainer} onPress={() => setHandleTimeModal(true)}>
                     <Text style={styles.optionText}>Definir horário do lembrete</Text>
                     <Icon name="chevron-right" size={20} color="#60c3eb" />
                 </RectButton>
-                <RectButton style={styles.optionContainer}>
+                <RectButton style={styles.optionContainer} onPress={() => navigation.navigate("UpdatesScreen")} >
                     <Text style={styles.optionText}>Futuras atualizações</Text>
                     <Icon name="chevron-right" size={20} color="#60c3eb" />
                 </RectButton>

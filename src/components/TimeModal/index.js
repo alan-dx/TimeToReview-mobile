@@ -24,8 +24,7 @@ const TimeModal = (props) => {
 
     function handleSelectTime(e, data, fun) {
         let posY = e.nativeEvent.contentOffset.y
-        alert(`${posY} data: ${data[posY/30]}`)
-        fun(data[posY/30])
+        fun(data[Math.round(posY/30)])
     }
 
     function scrollToTime(hour, minute) {
@@ -60,10 +59,10 @@ const TimeModal = (props) => {
                                     ref={hourRef}
                                     showsVerticalScrollIndicator={false}
                                     decelerationRate="fast"
-                                    snapToInterval={30}
                                     contentContainerStyle={{
                                         paddingVertical: 30,
                                     }}
+                                    snapToInterval={30}
                                     onMomentumScrollEnd={(e) => handleSelectTime(e, hours, props.setTimeHour)}
                                 >
                                     {hours.map((value, key) => { 
@@ -76,7 +75,7 @@ const TimeModal = (props) => {
                                         )}
                                     )}
                                 </ScrollView>
-                                <Text style={{fontSize: 20}}>:</Text>
+                                <Text style={{fontSize: 20, marginBottom: 5}}>:</Text>
                                 <ScrollView
                                     ref={minRef}
                                     showsVerticalScrollIndicator={false}
