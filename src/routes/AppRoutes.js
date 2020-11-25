@@ -88,7 +88,7 @@ const AppRoutes = () => {
                     component={BePremiumScreen}
                     options={{
                         headerShown: true,
-                        header: () => <Header title="Seja Premium" color="#F5F5F5" />
+                        header: () => <Header title="SEJA PREMIUM" color="#F5F5F5" />
                     }} 
                 />
                 <Screen 
@@ -96,7 +96,7 @@ const AppRoutes = () => {
                     component={UpdatesScreen}
                     options={{
                         headerShown: true,
-                        header: () => <Header title="Atualizações" color="#F5F5F5" />
+                        header: () => <Header title="ATUALIZAÇÕES" color="#F5F5F5" />
                     }}
                 />
                 <Screen 

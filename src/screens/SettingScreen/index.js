@@ -128,7 +128,13 @@ const SettingScreen = () => {
                     <Icon name="chevron-right" size={20} color="#60c3eb" />
                 </RectButton>
                 <RectButton style={styles.optionContainer} onPress={() => navigation.navigate("UpdatesScreen")} >
+                    {/* TROCAR PELA TELA DE BENEFÍCIOS NO APP GRATUITO */}
                     <Text style={styles.optionText}>Futuras atualizações</Text>
+                    <Icon name="chevron-right" size={20} color="#60c3eb" />
+                </RectButton>
+                <RectButton style={styles.optionContainer}>
+                    {/* Explicar como funciona o cálclo da próxima data */}
+                    <Text style={styles.optionText}>Reletar problemas</Text>
                     <Icon name="chevron-right" size={20} color="#60c3eb" />
                 </RectButton>
                 <RectButton style={styles.optionContainer}>
