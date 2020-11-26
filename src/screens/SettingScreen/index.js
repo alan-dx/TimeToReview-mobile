@@ -11,6 +11,8 @@ import api from '../../services/api';
 import notifications from '../../services/notifications';
 import PushNotification from 'react-native-push-notification';
 import { useNavigation } from '@react-navigation/native';
+import ImagePicker from 'react-native-image-picker';
+import AsyncStorage from '@react-native-community/async-storage';
 
 const SettingScreen = () => {
 
@@ -20,6 +22,17 @@ const SettingScreen = () => {
     const [handleTimeModal, setHandleTimeModal] = useState(false)
     const [timeHour, setTimeHour] = useState(new Date(user.reminderTime).getHours())
     const [timeMin, setTimeMin] = useState(new Date(user.reminderTime).getMinutes())
+    const [filePath, setFilePath] = useState(null)
+
+    useEffect(()  => {
+
+        async function loadStorageProfilePhoto() {
+            let source = await AsyncStorage.getItem("@TTR:profilephoto")
+            setFilePath(JSON.parse(source))
+        }
+
+        loadStorageProfilePhoto()
+    }, [])
 
     function handleContactWhatsapp() {
         Linking.canOpenURL(`whatsapp://send?phone=${1111}`).then((res) => {
@@ -109,11 +122,45 @@ const SettingScreen = () => {
           );
     }
 
+    function handleChangeProfilePhoto() {
+       ImagePicker.showImagePicker({
+           title: "Selecionar Foto",
+           mediaType: "photo",
+           storageOptions: {
+            skipBackup: true,
+            path: 'images',
+          },
+       }, (response) => {
+            if (response.didCancel) {
+                console.log('User cancelled image picker');
+
+            } else if (response.error) {
+                console.log('ImagePicker Error: ', response.error);
+                alert("Seu dispositivo não é compatível com essa funcionalidade...")
+            } else if (response.customButton) {
+                console.log(
+                'User tapped custom button: ',
+                response.customButton
+                );
+                console.log(response.customButton);
+            } else {
+                let source = response;
+                console.log('else')
+                setFilePath(source);
+                AsyncStorage.setItem("@TTR:profilephoto", JSON.stringify(source))
+            }
+    
+       })
+    }
+
     return (
         <View style={styles.container}>
             <View style={styles.header}>
-                <RectButton style={styles.profilePhotoBox}>
-                    <Icon name="camera" size={40} color="#303030" />
+                <RectButton style={styles.profilePhotoBox} onPress={handleChangeProfilePhoto}>
+                    { (filePath != null) ? 
+                        <Image source={{uri: 'data:image/jpeg;base64,' + filePath.data}} style={{width: 150, height: 150, borderRadius: 100}} /> : 
+                        <Icon name="camera" size={40} color="#303030" />
+                    }
                 </RectButton>
                 <Text style={styles.profileName}>{user.name}</Text>
                 <Text style={styles.profileEmail}>{user.email}</Text>
