@@ -14,13 +14,12 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'center',
     },
-    updateTextMarker: {
-        width: 12, 
-        height: 12, 
-        backgroundColor: '#60c3eb',
+    textMarker: {
+        width: 8, 
+        height: 8, 
+        backgroundColor: '#303030',
         borderRadius: 10,
 
-        alignSelf: 'flex-start',
         margin: 5
     },
     updateText: {

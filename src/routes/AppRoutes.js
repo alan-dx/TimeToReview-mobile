@@ -18,6 +18,7 @@ import AllReviewsScreen from '../screens/AllReviewsScreen';
 import Header from '../components/Header';
 import BePremiumScreen from '../screens/BePremiumScreen';
 import UpdatesScreen from '../screens/UpdatesScreen';
+import DoubtsScreen from '../screens/DoubtsScreen';
 
 const {Screen, Navigator} = createStackNavigator()
 
@@ -84,20 +85,28 @@ const AppRoutes = () => {
                     }} 
                 />
                 <Screen 
-                    name="BePremiumScreen" 
-                    component={BePremiumScreen}
-                    options={{
-                        headerShown: true,
-                        header: () => <Header title="SEJA PREMIUM" color="#F5F5F5" />
-                    }} 
-                />
-                <Screen 
                     name="UpdatesScreen" 
                     component={UpdatesScreen}
                     options={{
                         headerShown: true,
                         header: () => <Header title="ATUALIZAÇÕES" color="#F5F5F5" />
                     }}
+                />
+                <Screen 
+                    name="DoubtsScreen" 
+                    component={DoubtsScreen}
+                    options={{
+                        headerShown: true,
+                        header: () => <Header title="TIRA DÚVIDAS" color="#F5F5F5" />
+                    }}
+                />
+                <Screen 
+                    name="BePremiumScreen" 
+                    component={BePremiumScreen}
+                    options={{
+                        headerShown: true,
+                        header: () => <Header title="SEJA PREMIUM" color="#F5F5F5" />
+                    }} 
                 />
                 <Screen 
                     name="AddScreen" 

@@ -20,7 +20,7 @@ const UpdatesScreen = () => {
         // Troca a tela de Atualizações pela de benefícios no app gratuito
         <View style={styles.container}>
             <View style={styles.updateBox}>
-                <View style={styles.updateTextMarker} />
+                <View style={styles.textMarker} />
                 <Text style={styles.updateText}>
                     Nosso aplicativo esta em constante desenvolvimento, dia após dia nossa equipe busca maneiras
                     de aperfeiçoar e melhorar o desempenho da aplicação e, consequentemente, a experiência de nossos usuários. Dessa forma, buscamos
@@ -47,7 +47,7 @@ const UpdatesScreen = () => {
                 </View>
             </View>
             <View style={styles.updateBox}>
-                <View style={styles.updateTextMarker} />
+                <View style={styles.textMarker} />
                 <Text style={styles.updateText}>
                     Pretendemos melhorar muuuito o nosso App, portanto se você gostou e deseja que essas novidades cheguem o quanto antes,
                     considere, se possível, continuar contribuindo com o nosso aplicativo e tenha acesso a essas e todas as outras novidades que virão.
@@ -55,7 +55,7 @@ const UpdatesScreen = () => {
                 </Text>
             </View>
             <View style={styles.feedbackBox}>
-                <CustomButton text="AVALIE-NOS" color='#e74e36' onPress={() => {}} />
+                <CustomButton text="AVALIE-NOS" color='#60c3eb' onPress={() => {}} />
             </View>
         </View>
     )

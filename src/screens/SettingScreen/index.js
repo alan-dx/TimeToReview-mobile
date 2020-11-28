@@ -13,6 +13,7 @@ import PushNotification from 'react-native-push-notification';
 import { useNavigation } from '@react-navigation/native';
 import ImagePicker from 'react-native-image-picker';
 import AsyncStorage from '@react-native-community/async-storage';
+import ReportModal from '../../components/ReportModal';
 
 const SettingScreen = () => {
 
@@ -20,6 +21,7 @@ const SettingScreen = () => {
 
     const { user, setUser } = useContext(AuthContext)
     const [handleTimeModal, setHandleTimeModal] = useState(false)
+    const [handleReportModal, setHandleReportModal] = useState(false)
     const [timeHour, setTimeHour] = useState(new Date(user.reminderTime).getHours())
     const [timeMin, setTimeMin] = useState(new Date(user.reminderTime).getMinutes())
     const [filePath, setFilePath] = useState(null)
@@ -122,6 +124,10 @@ const SettingScreen = () => {
           );
     }
 
+    function handleCloseReportModal() {
+        setHandleReportModal(false)
+    }
+
     function handleChangeProfilePhoto() {
        ImagePicker.showImagePicker({
            title: "Selecionar Foto",
@@ -175,16 +181,14 @@ const SettingScreen = () => {
                     <Icon name="chevron-right" size={20} color="#60c3eb" />
                 </RectButton>
                 <RectButton style={styles.optionContainer} onPress={() => navigation.navigate("UpdatesScreen")} >
-                    {/* TROCAR PELA TELA DE BENEFÍCIOS NO APP GRATUITO */}
                     <Text style={styles.optionText}>Futuras atualizações</Text>
                     <Icon name="chevron-right" size={20} color="#60c3eb" />
                 </RectButton>
-                <RectButton style={styles.optionContainer}>
-                    {/* Explicar como funciona o cálclo da próxima data */}
-                    <Text style={styles.optionText}>Reletar problemas</Text>
+                <RectButton style={styles.optionContainer} onPress={() => setHandleReportModal(true)}>
+                    <Text style={styles.optionText}>Entre em contato</Text>
                     <Icon name="chevron-right" size={20} color="#60c3eb" />
                 </RectButton>
-                <RectButton style={styles.optionContainer}>
+                <RectButton style={styles.optionContainer} onPress={() => navigation.navigate("DoubtsScreen")}>
                     {/* Explicar como funciona o cálclo da próxima data */}
                     <Text style={styles.optionText}>Tira dúvidas</Text>
                     <Icon name="chevron-right" size={20} color="#60c3eb" />
@@ -226,6 +230,12 @@ const SettingScreen = () => {
                     modalVisible={handleTimeModal}
                     handleCloseModal={handleCloseTimeModal}
                 /> : null
+            }
+            {
+                handleReportModal ? <ReportModal 
+                    modalVisible={handleReportModal}
+                    handleCloseModal={handleCloseReportModal}
+                />: null
             }
 
         </View>
