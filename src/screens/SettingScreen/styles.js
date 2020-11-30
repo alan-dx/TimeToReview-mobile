@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
     },
     profileEmail: {
         color: '#707070',
-        fontFamily: 'Poppins-Normal',
+        fontFamily: 'Archivo-Normal',
         fontSize: 14
     },
     body: {
@@ -45,6 +45,8 @@ const styles = StyleSheet.create({
     optionContainer: {
         height: 40,
         borderRadius: 20,
+
+        padding: 5,
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',

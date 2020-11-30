@@ -58,11 +58,6 @@ const ReviewsScreen = (props) => {
         setPerformance(performance)
     }
 
-    function handlePressGoBack() {
-        navigation.goBack()
-        props.route.params.onGoBack(allReviews)
-    }
-
     function handlePressGoToAddScreen() {
         navigation.navigate("AddScreen", {
             onGoBack: handleUpdateDataOnAdd

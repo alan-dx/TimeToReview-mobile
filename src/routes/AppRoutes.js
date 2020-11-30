@@ -19,6 +19,7 @@ import Header from '../components/Header';
 import BePremiumScreen from '../screens/BePremiumScreen';
 import UpdatesScreen from '../screens/UpdatesScreen';
 import DoubtsScreen from '../screens/DoubtsScreen';
+import ProfileScreen from '../screens/ProfileScreen';
 
 const {Screen, Navigator} = createStackNavigator()
 
@@ -99,6 +100,14 @@ const AppRoutes = () => {
                         headerShown: true,
                         header: () => <Header title="TIRA DÚVIDAS" color="#F5F5F5" />
                     }}
+                />
+                <Screen 
+                    name="ProfileScreen" 
+                    component={ProfileScreen}
+                    options={({ navigation, route }) => ({
+                        headerShown: true,
+                        header: () => <Header route={route} navigation={navigation} title="SEU PERFIL" color="#F5F5F5" />
+                    })}
                 />
                 <Screen 
                     name="BePremiumScreen" 

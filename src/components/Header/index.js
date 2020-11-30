@@ -27,6 +27,9 @@ const Header = (props) => {
             }
         } else {
             navigation.goBack()
+            props.route?.params.onGoBack(props.route?.params.passData)
+            //route and navigation passed in AppRoutes
+
         }
     }
 

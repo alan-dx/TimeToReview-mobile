@@ -15,11 +15,12 @@ import ImagePicker from 'react-native-image-picker';
 import AsyncStorage from '@react-native-community/async-storage';
 import ReportModal from '../../components/ReportModal';
 
-const SettingScreen = () => {
+const SettingScreen = (props) => {
 
     const navigation = useNavigation()
 
     const { user, setUser } = useContext(AuthContext)
+    const [userName, setUserName] = useState(user.name)
     const [handleTimeModal, setHandleTimeModal] = useState(false)
     const [handleReportModal, setHandleReportModal] = useState(false)
     const [timeHour, setTimeHour] = useState(new Date(user.reminderTime).getHours())
@@ -159,6 +160,13 @@ const SettingScreen = () => {
        })
     }
 
+    function handleUpdateUserData(newName) {
+        if (newName) {
+            console.log(newName)
+            setUserName(newName)
+        }
+    }
+
     return (
         <View style={styles.container}>
             <View style={styles.header}>
@@ -168,7 +176,7 @@ const SettingScreen = () => {
                         <Icon name="camera" size={40} color="#303030" />
                     }
                 </RectButton>
-                <Text style={styles.profileName}>{user.name}</Text>
+                <Text style={styles.profileName}>{userName}</Text>
                 <Text style={styles.profileEmail}>{user.email}</Text>
             </View>
             <View style={styles.body}>
@@ -193,7 +201,9 @@ const SettingScreen = () => {
                     <Text style={styles.optionText}>Tira dúvidas</Text>
                     <Icon name="chevron-right" size={20} color="#60c3eb" />
                 </RectButton>
-                <RectButton style={styles.optionContainer}>
+                <RectButton style={styles.optionContainer} onPress={() => navigation.navigate("ProfileScreen", {
+                    onGoBack: handleUpdateUserData
+                })}>
                     <Text style={styles.optionText}>Seu perfil</Text>
                     <Icon name="chevron-right" size={20} color="#60c3eb" />
                 </RectButton>

@@ -3,7 +3,7 @@ import {Modal, Text, View, TouchableHighlight, TextInput, Linking} from 'react-n
 import styles from './styles';
 import Icon from 'react-native-vector-icons/AntDesign';
 
-const ReportModal = (props) => {
+const InfoModal = (props) => {
 
     return (
         <Modal
@@ -32,4 +32,4 @@ const ReportModal = (props) => {
     )
 }
 
-export default ReportModal;
+export default InfoModal;
