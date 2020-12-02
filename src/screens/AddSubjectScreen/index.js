@@ -8,11 +8,13 @@ import { useNavigation } from '@react-navigation/native';
 import ColorPicker from '../../components/ColorPicker';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import api from '../../services/api';
+import AuthContext from '../../contexts/auth';
 
 const AddSubjectScreen = (props) => {
 
     const navigation = useNavigation()
 
+    const { logoutContext } = useContext(AuthContext)
     const [titleSubject, setTitleSubject] = useState('')
     const [markerSubject, setMarkerSubject] = useState('')
 
@@ -29,14 +31,18 @@ const AddSubjectScreen = (props) => {
                 title: titleSubject,
                 marker: markerSubject
             }).then((response) => {
-                if (response) {
-                    props.route.params.onGoBack(response.data)
-                    navigation.goBack()
-                } else {
-                    alert("Houve um erro durante a criação da disciplina, tente novamente!")
-                }
+                props.route.params.onGoBack(response.data)
+                navigation.goBack()
             }).catch((err) => {
                 console.log(err)
+                if (err == 'Error: Request failed with status code 500') {
+                    alert("Erro interno do servidor, tente novamente mais tarde!.")
+                } else if (err = 'Error: Network Error') {
+                    alert("Sessão expirada!")
+                    logoutContext()
+                } else {
+                    alert('Houve um erro ao tentar salvar sua matéria no banco de dados, tente novamente!')
+                }
             })
         }
     }

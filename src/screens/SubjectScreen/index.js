@@ -17,10 +17,6 @@ const SubjectScreen = (props) => {
 
     const navigation = useNavigation()
 
-    function handleClickGoBack() {
-        navigation.goBack()
-    }
-
     function handlePressGoToAddSubjectScreen() {
         navigation.navigate("AddSubjectScreen", {
             onGoBack: handleUpdateDataOnAdd
@@ -76,7 +72,15 @@ const SubjectScreen = (props) => {
                     setSubjects(newData)
                 }
             }).catch((err) => {
-                alert(err)
+                console.log(err)
+                if (err == 'Error: Request failed with status code 500') {
+                    alert("Erro interno do servidor, tente novamente mais tarde!.")
+                } else if (err = 'Error: Network Error') {
+                    alert("Sessão expirada!")
+                    logoutContext()
+                } else {
+                    alert('Houve um erro ao tentar deletar sua matéria no banco de dados, tente novamente!')
+                }
             })
         } else {
             alert("Você não pode deletar esta matéria, pois ainda há revisões associadas a ela!")

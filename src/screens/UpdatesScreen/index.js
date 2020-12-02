@@ -3,7 +3,6 @@ import { View, Text } from 'react-native';
 import styles from './styles';
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/AntDesign';
-import Icon2 from 'react-native-vector-icons/Entypo';
 import Icon3 from 'react-native-vector-icons/SimpleLineIcons';
 import CustomButton from '../../components/CustomButton';
 

@@ -67,14 +67,8 @@ const LoginScreen = () => {
     }
 
 
-    function handleClickBackButton() {
-        navigation.goBack();
-    }
-
     function handleClickSignInButton() {
-        signInContext({email, password}).then(() => {
-            navigation.goBack()
-        })
+        signInContext({email, password})
     }
 
     return (

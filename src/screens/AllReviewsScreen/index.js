@@ -13,7 +13,7 @@ const AllReviewsScreen = (props) => {
     //PARA FAZER O FILTRO UTILIZE DOIS CAMPOS (ROTINAS E MATÉRIAS), QUANDO SELECIONAR UMA ROTINA/MATÉRIA
     //PARA FILTRAR A LISTA EDITE O DATA DO FLATLIST FILTRANDO AS REVISÕES
 
-    const { allReviews, setAllReviews, subjects, setSubjects, routines, setRoutines } = useContext(AuthContext)
+    const { allReviews, setAllReviews, subjects, setSubjects, routines, setRoutines, logoutContext } = useContext(AuthContext)
 
     const [data, setData] = useState(allReviews)
     const navigation = useNavigation()
@@ -27,7 +27,17 @@ const AllReviewsScreen = (props) => {
         }).then((response) => {
             alert("Revisão deletada com sucesso!")
         }).catch((err) => {
-            alert(err)
+            console.log(err)
+            if (err == 'Error: Request failed with status code 500') {
+                alert("Erro interno do servidor, tente novamente mais tarde!")
+            } else if (err = 'Error: Network Error') {
+                alert("Sessão expirada!")
+                logoutContext()
+            } else if (err = 'Error: Request failed with status code 401') {
+                alert('Opa! Isso não deveria acontecer, entre em contato com o suporte relatando um erro do tipo NTO')
+            } else {
+                alert('Houve um erro ao tentar deltar sua revisão no banco de dados, tente novamente!')
+            }
         })
 
         const newData = data.filter(item => item._id != review._id)//to update flatlist

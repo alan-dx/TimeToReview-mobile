@@ -17,7 +17,7 @@ const ReviewsScreen = (props) => {
 
     const currentDate = new Date()
 
-    const { reviews, allReviews, setAllReviews, performance, setPerformance } = useContext(AuthContext)
+    const { reviews, allReviews, setAllReviews, performance, setPerformance, logoutContext } = useContext(AuthContext)
 
     const [data, setData] = useState(reviews)
     const [dataCycles, setDataCycles] = useState(performance[currentDate.getDay()].cycles)
@@ -47,7 +47,15 @@ const ReviewsScreen = (props) => {
             setAllReviews(newAllReviews)
             
         }).catch((err) => {
-            alert(err)
+            console.log(err)
+                if (err == 'Error: Request failed with status code 500') {
+                    alert("Erro interno do servidor, tente novamente mais tarde!")
+                } else if (err = 'Error: Network Error') {
+                    alert("Sessão expirada!")
+                    logoutContext()
+                } else {
+                    alert('Houve um erro ao tentar concluir sua revisão, tente novamente!')
+                }
         })
 
         const newData = data.filter(item => item._id != id)//to update flatlist, removing the conclude review

@@ -13,7 +13,7 @@ import MyModal from '../../components/MyModal';
 
 const RoutineScreen = (props) => {
 
-    const {routines, setRoutines, reviews, allReviews} = useContext(AuthContext)
+    const {routines, setRoutines, logoutContext, allReviews} = useContext(AuthContext)
 
     const [data, setData] = useState(routines)
     const [modalAddVisible, setModalAddVisible] = useState(false)
@@ -50,7 +50,15 @@ const RoutineScreen = (props) => {
                 setSequenceRoutine('')
                 setDataToEdit('')
             }).catch((err) => {
-                alert(err)
+                console.log(err)
+                if (err == 'Error: Request failed with status code 500') {
+                    alert("Erro interno do servidor, tente novamente mais tarde!")
+                } else if (err = 'Error: Network Error') {
+                    alert("Sessão expirada!")
+                    logoutContext()
+                } else {
+                    alert('Houve um erro ao tentar salvar sua rotina no banco de dados, tente novamente!')
+                }
             })
         } else {
             setModalAddVisible(false)
@@ -67,12 +75,22 @@ const RoutineScreen = (props) => {
                     id: routine._id
                 }
             }).then((response) => {
-                alert("Matéria deletada com sucesso!")
+                alert("Rotina deletada com sucesso!")
                 const newData = data.filter(item => item._id != routine._id)
                 setData(newData)
                 setRoutines(newData)
             }).catch((err) => {
-                alert(err)
+                console.log(err)
+                if (err == 'Error: Request failed with status code 500') {
+                    alert("Erro interno do servidor, tente novamente mais tarde!")
+                } else if (err = 'Error: Network Error') {
+                    alert("Sessão expirada!")
+                    logoutContext()
+                } else if (err = 'Error: Request failed with status code 401') {
+                    alert('Opa! Isso não deveria acontecer, entre em contato com o suporte relatando um erro do tipo NTO')
+                } else {
+                    alert('Houve um erro ao tentar salvar sua rotina no banco de dados, tente novamente!')
+                }
             })
         } else {
             alert("Você não pode deletar esta rotina, pois ainda há revisões associadas a ela!")
@@ -125,7 +143,15 @@ const RoutineScreen = (props) => {
                 setSequenceRoutine('')
                 setDataToEdit('')
             }).catch((err) => {
-                alert(err)
+                console.log(err)
+                if (err == 'Error: Request failed with status code 500') {
+                    alert("Erro interno do servidor, tente novamente mais tarde!")
+                } else if (err = 'Error: Network Error') {
+                    alert("Sessão expirada!")
+                    logoutContext()
+                } else {
+                    alert('Houve um erro ao tentar salvar sua rotina no banco de dados, tente novamente!')
+                }
             })
         } else {
             alert('ROTINA NÃO EDITADA. Você não pode criar uma rotina sem uma sequência de revisão, preencha todos os campos corretamente!')

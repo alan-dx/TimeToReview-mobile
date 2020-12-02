@@ -20,6 +20,8 @@ import BePremiumScreen from '../screens/BePremiumScreen';
 import UpdatesScreen from '../screens/UpdatesScreen';
 import DoubtsScreen from '../screens/DoubtsScreen';
 import ProfileScreen from '../screens/ProfileScreen';
+import VerifyPassScreen from '../screens/VerifyPassScreen';
+import ChangePassScreen from '../screens/ChangePassScreen';
 
 const {Screen, Navigator} = createStackNavigator()
 
@@ -107,6 +109,22 @@ const AppRoutes = () => {
                     options={({ navigation, route }) => ({
                         headerShown: true,
                         header: () => <Header route={route} navigation={navigation} title="SEU PERFIL" color="#F5F5F5" />
+                    })}
+                />
+                <Screen 
+                    name="VerifyPassScreen" 
+                    component={VerifyPassScreen}
+                    options={({ navigation, route }) => ({
+                        headerShown: true,
+                        header: () => <Header title="" color="#F5F5F5" />
+                    })}
+                />
+                <Screen 
+                    name="ChangePassScreen" 
+                    component={ChangePassScreen}
+                    options={({ navigation, route }) => ({
+                        headerShown: true,
+                        header: () => <Header title="" color="#F5F5F5" />
                     })}
                 />
                 <Screen 

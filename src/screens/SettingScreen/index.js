@@ -19,7 +19,7 @@ const SettingScreen = (props) => {
 
     const navigation = useNavigation()
 
-    const { user, setUser } = useContext(AuthContext)
+    const { user, setUser, logoutContext } = useContext(AuthContext)
     const [userName, setUserName] = useState(user.name)
     const [handleTimeModal, setHandleTimeModal] = useState(false)
     const [handleReportModal, setHandleReportModal] = useState(false)
@@ -87,24 +87,32 @@ const SettingScreen = (props) => {
             notifications
                 .configure()
                 .localNotificationSchedule(
-                {
-                    channelId: "default-channel-id",
-                    title:'TimeToReview!',
-                    message:`É hora de revisar, vamos lá? Não deixe pra depois...`,
-                    date: new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate(), reminderTime.getHours(), reminderTime.getMinutes(), reminderTime.getSeconds()),
-                    vibrate:500,
-                    priority: "high",
-                    repeatType: "day",
-                    allowWhileIdle: true
-                }
-        )
+                    {
+                        channelId: "default-channel-id",
+                        title:'TimeToReview!',
+                        message:`É hora de revisar, vamos lá? Não deixe pra depois...`,
+                        date: new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate(), reminderTime.getHours(), reminderTime.getMinutes(), reminderTime.getSeconds()),
+                        vibrate:500,
+                        priority: "high",
+                        repeatType: "day",
+                        allowWhileIdle: true
+                    }
+                )
         }).catch((err) => {
-            alert(err, "Houve um erro durante a edição do horário, tente novamente!")
+            console.log(err)
+                if (err == 'Error: Request failed with status code 500') {
+                    alert("Erro interno do servidor, tente novamente mais tarde!")
+                } else if (err = 'Error: Network Error') {
+                    alert("Sessão expirada!")
+                    logoutContext()
+                } else {
+                    alert('Houve um erro ao tentar modificar o horário de lembrete, tente novamente!')
+                }
         })
 
     }
 
-    function handleCleanCharts() {
+    function handleResetCharts() {
         Alert.alert(
             "Atenção!",
             "Você tem certeza que deseja zerar os gráficos de desempenho? Essa ação é realizada automaticamente toda segunda-feira.",
@@ -118,7 +126,17 @@ const SettingScreen = (props) => {
                 api.get('/resetCharts').then((response) => {
                     ToastAndroid.show('Gráficos e ciclos resetados!', 600)
                     navigation.navigate("PreLoadScreen")
-                }).catch((err) => alert(err))
+                }).catch((err) => {
+                    console.log(err)
+                    if (err == 'Error: Request failed with status code 500') {
+                        alert('Erro interno do servidor, tente novamente mais tarde!')
+                    } else if (err == 'Error: Network Error') {
+                        alert('Sessão expirada!')
+                        logoutContext()
+                    } else {
+                        alert('Houve um erro desconhecido, tente novamente mais tarde!')
+                    }
+                })
               }}
             ],
             { cancelable: false }
@@ -180,7 +198,7 @@ const SettingScreen = (props) => {
                 <Text style={styles.profileEmail}>{user.email}</Text>
             </View>
             <View style={styles.body}>
-                <RectButton style={styles.optionContainer} onPress={handleCleanCharts}>
+                <RectButton style={styles.optionContainer} onPress={handleResetCharts}>
                     <Text style={styles.optionText}>Zerar dados de desempenho</Text>
                     <Icon name="chevron-right" size={20} color="#60c3eb" />
                 </RectButton>

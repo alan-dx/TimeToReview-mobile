@@ -47,13 +47,20 @@ export const AuthProvider = (props) => {
             if (response.data) {
                 const { token } = response.data;
                 api.defaults.headers["Authorization"] = `Bearer ${token}`
-                AsyncStorage.setItem("@TTR:token", token)
+               await AsyncStorage.setItem("@TTR:token", token)
                 // AsyncStorage.setItem("@TTR:user", JSON.stringify(user))
                 setToken(token)
                 // setUser(user)
             }
         } catch (error) {
-            alert(`Senha/Email Incorretos. Verifique e tente novamente!, ${error}`)
+            console.log(error)
+            if (error == 'Error: Request failed with status code 401') {
+                alert(`Senha/Email Incorretos. Verifique e tente novament!`)
+            } else if ( error == 'Error: Request failed with status code 404') {
+                alert('Usuário não encontrado! Verifique se há uma conta cadastrada ' + 
+                'com esse email, caso contrário entre em contato com nossa equipe.')
+            }
+
         }
     }
 

@@ -11,7 +11,7 @@ import AuthContext from '../../contexts/auth';
 
 const AddScreen = (props) => {
 
-    const {routines, subjects, setSubjects, setRoutines, setAllReviews, allReviews} = useContext(AuthContext)
+    const {routines, subjects, setSubjects, setRoutines, setAllReviews, allReviews, logoutContext} = useContext(AuthContext)
 
     const [titleReview, setTitleReview] = useState('')
     const [subjectReview, setSubjectReview] = useState('')
@@ -41,29 +41,37 @@ const AddScreen = (props) => {
                 subject_id: subjectReview._id,
                 dateNextSequenceReview: dateNextSequenceReview
             }).then((response) => {
-                if (response) {
-                    navigation.goBack()
-                    setAllReviews([...allReviews, response.data])
 
-                    subjects.forEach(item => {
-                        if (item._id == subjectReview._id) {
-                            item.associatedReviews.push(response.data._id)
-                        }
-                    })
+                navigation.goBack()
+                setAllReviews([...allReviews, response.data])
 
-                    routines.forEach(item => {
-                        if (item._id == routineReview._id) {
-                            item.associatedReviews.push(response.data._id)
-                        }
-                    })
-
-                    if (dateNextSequenceReview.getDate() == currentDate.getDate()) {
-                        props.route.params.onGoBack(response.data)
+                subjects.forEach(item => {
+                    if (item._id == subjectReview._id) {
+                        item.associatedReviews.push(response.data._id)
                     }
-                } else {
-                    alert("Houve um erro durante a criação da revisão, tente novamente!")
+                })
+
+                routines.forEach(item => {
+                    if (item._id == routineReview._id) {
+                        item.associatedReviews.push(response.data._id)
+                    }
+                })
+
+                if (dateNextSequenceReview.getDate() == currentDate.getDate()) {
+                    props.route.params.onGoBack(response.data)
                 }
-            }).catch((err) => console.log(err))
+
+            }).catch((err) => {
+                console.log(err)
+                if (err == 'Error: Request failed with status code 500') {
+                    alert("Erro interno do servidor, tente novamente mais tarde!.")
+                } else if (err = 'Error: Network Error') {
+                    alert("Sessão expirada!")
+                    logoutContext()
+                } else {
+                    alert('Houve um erro ao tentar salvar sua revisão no banco de dados, tente novamente!')
+                }
+            })
         }
 
     }

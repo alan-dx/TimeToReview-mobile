@@ -84,7 +84,8 @@ const ProfileScreen = () => {
         api.get('/verifyToken').then((response) => {
             navigation.navigate("VerifyPassScreen")
         }).catch((err) => {
-            alert(err)
+            alert('Sessão expirada!')
+            logoutContext()
         })
     }
 
@@ -112,7 +113,7 @@ const ProfileScreen = () => {
                 <Text style={styles.infoText}>{allReviews.length} revisões, {routines.length} rotinas e {subjects.length} matérias cadastradas</Text>
             </View>
             <View style={styles.menuBox}>
-                <RectButton style={styles.optionContainer}>
+                <RectButton style={styles.optionContainer}  onPress={handleChangePass}>
                     <Text style={styles.optionText}>Quero redefinir minha senha</Text>
                     <Icon name="chevron-right" size={20} color="#60c3eb" />
                 </RectButton>

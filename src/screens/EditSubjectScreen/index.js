@@ -7,12 +7,15 @@ import Input from '../../components/Input';
 import { useNavigation } from '@react-navigation/native';
 import ColorPicker from '../../components/ColorPicker';
 import api from '../../services/api';
+import AuthContext from '../../contexts/auth';
 
 const EditSubjectScreen = (props) => {
 
     const screenData = props.route.params.screenData
 
     const navigation = useNavigation()
+
+    const {logoutContext} = useContext(AuthContext)
 
     const [titleSubject, setTitleSubject] = useState(screenData.label)
     const [markerSubject, setMarkerSubject] = useState(screenData.marker)
@@ -35,12 +38,18 @@ const EditSubjectScreen = (props) => {
                         id: screenData._id
                     }
                 }).then((response) => {
-                    if (response) {
-                        navigation.goBack()
-                        props.route.params.onGoBack(response.data.subject)
-                    }
+                    navigation.goBack()
+                    props.route.params.onGoBack(response.data.subject)
                 }).catch((err) => {
-                    alert(err)
+                    console.log(err)
+                    if (err == 'Error: Request failed with status code 500') {
+                        alert("Erro interno do servidor, tente novamente mais tarde!.")
+                    } else if (err = 'Error: Network Error') {
+                        alert("Sessão expirada!")
+                        logoutContext()
+                    } else {
+                        alert('Houve um erro ao tentar salvar sua matéria no banco de dados, tente novamente!')
+                    }
                 })
             } else {
                 navigation.goBack()

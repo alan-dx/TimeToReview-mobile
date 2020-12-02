@@ -13,7 +13,7 @@ const EditScreen = (props) => {
 
     const dataScreen = props.route.params.screenData
 
-    const {routines, subjects, setSubjects, allReviews, setAllReviews } = useContext(AuthContext)
+    const {routines, subjects, setSubjects, allReviews, setAllReviews, logoutContext } = useContext(AuthContext)
 
     const [min,seg] = dataScreen.timer.split(':')
 
@@ -50,20 +50,26 @@ const EditScreen = (props) => {
                     id: dataScreen._id
                 }
             }).then((response) => {
-                if (response) {
-                    const index = allReviews.findIndex(item => item._id == response.data.review._id)
-                    const newAllReviews = allReviews
-                    newAllReviews[index] = response.data.review
 
-                    setAllReviews(newAllReviews)
+                const index = allReviews.findIndex(item => item._id == response.data.review._id)
+                const newAllReviews = allReviews
+                newAllReviews[index] = response.data.review
 
-                    props.route.params.onGoBack(response.data.review)
-                    navigation.goBack()
-                } else {
-                    alert("Houve um erro durante a edição da revisão, tente novamente!")
-                }
+                setAllReviews(newAllReviews)
+
+                props.route.params.onGoBack(response.data.review)
+                navigation.goBack()
+                
             }).catch((err) => {
-                alert(err)
+                console.log(err)
+                if (err == 'Error: Request failed with status code 500') {
+                    alert("Erro interno do servidor, tente novamente mais tarde!.")
+                } else if (err = 'Error: Network Error') {
+                    alert("Sessão expirada!")
+                    logoutContext()
+                } else {
+                    alert('Houve um erro ao tentar salvar sua revisão no banco de dados, tente novamente!')
+                }
             })
         }
 

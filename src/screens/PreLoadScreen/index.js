@@ -12,6 +12,7 @@ const PreLoadScreen = () => {
         loadServerData().then((response) => {
             
             // const reminderTime = new Date(response.data.reminderTime)
+            console.log(response.data.change)
 
             setUser({
                 name: response.data.name,
@@ -38,7 +39,7 @@ const PreLoadScreen = () => {
             console.log(response.data.reminderTime)
 
         }).catch((err) => {
-            console.log(err)
+            alert('Sessão expirada!')
             logoutContext()
         })
     }, [])

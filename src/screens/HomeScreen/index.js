@@ -116,7 +116,7 @@ const HomeScreen = () => {
                 </View>
                 <View style={styles.menuItemBox}>
                     <MenuButton color="#FFF" textColor="#606060" onPress={handleGoToBePremiumScreen} title="Dicas de Estudo">
-                        <Icon2 name="trending-up" size={23} color="#303030" />
+                        <Icon name="bulb1" size={23} color="#303030" />
                     </MenuButton>
                 </View>
                 <View style={styles.menuItemBox}>
