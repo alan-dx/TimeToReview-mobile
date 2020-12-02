@@ -229,7 +229,7 @@ const SettingScreen = (props) => {
                     <Text style={styles.optionText}>Tutorial</Text>
                     <Icon name="chevron-right" size={20} color="#60c3eb" />
                 </RectButton>
-                <RectButton style={styles.optionContainer}>
+                <RectButton style={styles.optionContainer} onPress={() => navigation.navigate("AboutScreen")}>
                     <Text style={styles.optionText}>Sobre</Text>
                     <Icon name="chevron-right" size={20} color="#60c3eb" />
                 </RectButton>

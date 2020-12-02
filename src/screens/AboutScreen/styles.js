@@ -8,11 +8,14 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-around'
     },
-    updateBox: {
+    aboutBox: {
         width: '100%',
-        
-        flexDirection: 'row',
-        justifyContent: 'center',
+        flex: 1,
+    },
+    logoBox: {
+        marginVertical: 5,
+        alignItems: 'center',
+        justifyContent: 'center'
     },
     textMarker: {
         width: 6, 
@@ -23,29 +26,34 @@ const styles = StyleSheet.create({
         margin: 5,
         marginTop: 10
     },
-    updateText: {
+    aboutTextBox: {
+        flexDirection: 'row',
+        marginVertical: 5,
+
+    },
+    aboutText: {
         fontFamily: 'Archivo',
-        fontSize: 18,
+        fontSize: 16,
         color: '#303030',
         width: '90%',
         
         textAlign: 'justify'
     },
-    updateItemBox: {
+    aboutItemBox: {
         width: '50%',
         marginVertical: 10,
         
         alignItems: 'center',
         
     },
-    updateItem: {
+    aboutItem: {
         marginBottom: 10,
         width: '100%',
         
         flexDirection: 'row',
         alignItems: 'center',
     },
-    updateItemText: {
+    aboutItemText: {
         fontFamily: 'Archivo',
         color: '#505050',
         fontSize: 15
@@ -53,6 +61,11 @@ const styles = StyleSheet.create({
     feedbackBox: {
         width: '70%',
         alignItems: 'center'
+    },
+    titleChart: {
+        fontWeight: 'bold',
+        fontSize: 16,
+        fontFamily: 'Archivo'
     }
 })
 

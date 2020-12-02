@@ -45,8 +45,8 @@ const styles = StyleSheet.create({
 
     },
     textMarker: {
-        width: 8, 
-        height: 8, 
+        width: 6, 
+        height: 6, 
         backgroundColor: '#303030',
         borderRadius: 10,
 

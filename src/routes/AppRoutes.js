@@ -22,6 +22,7 @@ import DoubtsScreen from '../screens/DoubtsScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import VerifyPassScreen from '../screens/VerifyPassScreen';
 import ChangePassScreen from '../screens/ChangePassScreen';
+import AboutScreen from '../screens/AboutScreen';
 
 const {Screen, Navigator} = createStackNavigator()
 
@@ -101,6 +102,14 @@ const AppRoutes = () => {
                     options={{
                         headerShown: true,
                         header: () => <Header title="TIRA DÚVIDAS" color="#F5F5F5" />
+                    }}
+                />
+                <Screen 
+                    name="AboutScreen" 
+                    component={AboutScreen}
+                    options={{
+                        headerShown: true,
+                        header: () => <Header title="SOBRE" color="#F5F5F5" />
                     }}
                 />
                 <Screen 
