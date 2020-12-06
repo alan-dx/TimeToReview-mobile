@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
 
         marginBottom: 5
     },
-    chartBox: {
+    performanceItemBox: {
         width: '95%',
         backgroundColor: '#FFF',
         borderRadius: 20,
@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         alignItems: 'center',
     },
-    textChartPieBox: {
+    textBold: {
         marginTop: 5,
         fontFamily: 'Archivo-SemiBold',
         fontSize: 17,
@@ -43,10 +43,12 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between'
     },
-    subLineText: {
-        fontFamily: 'Archivo-Medium',
-        fontSize: 11,
-        color: '#606060'
+    subText: {
+        fontFamily: 'Archivo-SemiBold',
+        fontSize: 14,
+        color: '#606060',
+
+        marginBottom: 3
     }
 })
 

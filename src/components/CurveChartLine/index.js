@@ -72,7 +72,7 @@ const CurveChartLine = (props) => {
                     });
                 }}
                 chartConfig={{
-                    backgroundColor: "#F5F5F4",
+                    backgroundColor: "#F5F5F5",
                     backgroundGradientFrom: "#F5F5F5",
                     backgroundGradientTo: "#F5F5F5",
                     decimalPlaces: 0, // optional, defaults to 2dp

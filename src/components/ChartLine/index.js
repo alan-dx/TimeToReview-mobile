@@ -26,7 +26,6 @@ const ChartLine = (props) => {
                         data: data
                     }
                     ],
-                    legend: ["Número de revisões/dia"]
                 }}
                 width={Dimensions.get("window").width * 0.95} // from react-native
                 height={props.height}

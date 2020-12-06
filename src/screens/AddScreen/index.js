@@ -8,6 +8,7 @@ import { useNavigation } from '@react-navigation/native';
 import PickerInfo from '../../components/Picker';
 import api from '../../services/api';
 import AuthContext from '../../contexts/auth';
+import AsyncStorage from '@react-native-community/async-storage';
 
 const AddScreen = (props) => {
 
@@ -75,7 +76,7 @@ const AddScreen = (props) => {
         }
 
     }
-
+    //ADICIONAR A DATA DE QUANDO FOI CRIADA
     return (
         <KeyboardAvoidingView style={styles.container}>
             <View style={styles.header}>

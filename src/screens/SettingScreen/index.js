@@ -31,6 +31,7 @@ const SettingScreen = (props) => {
 
         async function loadStorageProfilePhoto() {
             let source = await AsyncStorage.getItem("@TTR:profilephoto")
+            console.log(source)
             setFilePath(JSON.parse(source))
         }
 
@@ -185,6 +186,26 @@ const SettingScreen = (props) => {
         }
     }
 
+    function handleRestartTutorial() {
+        Alert.alert(
+            "Feito!",
+            "O tutorial das telas foi reinicado com sucesso, para visualizar novamente basta acessar a tela desejada no menu.",
+            [
+              {
+                text: "Confirmar",
+                onPress: async () => {
+                    await AsyncStorage.removeItem("@TTR:firstTimeReviewsScreen")
+                    await AsyncStorage.removeItem("@TTR:firstTimeAllReviewsScreen")
+                    await AsyncStorage.removeItem("@TTR:firstTimeRoutineScreen")
+                    await AsyncStorage.removeItem("@TTR:firstTimeSubjectScreen")
+                },
+                style: "cancel"
+              },
+            ],
+            { cancelable: false }
+          );
+    }
+
     return (
         <View style={styles.container}>
             <View style={styles.header}>
@@ -210,6 +231,10 @@ const SettingScreen = (props) => {
                     <Text style={styles.optionText}>Futuras atualizações</Text>
                     <Icon name="chevron-right" size={20} color="#60c3eb" />
                 </RectButton>
+                <RectButton style={styles.optionContainer} onPress={handleRestartTutorial}>
+                    <Text style={styles.optionText}>Reiniciar o tutorial</Text>
+                    <Icon name="chevron-right" size={20} color="#60c3eb" />
+                </RectButton>
                 <RectButton style={styles.optionContainer} onPress={() => setHandleReportModal(true)}>
                     <Text style={styles.optionText}>Entre em contato</Text>
                     <Icon name="chevron-right" size={20} color="#60c3eb" />
@@ -223,10 +248,6 @@ const SettingScreen = (props) => {
                     onGoBack: handleUpdateUserData
                 })}>
                     <Text style={styles.optionText}>Seu perfil</Text>
-                    <Icon name="chevron-right" size={20} color="#60c3eb" />
-                </RectButton>
-                <RectButton style={styles.optionContainer}>
-                    <Text style={styles.optionText}>Tutorial</Text>
                     <Icon name="chevron-right" size={20} color="#60c3eb" />
                 </RectButton>
                 <RectButton style={styles.optionContainer} onPress={() => navigation.navigate("AboutScreen")}>

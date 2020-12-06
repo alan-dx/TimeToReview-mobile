@@ -38,11 +38,11 @@ const UpdatesScreen = () => {
                 </View>
                 <View style={styles.updateItem}>
                     <Icon3 name="microphone" size={25} color="#303030" style={{marginRight: 5}} />
-                    <Text style={styles.updateItemText}>Gravador de aúdio-aulas;</Text>
+                    <Text style={styles.updateItemText}>Aúdios associados as revisões;</Text>
                 </View>
                 <View style={styles.updateItem}>
                     <Icon name="tagso" size={25} color="#303030" style={{marginRight: 5}} />
-                    <Text style={styles.updateItemText}>Post-it/Lembretes virtuais;</Text>
+                    <Text style={styles.updateItemText}>Anotações associadas as revisões;</Text>
                 </View>
             </View>
             <View style={styles.updateBox}>

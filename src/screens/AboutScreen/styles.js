@@ -29,7 +29,6 @@ const styles = StyleSheet.create({
     aboutTextBox: {
         flexDirection: 'row',
         marginVertical: 5,
-
     },
     aboutText: {
         fontFamily: 'Archivo',
@@ -39,28 +38,12 @@ const styles = StyleSheet.create({
         
         textAlign: 'justify'
     },
-    aboutItemBox: {
-        width: '50%',
-        marginVertical: 10,
-        
-        alignItems: 'center',
-        
-    },
     aboutItem: {
         marginBottom: 10,
         width: '100%',
         
         flexDirection: 'row',
         alignItems: 'center',
-    },
-    aboutItemText: {
-        fontFamily: 'Archivo',
-        color: '#505050',
-        fontSize: 15
-    },
-    feedbackBox: {
-        width: '70%',
-        alignItems: 'center'
     },
     titleChart: {
         fontWeight: 'bold',

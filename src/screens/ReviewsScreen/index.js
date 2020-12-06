@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect, useRef } from 'react';
-import { View, FlatList, ToastAndroid } from 'react-native';
+import { View, FlatList, ToastAndroid, Text } from 'react-native';
 import styles from './styles';
+import stylesSteps from './stylesSteps';
 import { useNavigation } from '@react-navigation/native';
 import ReviewContainer from '../../components/ReviewContainer';
 import FloatAddButton from '../../components/FloatAddButton';
@@ -9,6 +10,8 @@ import AuthContext from '../../contexts/auth';
 import CicleContainer from '../../components/CicleContainer';
 import timeFormat from '../../utils/formatDateTime';
 import AsyncStorage from '@react-native-community/async-storage';
+import ScreenTutorial from '../../components/ScreenTutorial';
+import Icon from 'react-native-vector-icons/AntDesign';
 
 
 const ReviewsScreen = (props) => {
@@ -24,13 +27,99 @@ const ReviewsScreen = (props) => {
     const navigation = useNavigation()
     const [startController, setStartController] = useState(true)
     const [reviewInitTime, setReviewInitTime] = useState(new Date())
+    const [handleOpenTutorialModal, setHandleOpenTutorialModal] = useState(false)
 
     const cycleFlatList = useRef(null)
 
     useEffect(() => {
-        console.log(startController)
-        navigation.setParams({finishCycleActive: startController})//EM OUTRAS TELAS, TALVEZ SEJA NECESSÁRIO PASSAR SEMPRE COMO TRUE
+        navigation.setParams({finishCycleActive: startController})
     }, [startController])
+
+    //User tutorial
+    let Step0 = <View style={stylesSteps.container}>
+        <Text style={stylesSteps.desciptionText}>
+            Seja bem vindo a tela de Revisões.
+            {"\n"}
+            {"\n"}
+            Aqui é onde você irá criar, editar e concluir uma revisão pendente.
+        </Text>
+    </View>
+    let Step1 = <View style={stylesSteps.container}>
+        <View style={stylesSteps.floatAddButton}>
+            <Icon name="plus" size={20} color="#FCFCFC" />
+        </View>
+        <Text style={stylesSteps.desciptionText}>Esse é o botão que você ira utilizar quando desejar criar novas revisões!</Text>
+    </View>
+    let Step2 = <View style={stylesSteps.container}>
+        <View style={stylesSteps.timerBox}>
+            <View style={stylesSteps.timerController}>
+                <Icon  name="check" size={25} color="#303030" />
+            </View>
+            <Text style={stylesSteps.timerText2}>Início: 17:25:32</Text>
+                <Text style={stylesSteps.timerText2}> Término: 17:48:12</Text>
+                <View>
+                    <Text style={stylesSteps.timerText2}>Cont.</Text>
+                    <View style={stylesSteps.timerCountReviews}>
+                            <Text style={stylesSteps.timerText}>7</Text>
+                    </View>
+                </View>
+                <View style={stylesSteps.timerChronometerBox}>
+                    <Text style={stylesSteps.timerText2}>Período</Text>
+                    <View style={stylesSteps.timerChronometer}>
+                        <Text style={stylesSteps.timerText}>00:27:40</Text>
+                    </View>
+                </View>
+        </View>
+        <Text style={stylesSteps.desciptionText}>Esse é o controlador de ciclos.
+            {"\n"}
+            {"\n"}
+            Seu objetivo é auxiliar no gerenciamento do desempenho em cada período de revisão.
+            A quantidade de ciclos é definida de acordo com seu método de estudos, você pode fazer todas as revisões do dia de uma única vez ou fazer
+            isso em intervalos, fica a seu critério.
+            {"\n"}
+            {"\n"}
+            Ao finalizar um ciclo, outro é criado automaticamente!
+        </Text>
+    </View>
+    let Step3 = <View style={stylesSteps.container}> 
+    <ReviewContainer 
+            titleRightButton="CONCLUIR" 
+            data={{
+                routine_id: {sequence: ["1", "2", "4", "5"]},
+                subject_id: {marker: '#60c3eb'},
+                timer: '13:00',
+                title: 'REVISÃO X',
+
+            }} 
+            onPressConclude={() => {}} 
+            onPressEdit={() => {}} 
+        />
+        <Text style={stylesSteps.desciptionText}>
+            Container de Revisão.
+            {"\n"}
+            {"\n"}
+            É dessa forma que as revisões serão visualizadas. Observe que existe um botão "EDITAR" e outro "CONCLUIR",
+            o primeiro permite que você edite todos os detalhes, já o segundo conclue e calcula a data da próxima revisão.
+            {"\n"}
+            {"\n"}
+            O marcador colorido indica a qual matéria a revisão é associada.
+        </Text>
+    </View>
+
+    useEffect(() => {
+        async function checkIfItsTheFirstTime() {
+            const firstTimeOnScreen = await AsyncStorage.getItem("@TTR:firstTimeReviewsScreen")
+            
+            if (!firstTimeOnScreen) {
+                setHandleOpenTutorialModal(true)
+                await AsyncStorage.setItem('@TTR:firstTimeReviewsScreen', 'true')
+            }
+
+        }
+
+        checkIfItsTheFirstTime()
+    }, [])
+    //User tutorial
 
     async function handleConcludeReview(id) {
         const currentDate = new Date()
@@ -165,6 +254,13 @@ const ReviewsScreen = (props) => {
                 />
             }
             <FloatAddButton onPress={handlePressGoToAddScreen}/>
+            {handleOpenTutorialModal ? 
+                <ScreenTutorial 
+                    modalVisible={handleOpenTutorialModal}
+                    steps={[Step0, Step1, Step2, Step3]}
+                />
+                : null
+            }
         </View>
     )
     

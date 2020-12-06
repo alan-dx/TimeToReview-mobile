@@ -1,19 +1,71 @@
 import React, {useContext, useEffect, useState} from 'react';
 import { View, Modal, Text } from 'react-native';
-import Header from '../../components/Header';
 import styles from './styles';
-import Icon from 'react-native-vector-icons/AntDesign';
+import stylesSteps from './stylesSteps';
 import { useNavigation } from '@react-navigation/native';
 import { FlatList } from 'react-native-gesture-handler';
 import FloatAddButton from '../../components/FloatAddButton';
 import SubjectContainer from '../../components/SubjectContainer';
 import AuthContext from '../../contexts/auth';
 import api from '../../services/api';
+import ScreenTutorial from '../../components/ScreenTutorial';
+import AsyncStorage from '@react-native-community/async-storage';
+import Icon from 'react-native-vector-icons/AntDesign';
 
 const SubjectScreen = (props) => {
 
-    const { subjects, setSubjects, reviews, allReviews } = useContext(AuthContext)
+    const { subjects, setSubjects, allReviews } = useContext(AuthContext)
     const [data, setData] = useState(subjects)
+    const [handleOpenTutorialModal, setHandleOpenTutorialModal] = useState(false)
+
+    //User tutorial
+    let Step0 = <View style={stylesSteps.container}>
+        <Text style={stylesSteps.desciptionText}>
+            Seja bem vindo a tela de Matérias.
+            {"\n"}
+            {"\n"}
+            Aqui é onde você poderá visualizar todas as matérias que criar.
+        </Text>
+    </View>
+    
+    let Step1 = <View style={stylesSteps.container}>
+        <View style={stylesSteps.floatAddButton}>
+            <Icon name="plus" size={20} color="#FCFCFC" />
+        </View>
+        <Text style={stylesSteps.desciptionText}>
+            Esse é o botão que você ira utilizar quando desejar criar uma nova Matéria!
+        </Text>
+    </View>
+    
+    let Step2 = <View style={stylesSteps.container}>
+        <SubjectContainer 
+            onPressEdit={() => {}} 
+            onPressDelete={() => {}}
+            data={{"associatedReviews": ["1", "2", "3"],  "label": "Matéria X", "marker": "#ff9900", "value": "Cálculo B"}}
+        />
+        <Text style={stylesSteps.desciptionText}>
+            Container de Matéria.
+            {"\n"}
+            {"\n"}
+            É dessa forma que as suas matérias de estudo irão aparecer, cada container possui o nome da matéria, a quantidade de revisões
+            associadas, um marcador colorido {"(selecionado na criação da matéria)"}.
+        </Text>
+    </View>
+    
+    useEffect(() => {
+        async function checkIfItsTheFirstTime() {
+            const firstTimeOnScreen = await AsyncStorage.getItem("@TTR:firstTimeSubjectScreen")
+            
+            if (!firstTimeOnScreen) {
+                setHandleOpenTutorialModal(true)
+                await AsyncStorage.setItem('@TTR:firstTimeSubjectScreen', 'true')
+            }
+            console.log(subjects)
+        }
+
+        checkIfItsTheFirstTime()
+    }, [])
+    //User tutorial
 
     const navigation = useNavigation()
 
@@ -44,11 +96,7 @@ const SubjectScreen = (props) => {
                 item.subject_id = passData
             }
         })
-        // reviews.map(item => {
-        //     if (item.subject_id._id == passData._id) {
-        //         item.subject_id = passData
-        //     }
-        // })
+  
         const newData = data
         setData([])//For some reason, it is necessary to do this to update the list, perhaps because I am using the method findIndex
         const indexData = newData.findIndex(item => item._id == passData._id)
@@ -100,6 +148,10 @@ const SubjectScreen = (props) => {
                 />
             }
             <FloatAddButton onPress={handlePressGoToAddSubjectScreen}/>
+            {handleOpenTutorialModal ? 
+                <ScreenTutorial steps={[Step0, Step1, Step2]}/>    
+                : null
+            }
         </View>
     )
     

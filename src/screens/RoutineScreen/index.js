@@ -1,7 +1,8 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { View, Text, Modal, TouchableHighlight } from 'react-native';
 import Header from '../../components/Header';
 import styles from './styles';
+import stylesSteps from './stylesSteps';
 import Icon from 'react-native-vector-icons/AntDesign';
 import { useNavigation } from '@react-navigation/native';
 import { FlatList } from 'react-native-gesture-handler';
@@ -10,6 +11,8 @@ import RoutineContainer from '../../components/RoutineContainer';
 import AuthContext from '../../contexts/auth';
 import api from '../../services/api';
 import MyModal from '../../components/MyModal';
+import ScreenTutorial from '../../components/ScreenTutorial';
+import AsyncStorage from '@react-native-community/async-storage';
 
 const RoutineScreen = (props) => {
 
@@ -19,12 +22,68 @@ const RoutineScreen = (props) => {
     const [modalAddVisible, setModalAddVisible] = useState(false)
     const [modalEditVisible, setModalEditVisible] = useState(false)
     const [sequenceRoutine, setSequenceRoutine] = useState('')
-    const navigation = useNavigation()
+    const [handleOpenTutorialModal, setHandleOpenTutorialModal] = useState(false)
     const [dataToEdit, setDataToEdit] = useState('')
 
-    function handleClickGoBack() {
-        navigation.goBack()///THE PROBLEM, HE DON'T DESTROY THE BACK SCREEN
-    }
+    //User tutorial
+    let Step0 = <View style={stylesSteps.container}>
+        <Text style={stylesSteps.desciptionText}>
+            Seja bem vindo a tela de Rotinas.
+            {"\n"}
+            {"\n"}
+            Vamos passar por um breve tutorial para lhe familiarizar com o ambiente.
+            {"\n"}
+            {"\n"}
+            Aqui é onde você poderá visualizar todas as rotinas criadas. As rotinas são os ciclos de repetição
+            usados no cálculo das datas de revisão de cada conteúdo.
+        </Text>
+    </View>
+    let Step1 = <View style={stylesSteps.container}>
+        <View style={stylesSteps.floatAddButton}>
+            <Icon name="plus" size={20} color="#FCFCFC" />
+        </View>
+        <Text style={stylesSteps.desciptionText}>
+            Esse é o botão que você ira utilizar quando desejar criar novas rotinas!
+            {"\n"}
+            {"\n"}
+            Por padrão, uma rotina de revisão já vem criada junto com o App. Essa rotina foi desenvolvida pela
+            nossa equipe com base na curva de esquecimento, entretanto você é livre para criar suas próprias rotinas personalizadas.
+        </Text>
+    </View>
+    let Step2 = <View style={stylesSteps.container}>
+        <RoutineContainer 
+            onPressEdit={() => {}} 
+            onPressDelete={() => {}}
+            data={
+                {"associatedReviews": ["1", "2", "3", "4", "5"], "label": "0-1-3-7-14-21-30"}
+            }
+        />
+        <Text style={stylesSteps.desciptionText}>
+            Container de rotina.
+            {"\n"}
+            {"\n"}
+            É dessa forma que as suas rotinas irão aparecer, cada container possui a sequência da rotina, quantidade de revisões associadas e 
+            dois botões: "EDITAR" e "CONCLUIR". O primeio permite modificar a rotina em questão, já o segundo permite que você apague a rotina.
+            {"\n"}
+            {"\n"}
+            Só será possível apagar uma rotina quando não houver revisões associadas a ela!
+        </Text>
+    </View>
+
+    useEffect(() => {
+        async function checkIfItsTheFirstTime() {
+            const firstTimeOnScreen = await AsyncStorage.getItem("@TTR:firstTimeRoutineScreen")
+            console.log(firstTimeOnScreen)
+            if (!firstTimeOnScreen) {
+                setHandleOpenTutorialModal(true)
+                await AsyncStorage.setItem('@TTR:firstTimeRoutineScreen', 'true')
+            }
+
+        }
+
+        checkIfItsTheFirstTime()
+    }, [])
+    //User tutorial
 
     function handleOpenAddModal() {
         setSequenceRoutine('')
@@ -189,6 +248,10 @@ const RoutineScreen = (props) => {
                 data={dataToEdit}
             />
             <FloatAddButton onPress={handleOpenAddModal} />
+            { handleOpenTutorialModal ? 
+               <ScreenTutorial steps={[Step0, Step1, Step2]} /> 
+                : null
+            }
         </View>
     )
     

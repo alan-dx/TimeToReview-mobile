@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
-import { View, Text, ScrollView } from 'react-native';
+import { View, Text, ScrollView, Dimensions } from 'react-native';
 import styles from './styles';
 
 import ChartLine from '../../components/ChartLine';
@@ -7,6 +7,7 @@ import ChartBar from '../../components/ChartBar';
 import ChartPiee from '../../components/ChartPiee';
 import AuthContext from '../../contexts/auth';
 import averageCalculate from '../../utils/averageCalculate';
+import ChartOverall from '../../components/ChartOverall';
 
 const PerformanceScreen = () => {
 
@@ -19,7 +20,7 @@ const PerformanceScreen = () => {
     const [dataChronometerChart, setDataChronometerChart] = useState([1,2,3,4,5,6,7])
     const [bestPerformanceDay] = useState(findBestPerformanceDay(dataReviewsChart))
 
-    useEffect(() => {
+        useEffect(() => {
         let tempArray = []
 
         performance.forEach(({cycles}, index) => {
@@ -50,7 +51,7 @@ const PerformanceScreen = () => {
     }
 
     function findBestPerformanceDay(data) {
-        let index = data.reduce((a,b) => Math.max(a,b))
+        let index = data.reduce((a,b) => Math.max(a,b)) - 1
         let day = ''
         switch (index) {
             case 0:
@@ -83,27 +84,38 @@ const PerformanceScreen = () => {
     return (
         <View style={styles.container}>
             <ScrollView scrollEnabled contentContainerStyle={styles.scrollContainer}>
-                <View style={styles.chartBox}>
-                    <Text style={styles.textChartPieBox}>Você possui {allReviews.length} revisões ao todo</Text>
+                <View style={styles.performanceItemBox}>
+                    <Text style={styles.textBold}>INFORMAÇÕES GERAIS</Text>
                     <View style={styles.lineChartPieBox} />
-                    <View>
-                        <Text style={styles.subLineText}>Matéria de maior uso: {subjects[mostUseSubject].label}</Text>
+                    <View style={{alignItems: 'flex-start', width: '90%', paddingVertical: 10}}>
+                        <Text style={styles.subText}>Dia de maior desempenho: {bestPerformanceDay} </Text>
+                        <Text style={styles.subText}>Rotina mais utilizada: {routines[mostUseRoutine].label} </Text>
+                        <Text style={styles.subText}>Matéria de maior uso: {subjects[mostUseSubject].label}</Text>
                     </View>
+                </View>
+                <View style={styles.performanceItemBox}>
+                    <Text style={styles.textBold}>DESEMPENHO DO DIA</Text>
+                    <View style={styles.lineChartPieBox} />
+                    <Text style={styles.subText}>Você concluiu 4 revisões hoje!</Text>
+                    <ChartOverall />
+                </View>
+                <View style={styles.performanceItemBox}>
+                    <Text style={styles.textBold}>REVISÕES/MATÉRIA</Text>
+                    <View style={styles.lineChartPieBox} />
+                    <Text style={styles.subText}>{allReviews.length} revisões cadastradas</Text>
                     <ChartPiee data={subjects} />
                 </View>
-                <View style={styles.chartBox}>
+                <View style={styles.performanceItemBox}>
                     {/* Melhorar o cálculo das médias */}
-                    <Text style={styles.textChartPieBox}>Média diária: {Math.round(averageCalculate(dataReviewsChart))} revisões</Text>
+                    <Text style={styles.textBold}>REVISÕES/DIA</Text>
                     <View style={styles.lineChartPieBox} />
-                    <View style={styles.subLineChartPieBox}>
-                        <Text style={styles.subLineText}>Rotina recorrente: {routines[mostUseRoutine].label}</Text>
-                        <Text style={styles.subLineText}>Dia de maior desempenho: {bestPerformanceDay}</Text>
-                    </View>
+                    <Text style={styles.subText}>Média diária: {Math.round(averageCalculate(dataReviewsChart))} revisões</Text>
                     <ChartLine data={performance} height={300} />{/* For some reason, pass dataReviewsChart here cause a error */}
                 </View>
-                <View style={styles.chartBox}>
-                    <Text style={styles.textChartPieBox}>Média diária: {averageCalculate(dataChronometerChart)} minutos</Text>
+                <View style={styles.performanceItemBox}>
+                    <Text style={styles.textBold}>MINUTOS REVISADOS/DIA</Text>
                     <View style={styles.lineChartPieBox} />
+                    <Text style={styles.subText}>Média diária: {averageCalculate(dataChronometerChart)} minutos</Text>
                     <ChartBar data={dataChronometerChart} />
                 </View>
             </ScrollView>

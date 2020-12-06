@@ -19,7 +19,6 @@ const ChartBar = (props) => {
                         data: props.data
                     }
                     ],
-                    legend: ["Minutos revisados/dia"]
                 }}
                 width={Dimensions.get("window").width * 0.95} // from react-native
                 height={300}

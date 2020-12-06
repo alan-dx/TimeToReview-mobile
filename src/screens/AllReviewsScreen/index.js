@@ -1,12 +1,14 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { View, Text, FlatList } from 'react-native';
-import Header from '../../components/Header';
 import styles from './styles';
-import Icon from 'react-native-vector-icons/AntDesign';
+import stylesSteps from './stylesSteps';
 import { useNavigation } from '@react-navigation/native';
 import ReviewContainer from '../../components/ReviewContainer';
 import api from '../../services/api';
 import AuthContext from '../../contexts/auth';
+import Icon from 'react-native-vector-icons/AntDesign';
+import AsyncStorage from '@react-native-community/async-storage';
+import ScreenTutorial from '../../components/ScreenTutorial';
 
 const AllReviewsScreen = (props) => {
 
@@ -17,6 +19,57 @@ const AllReviewsScreen = (props) => {
 
     const [data, setData] = useState(allReviews)
     const navigation = useNavigation()
+    const [handleOpenTutorialModal, setHandleOpenTutorialModal] = useState(false)
+
+    //User tutorial
+    let Step0 = <View style={stylesSteps.container}>
+        <Text style={stylesSteps.desciptionText}>
+            Essa é a tela que irá listar todas as suas revisões.
+            {"\n"}
+            {"\n"}
+            Aqui você pode editar e deletar uma revisão.
+        </Text>
+    </View>
+    let Step1 = <View style={stylesSteps.container}> 
+    <ReviewContainer 
+            titleRightButton="DELETAR" 
+            data={{
+                routine_id: {sequence: ["1", "2", "4", "5"]},
+                subject_id: {marker: '#60c3eb'},
+                timer: '13:00',
+                title: 'REVISÃO X',
+
+            }} 
+            onPressConclude={() => {}} 
+            onPressEdit={() => {}} 
+        />
+        <Text style={stylesSteps.desciptionText}>
+            Container de Revisão.
+            {"\n"}
+            {"\n"}
+            É dessa forma que as revisões serão visualizadas. Observe que existe um botão "EDITAR" e outro "APAGAR",
+            o primeiro permite que você edite todos os detalhes da revisão, já o segundo deleta permanentemente a revisão.
+            {"\n"}
+            {"\n"}
+            O marcador colorido indica a qual matéria a revisão é associada.
+        </Text>
+    </View>
+
+    useEffect(() => {
+        async function checkIfItsTheFirstTime() {
+            const firstTimeOnScreen = await AsyncStorage.getItem("@TTR:firstTimeAllReviewsScreen")
+            
+            if (!firstTimeOnScreen) {
+                setHandleOpenTutorialModal(true)
+                await AsyncStorage.setItem('@TTR:firstTimeAllReviewsScreen', 'true')
+            }
+
+        }
+
+        checkIfItsTheFirstTime()
+    }, [])
+    //User tutorial
+
 
     async function handleDeleteReview(review) {
 
@@ -57,11 +110,6 @@ const AllReviewsScreen = (props) => {
         setRoutines(newRoutines)
     }
 
-    function handlePressGoBack() {
-        navigation.goBack()
-        props.route.params.onGoBack(allReviews)
-    }
-
     function handleGoToEditScreen(screenData) {
         navigation.navigate("EditScreen", {
             screenData: screenData,
@@ -89,6 +137,13 @@ const AllReviewsScreen = (props) => {
                     keyExtractor={item => item._id}
                     renderItem={({item}) => <ReviewContainer titleRightButton="DELETAR" data={item} onPressConclude={() => handleDeleteReview(item)} onPressEdit={() => handleGoToEditScreen(item)}/>}
                 />
+            }
+            {handleOpenTutorialModal ? 
+                <ScreenTutorial 
+                    modalVisible={handleOpenTutorialModal}
+                    steps={[Step0, Step1]}
+                />
+                : null
             }
         </View>
     )
