@@ -51,7 +51,9 @@ const PerformanceScreen = () => {
     }
 
     function findBestPerformanceDay(data) {
-        let index = data.reduce((a,b) => Math.max(a,b)) - 1
+        console.log(data)
+        let index = data.indexOf(data.reduce((a,b) => Math.max(a,b)))
+        console.log(index)
         let day = ''
         switch (index) {
             case 0:
@@ -96,8 +98,13 @@ const PerformanceScreen = () => {
                 <View style={styles.performanceItemBox}>
                     <Text style={styles.textBold}>DESEMPENHO DO DIA</Text>
                     <View style={styles.lineChartPieBox} />
-                    <Text style={styles.subText}>Você concluiu 4 revisões hoje!</Text>
-                    <ChartOverall />
+                    <Text style={styles.subText}>Você concluiu {dataReviewsChart[new Date().getDay()]} revisões hoje!</Text>
+                    <ChartOverall 
+                        data={{
+                            reviewsAverage: Math.round(averageCalculate(dataReviewsChart)),
+                            days: dataReviewsChart
+                        }} 
+                    />
                 </View>
                 <View style={styles.performanceItemBox}>
                     <Text style={styles.textBold}>REVISÕES/MATÉRIA</Text>

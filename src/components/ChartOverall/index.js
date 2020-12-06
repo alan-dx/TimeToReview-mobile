@@ -1,13 +1,24 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, Dimensions, StyleSheet } from 'react-native';
 import styles from './styles';
 import { ProgressChart } from 'react-native-chart-kit';
 
 const ChartOverall = (props) => {
 
+    const [dataChart, setDataChart] = useState(
+        (props.data.days[new Date().getDay()]/props.data.reviewsAverage) > 1 ?
+        1 :
+        props.data.days[new Date().getDay()]/props.data.reviewsAverage
+    )
+
     const data = {
-        data: [0.9]
+        data: [dataChart]
     };
+
+    useEffect(() => {
+        const currentDate = new Date()
+        console.log(props.data.days[currentDate.getDay()])
+    }, [])
 
     // color: (opacity = 1) => `rgba(15, 129, 0, ${opacity})`, verde
 
@@ -18,7 +29,7 @@ const ChartOverall = (props) => {
         backgroundGradientToOpacity: 0,
         color:  (opacity = 1) => {
             if (data.data < 0.5) {
-                return `rgba(15, 129, 0, ${opacity})`
+                return `rgba(255, 0, 0, ${opacity})`
             } else {
                 return `rgba(15, 129, 0, ${opacity})`
             }
@@ -34,13 +45,13 @@ const ChartOverall = (props) => {
                 data={data}
                 width={Dimensions.get("window").width * 0.95}
                 height={220}
-                strokeWidth={8}
-                radius={80}
+                strokeWidth={10}
+                radius={85}
                 chartConfig={chartConfig}
                 hideLegend={true}
             />
             <View style={styles.chartOverallCenter}>
-                <Text style={styles.chartOverallText}>{data.data * 100}%</Text>
+                <Text style={styles.chartOverallText}>{((props.data.days[new Date().getDay()]/props.data.reviewsAverage)*100).toFixed(0)}%</Text>
                 <Text style={styles.chartOverallSubText}>de sua média diária</Text>
             </View>
         </View>

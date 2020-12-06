@@ -22,6 +22,7 @@ class ChartPiee extends React.Component {
 
     this.state = {
       passData: props.data,
+      selectedEntry: 'Pressione uma fatia do círculo',
       legend: {
         enabled: true,
         textSize: 10,
@@ -50,7 +51,6 @@ class ChartPiee extends React.Component {
           }
         }],
       },
-      highlights: [{x:2}],
       description: {
         text: '',
         textSize: 15,
@@ -62,15 +62,16 @@ class ChartPiee extends React.Component {
   handleSelect(event) {
     let entry = event.nativeEvent
     if (entry == null || entry.label == undefined) {
-      this.setState({...this.state, selectedEntry: null})
+      this.setState({...this.state, selectedEntry: 'Pressione uma fatia do círculo'})
     } else {
       this.setState({...this.state, selectedEntry: `${entry.label}: ${entry.value} Revisões`})
     }
-
     console.log(event.nativeEvent)
   }
 
+
   render() {
+
     return (
       <View style={styles.container}>
           <View style={styles.chartContainer}>
@@ -105,7 +106,7 @@ class ChartPiee extends React.Component {
             />
           </View>
           <View>
-              <Text  style={styles.selectText}>{this.state.selectedEntry}</Text>
+              <Text style={styles.selectText}>{this.state.selectedEntry}</Text>
           </View>
       </View>
     );
@@ -121,7 +122,7 @@ const styles = StyleSheet.create({
   },
   chartContainer: {
     flex: 1,
-    marginTop: 25
+    marginTop: 25,
   },
   chart: {
     flex: 1,
