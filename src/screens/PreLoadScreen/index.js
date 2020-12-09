@@ -5,14 +5,16 @@ import AuthContext from '../../contexts/auth';
 
 const PreLoadScreen = () => {
 
-    const { setSubjects, setUser, setRoutines, setAllReviews, loadServerData, setPerformance, logoutContext} = useContext(AuthContext);
+    const { setSubjects, setUser, setRoutines, setAllReviews, loadServerData, setPerformance, logoutContext, setLastWeekPerformance} = useContext(AuthContext);
     const navigation = useNavigation()
 
     useEffect(() => {
         loadServerData().then((response) => {
             
             // const reminderTime = new Date(response.data.reminderTime)
-            console.log(response.data.change)
+            console.log(response.data.performance)
+            console.log('sub',response.data.subjects)
+            console.log('sub',response.data.routines)
 
             setUser({
                 name: response.data.name,
@@ -29,8 +31,16 @@ const PreLoadScreen = () => {
                     sub.chronometer = new Date(sub.chronometer)
                 })
             })
-            
+
+            response.data.lastWeekPerformance.forEach(item => {
+                item.cycles.forEach(sub => {
+                    sub.chronometer = new Date(sub.chronometer)
+                })
+            })
+
+            setLastWeekPerformance(response.data.lastWeekPerformance)
             setPerformance(response.data.performance)
+
             navigation.reset({
                 index: 0,
                 routes: [{name: "HomeScreen"}]

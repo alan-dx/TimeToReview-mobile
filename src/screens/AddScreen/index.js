@@ -18,8 +18,6 @@ const AddScreen = (props) => {
     const [subjectReview, setSubjectReview] = useState('')
     const [routineReview, setRoutineReview] = useState('')
     const [dateNextSequenceReview, setDateNextSequenceReview] = useState('');
-    const [timerMin, setTimerMin] = useState('')
-    const [timerSeg, setTimerSeg] = useState('')
 
     const navigation = useNavigation();
 
@@ -29,15 +27,13 @@ const AddScreen = (props) => {
 
     function showInfo() {
         
-        const timer = `${timerMin}:${timerSeg}`
         const currentDate = new Date()
         
-        if (!titleReview || !subjectReview || !routineReview || !timerSeg || !timerMin ) {
+        if (!titleReview || !subjectReview || !routineReview) {
             alert("Preencha todos os campos!")
         } else {
             api.post('/createReview', {
                 title: titleReview,
-                timer: timer,
                 routine_id: routineReview._id,
                 subject_id: subjectReview._id,
                 dateNextSequenceReview: dateNextSequenceReview
@@ -138,7 +134,7 @@ const AddScreen = (props) => {
                         <Text style={styles.label}>Cronômetro de conclusão</Text>
                         <Icon name="clockcircleo" size={20} color="#303030" style={{marginLeft: 3}} />
                     </View>
-                    <View style={styles.timerInputBox}>
+                    {/* <View style={styles.timerInputBox}>
                         <TextInput 
                             value={timerMin} 
                             keyboardType="phone-pad" 
@@ -157,7 +153,7 @@ const AddScreen = (props) => {
                             }} 
                             placeholder="SEG" 
                             style={styles.input}/>
-                    </View>
+                    </View> */}
                 </View> 
             </View>
         </KeyboardAvoidingView>

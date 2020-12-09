@@ -94,7 +94,7 @@ class ChartPiee extends React.Component {
                 rotationEnabled={true}
                 rotationAngle={45}
                 usePercentValues={true}
-                styledCenterText={{text:'Porcentagem por matéria', color: processColor('#303030'), fontFamily: 'HelveticaNeue-Medium', size: 12}}
+                styledCenterText={{text:'Porcentagem por matéria', color: processColor('#303030'), fontFamily: 'HelveticaNeue-Medium', size: 10}}
                 centerTextRadiusPercent={100}
                 holeRadius={40}
                 holeColor={processColor('#FFF')}

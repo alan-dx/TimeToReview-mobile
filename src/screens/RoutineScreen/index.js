@@ -1,10 +1,8 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { View, Text, Modal, TouchableHighlight } from 'react-native';
-import Header from '../../components/Header';
+import { View, Text } from 'react-native';
 import styles from './styles';
 import stylesSteps from './stylesSteps';
 import Icon from 'react-native-vector-icons/AntDesign';
-import { useNavigation } from '@react-navigation/native';
 import { FlatList } from 'react-native-gesture-handler';
 import FloatAddButton from '../../components/FloatAddButton';
 import RoutineContainer from '../../components/RoutineContainer';
@@ -31,10 +29,10 @@ const RoutineScreen = (props) => {
             Seja bem vindo a tela de Rotinas.
             {"\n"}
             {"\n"}
-            Vamos passar por um breve tutorial para lhe familiarizar com o ambiente.
+            Aqui é onde você poderá visualizar todas as rotinas criadas. 
             {"\n"}
             {"\n"}
-            Aqui é onde você poderá visualizar todas as rotinas criadas. As rotinas são os ciclos de repetição
+            As rotinas são os ciclos de repetição
             usados no cálculo das datas de revisão de cada conteúdo.
         </Text>
     </View>

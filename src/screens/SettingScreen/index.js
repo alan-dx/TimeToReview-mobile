@@ -198,6 +198,8 @@ const SettingScreen = (props) => {
                     await AsyncStorage.removeItem("@TTR:firstTimeAllReviewsScreen")
                     await AsyncStorage.removeItem("@TTR:firstTimeRoutineScreen")
                     await AsyncStorage.removeItem("@TTR:firstTimeSubjectScreen")
+                    await AsyncStorage.removeItem("@TTR:firstTimePerformanceScreen")
+                    await AsyncStorage.removeItem("@TTR:firstTimeHomeScreen")
                 },
                 style: "cancel"
               },

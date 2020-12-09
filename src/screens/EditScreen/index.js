@@ -15,15 +15,11 @@ const EditScreen = (props) => {
 
     const {routines, subjects, setSubjects, allReviews, setAllReviews, logoutContext } = useContext(AuthContext)
 
-    const [min,seg] = dataScreen.timer.split(':')
-
     const [titleReview, setTitleReview] = useState(dataScreen.title)
     const [subjectReview, setSubjectReview] = useState(dataScreen.subject_id)
     const [routineReview, setRoutineReview] = useState(dataScreen.routine_id)
     const [dateNextSequenceReview, setDateNextSequenceReview] = useState(new Date(dataScreen.dateNextSequenceReview));
     const [currentSequenceReview, setCurrentSequenceReview] = useState(dataScreen.routine_id.sequence[dataScreen.currentSequenceReview])
-    const [timerMin, setTimerMin] = useState(min)
-    const [timerSeg, setTimerSeg] = useState(seg)
 
     const navigation = useNavigation();
 
@@ -33,17 +29,14 @@ const EditScreen = (props) => {
 
     function showInfo() {
 
-        const timer = `${timerMin}:${timerSeg}`
-
         let editData = {
             title: titleReview != dataScreen.title ? titleReview : null,
             subject_id: subjectReview._id != dataScreen.subject_id._id ? subjectReview._id : null,
             routine_id: routineReview._id != dataScreen.routine_id._id ? routineReview._id : null,
-            timer: timer != dataScreen.timer ? timer : null
         }
 
         
-        if (editData.title || editData.subject_id || editData.routine_id || editData.timer) {
+        if (editData.title || editData.subject_id || editData.routine_id) {
             api.put('/editReview', editData,
             {
                 params: {
@@ -175,7 +168,7 @@ const EditScreen = (props) => {
                         <Text style={styles.label}>Cronômetro de conlusão</Text>
                         <Icon name="clockcircleo" size={20} color="#303030" style={{marginLeft: 3}} />
                     </View>
-                    <View style={styles.timerInputBox}>
+                    {/* <View style={styles.timerInputBox}>
                         <TextInput 
                             value={timerMin} 
                             keyboardType="phone-pad" 
@@ -194,7 +187,7 @@ const EditScreen = (props) => {
                             }} 
                             placeholder="SEG" 
                             style={styles.input}/>
-                    </View>
+                    </View> */}
                 </View> 
             </View>
         </KeyboardAvoidingView>

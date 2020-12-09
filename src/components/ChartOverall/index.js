@@ -5,20 +5,26 @@ import { ProgressChart } from 'react-native-chart-kit';
 
 const ChartOverall = (props) => {
 
-    const [dataChart, setDataChart] = useState(
-        (props.data.days[new Date().getDay()]/props.data.reviewsAverage) > 1 ?
-        1 :
-        props.data.days[new Date().getDay()]/props.data.reviewsAverage
-    )
+    const [dataChart, setDataChart] = useState(null)
+    const [percent, setPercent] = useState(0)
+    
+    useEffect(() => {
+        if (props.data.reviewsAverage != 0) {
+            setDataChart(
+                (props.data.days[new Date().getDay()]/props.data.reviewsAverage) > 1 ?
+                1 :
+                props.data.days[new Date().getDay()]/props.data.reviewsAverage
+            )
+
+            setPercent(((props.data.days[new Date().getDay()]/props.data.reviewsAverage)*100).toFixed(0))
+        }
+
+    }, [])
 
     const data = {
         data: [dataChart]
     };
 
-    useEffect(() => {
-        const currentDate = new Date()
-        console.log(props.data.days[currentDate.getDay()])
-    }, [])
 
     // color: (opacity = 1) => `rgba(15, 129, 0, ${opacity})`, verde
 
@@ -51,7 +57,7 @@ const ChartOverall = (props) => {
                 hideLegend={true}
             />
             <View style={styles.chartOverallCenter}>
-                <Text style={styles.chartOverallText}>{((props.data.days[new Date().getDay()]/props.data.reviewsAverage)*100).toFixed(0)}%</Text>
+                <Text style={styles.chartOverallText}>{percent}%</Text>
                 <Text style={styles.chartOverallSubText}>de sua média diária</Text>
             </View>
         </View>

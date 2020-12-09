@@ -2,14 +2,15 @@ import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { View, Text } from 'react-native';
 
 import styles from './styles';
+import stylesSteps from './stylesSteps';
 import AuthContext from '../../contexts/auth';
 import Icon from 'react-native-vector-icons/AntDesign';
-import Icon2 from 'react-native-vector-icons/Feather';
 import MenuButton from '../../components/MenuButton';
 import Chart from '../../components/ChartLine';
 import { BorderlessButton } from 'react-native-gesture-handler';
 import { useFocusEffect, useIsFocused, useNavigation } from '@react-navigation/native';
-
+import AsyncStorage from '@react-native-community/async-storage';
+import ScreenTutorial from '../../components/ScreenTutorial';
 
 const HomeScreen = () => {
 
@@ -19,11 +20,12 @@ const HomeScreen = () => {
     //Gambi? => As react navigation goBack does not cause the screen to render again, the chart was not updating. That was the only functional solution I found.
 
     const navigation = useNavigation()
-    const { performance, setPerformance, allReviews, setReviews, setAllReviews } = useContext(AuthContext);
+    const { performance, subjects, routines, allReviews, setReviews } = useContext(AuthContext);
     const [numberOfReviews, setNumberOfReviews] = useState(0)
     const [isLoading, setIsLoading] = useState(false)
     const [dataChart, setDataChart] = useState(performance)
     const [loadingChart, setLoadingChart] = useState(true)
+    const [handleOpenTutorialModal, setHandleOpenTutorialModal] = useState(false)
 
     useFocusEffect(
         useCallback(() => {
@@ -33,10 +35,36 @@ const HomeScreen = () => {
             const filteredReviews = allReviews.filter(item => new Date(item.dateNextSequenceReview) <= currentDate)
             setReviews(filteredReviews)
             setNumberOfReviews(filteredReviews.length)
-            // setLoadingChart(false)
             setLoadingChart(true)//Gambi
+
+            checkIfItsTheFirstTime()
+
         }, [allReviews])
     )
+
+    //User tutorial
+    let Step0 = <View style={stylesSteps.container}>
+        <Text style={stylesSteps.desciptionText}>
+            Seja bem vindo a dashboard do TimeToReview!
+            {"\n"}
+            {"\n"}
+            Esse é o menu do aplicativo, onde você poderá navegar pelas telas e acessar as funções do App.
+            {"\n"}
+            {"\n"}
+            Você visualizará um breve tutorial em cada tela que acessar, o objetivo é lhe familiarizar com o ambiente.
+        </Text>
+    </View>
+
+    async function checkIfItsTheFirstTime() { //See useFocusEffect
+        const firstTimeOnScreen = await AsyncStorage.getItem("@TTR:firstTimeHomeScreen")
+        console.log('asda', firstTimeOnScreen)
+        if (!firstTimeOnScreen) {
+            setHandleOpenTutorialModal(true)
+            await AsyncStorage.setItem('@TTR:firstTimeHomeScreen', 'true')
+        }
+
+    }
+    //User tutorial
 
     function handleClickGoToReviewsScreen() {
         navigation.navigate('ReviewsScreen', {
@@ -57,7 +85,11 @@ const HomeScreen = () => {
     }
 
     function handleClickGoToPerformanceScreen() {
-        navigation.navigate('PerformanceScreen')
+        if (subjects.length != 0 && routines.length != 0) {
+            navigation.navigate('PerformanceScreen')
+        } else {
+            alert('Você ainda não criou uma matéria ou rotina! Elas são necessárias para visualizar os dados de desempenho.')
+        }
     }
 
     function handleGoToBePremiumScreen() {
@@ -83,7 +115,7 @@ const HomeScreen = () => {
             <View style={styles.performanceBox}>
                 <View style={styles.performanceButtonBox}>
                     <BorderlessButton onPress={handleClickGoToPerformanceScreen} style={styles.performanceButton}>
-                        <Icon name="barchart" size={22} color="#FFF" />
+                        <Icon name="linechart" size={22} color="#FFF" />
                     </BorderlessButton>
                 </View>
                 <Text style={styles.performanceButtonText}>Visualizar desempenho completo</Text>
@@ -126,6 +158,10 @@ const HomeScreen = () => {
                 </View>
             </View>
         </View>
+        { handleOpenTutorialModal ? 
+            <ScreenTutorial steps={[Step0]} /> :
+            null
+        }
     </>
     const landing = <><Text>Carregando</Text></>
 

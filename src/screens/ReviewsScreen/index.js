@@ -12,11 +12,10 @@ import timeFormat from '../../utils/formatDateTime';
 import AsyncStorage from '@react-native-community/async-storage';
 import ScreenTutorial from '../../components/ScreenTutorial';
 import Icon from 'react-native-vector-icons/AntDesign';
+import Icon2 from 'react-native-vector-icons/Feather';
 
 
 const ReviewsScreen = (props) => {
-
-    // new Date(new Date().setUTCHours(0,0,0,0)) keep the hour in year-month-dayT00:00:00.000Z
 
     const currentDate = new Date()
 
@@ -105,6 +104,15 @@ const ReviewsScreen = (props) => {
             O marcador colorido indica a qual matéria a revisão é associada.
         </Text>
     </View>
+    let Step4 = <View style={stylesSteps.container}> 
+        <Icon2 name="alert-triangle" size={35} color="red" />
+        <Text style={stylesSteps.desciptionText}>
+            Revisão atrasada!
+            {"\n"}
+            {"\n"}
+            Quando uma revisão estiver em atraso você visualizará esse ícone junto ao container.
+        </Text>
+    </View>
 
     useEffect(() => {
         async function checkIfItsTheFirstTime() {
@@ -137,14 +145,14 @@ const ReviewsScreen = (props) => {
             
         }).catch((err) => {
             console.log(err)
-                if (err == 'Error: Request failed with status code 500') {
-                    alert("Erro interno do servidor, tente novamente mais tarde!")
-                } else if (err = 'Error: Network Error') {
-                    alert("Sessão expirada!")
-                    logoutContext()
-                } else {
-                    alert('Houve um erro ao tentar concluir sua revisão, tente novamente!')
-                }
+            if (err == 'Error: Request failed with status code 500') {
+                alert("Erro interno do servidor, tente novamente mais tarde!")
+            } else if (err = 'Error: Network Error') {
+                alert("Sessão expirada!")
+                logoutContext()
+            } else {
+                alert('Houve um erro ao tentar concluir sua revisão, tente novamente!')
+            }
         })
 
         const newData = data.filter(item => item._id != id)//to update flatlist, removing the conclude review
@@ -153,6 +161,10 @@ const ReviewsScreen = (props) => {
         setDataCycles(dataCycles)
         performance[currentDate.getDay()].reviews++
         setPerformance(performance)
+        
+        if (startController) {
+            handleStartPauseController()
+        }
     }
 
     function handlePressGoToAddScreen() {
@@ -250,14 +262,14 @@ const ReviewsScreen = (props) => {
                     style={styles.flatlist} 
                     data={data}
                     keyExtractor={item => item._id}
-                    renderItem={({item}) => <ReviewContainer titleRightButton="CONCLUIR" data={item} onPressConclude={() => handleConcludeReview(item._id)} onPressEdit={() => handleGoToEditScreen(item)}/>}
+                    renderItem={({item}) => <ReviewContainer haveDelay={true} titleRightButton="CONCLUIR" data={item} onPressConclude={() => handleConcludeReview(item._id)} onPressEdit={() => handleGoToEditScreen(item)}/>}
                 />
             }
             <FloatAddButton onPress={handlePressGoToAddScreen}/>
             {handleOpenTutorialModal ? 
                 <ScreenTutorial 
                     modalVisible={handleOpenTutorialModal}
-                    steps={[Step0, Step1, Step2, Step3]}
+                    steps={[Step0, Step1, Step2, Step3, Step4]}
                 />
                 : null
             }

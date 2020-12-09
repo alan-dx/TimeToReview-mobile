@@ -1,27 +1,67 @@
 import React, {useContext, useEffect, useState} from 'react';
 import { View, Text, ScrollView, Dimensions } from 'react-native';
 import styles from './styles';
-
+import stylesSteps from './stylesSteps';
 import ChartLine from '../../components/ChartLine';
 import ChartBar from '../../components/ChartBar';
 import ChartPiee from '../../components/ChartPiee';
 import AuthContext from '../../contexts/auth';
 import averageCalculate from '../../utils/averageCalculate';
 import ChartOverall from '../../components/ChartOverall';
+import ScreenTutorial from '../../components/ScreenTutorial';
+import Icon from 'react-native-vector-icons/AntDesign';
+import AsyncStorage from '@react-native-community/async-storage';
 
 const PerformanceScreen = () => {
 
-    const { allReviews, subjects, routines, performance } = useContext(AuthContext);
+    const { allReviews, subjects, routines, performance, lastWeekPerformance } = useContext(AuthContext);
     const [mostUseSubject] = useState(findMostUse(subjects))
     const [mostUseRoutine] = useState(findMostUse(routines))
     const [dataReviewsChart] = useState(performance.map(({reviews}) => {
         return reviews
     }))
-    const [dataChronometerChart, setDataChronometerChart] = useState([1,2,3,4,5,6,7])
+    const [lastWeekDataReviewsChart] = useState(lastWeekPerformance.map(({reviews}) => {
+        return reviews
+    }))
+    const [averageReviews, setAverageReviews] = useState(Math.round(averageCalculate(dataReviewsChart)))
+    const [dataChronometerChart, setDataChronometerChart] = useState([0,0,0,0,0,0,0])
+    const [averageChronometer, setAverageChronometer] = useState(dataChronometerChart)
     const [bestPerformanceDay] = useState(findBestPerformanceDay(dataReviewsChart))
+    const [handleOpenTutorialModal, setHandleOpenTutorialModal] = useState(false)
 
-        useEffect(() => {
+    //User tutorial
+    let Step0 = <View style={stylesSteps.container}>
+        <Text style={stylesSteps.desciptionText}>
+            Seja bem vindo a tela de desempenho.
+            {"\n"}
+            {"\n"}
+            Aqui você tem acesso a informações gerais de sua performance em nosso aplicativo, tais como: número de revisões/dia,
+            porcentagem por matéria, desempenho diário e muito mais.
+            {"\n"}
+            {"\n"}
+            Aproveite e tire o máximo de proveito desses dados.
+        </Text>
+    </View>
+
+    useEffect(() => {
+        async function checkIfItsTheFirstTime() {
+            const firstTimeOnScreen = await AsyncStorage.getItem("@TTR:firstTimePerformanceScreen")
+            
+            if (!firstTimeOnScreen) {
+                setHandleOpenTutorialModal(true)
+                await AsyncStorage.setItem('@TTR:firstTimePerformanceScreen', 'true')
+            }
+
+        }
+
+        checkIfItsTheFirstTime()
+    }, [])
+    //User tutorial
+
+    useEffect(() => { //select which data to use, performance or lastWeekPerformance for each chart
         let tempArray = []
+
+        let decisionForTimeAverage;
 
         performance.forEach(({cycles}, index) => {
             let teste = 0;
@@ -31,6 +71,33 @@ const PerformanceScreen = () => {
             })
         })
 
+        lastWeekDataReviewsChart.map(item => {
+            if (item != 0) {//if true => lastWeek had use
+                console.log('qnts vezes repetiu o lastweek map')
+                setAverageReviews(Math.round(averageCalculate(lastWeekDataReviewsChart)))
+                
+                decisionForTimeAverage = true
+
+                findBestPerformanceDay(lastWeekDataReviewsChart)
+
+                return null
+            }
+        })
+
+        if (decisionForTimeAverage) {
+            console.log('tempo semana passada foi usado')
+            let tempInfoAverage = []
+            lastWeekPerformance.forEach(({cycles}, index) => {
+                let teste = 0;
+                cycles.forEach(({chronometer}) => {
+                    teste = teste + ((chronometer.getMinutes() * 60) + chronometer.getSeconds())/60
+                    tempInfoAverage[index] = parseFloat(teste.toFixed(2))
+                })
+            })
+            setAverageChronometer(tempInfoAverage)
+        } else {
+            setAverageChronometer(tempArray)
+        }
 
         setDataChronometerChart(tempArray)
 
@@ -91,17 +158,17 @@ const PerformanceScreen = () => {
                     <View style={styles.lineChartPieBox} />
                     <View style={{alignItems: 'flex-start', width: '90%', paddingVertical: 10}}>
                         <Text style={styles.subText}>Dia de maior desempenho: {bestPerformanceDay} </Text>
-                        <Text style={styles.subText}>Rotina mais utilizada: {routines[mostUseRoutine].label} </Text>
+                        <Text style={styles.subText}>Rotina mais utilizada: {routines[mostUseRoutine].label || 'Verificando...'} </Text>
                         <Text style={styles.subText}>Matéria de maior uso: {subjects[mostUseSubject].label}</Text>
                     </View>
                 </View>
                 <View style={styles.performanceItemBox}>
                     <Text style={styles.textBold}>DESEMPENHO DO DIA</Text>
                     <View style={styles.lineChartPieBox} />
-                    <Text style={styles.subText}>Você concluiu {dataReviewsChart[new Date().getDay()]} revisões hoje!</Text>
+                    <Text style={styles.subText}>Você concluiu {dataReviewsChart[new Date().getDay()]} revisões hoje! (Média = {averageReviews} revisões) </Text>
                     <ChartOverall 
                         data={{
-                            reviewsAverage: Math.round(averageCalculate(dataReviewsChart)),
+                            reviewsAverage: averageReviews,
                             days: dataReviewsChart
                         }} 
                     />
@@ -116,16 +183,23 @@ const PerformanceScreen = () => {
                     {/* Melhorar o cálculo das médias */}
                     <Text style={styles.textBold}>REVISÕES/DIA</Text>
                     <View style={styles.lineChartPieBox} />
-                    <Text style={styles.subText}>Média diária: {Math.round(averageCalculate(dataReviewsChart))} revisões</Text>
+                    <Text style={styles.subText}>Média diária: {averageReviews} revisões</Text>
                     <ChartLine data={performance} height={300} />{/* For some reason, pass dataReviewsChart here cause a error */}
                 </View>
                 <View style={styles.performanceItemBox}>
                     <Text style={styles.textBold}>MINUTOS REVISADOS/DIA</Text>
                     <View style={styles.lineChartPieBox} />
-                    <Text style={styles.subText}>Média diária: {averageCalculate(dataChronometerChart)} minutos</Text>
+                    <Text style={styles.subText}>Média diária: {averageCalculate(averageChronometer)} minutos</Text>
                     <ChartBar data={dataChronometerChart} />
                 </View>
             </ScrollView>
+            {handleOpenTutorialModal ? 
+                <ScreenTutorial 
+                    modalVisible={handleOpenTutorialModal}
+                    steps={[Step0]}
+                />
+                : null
+            }
         </View>
     )
     

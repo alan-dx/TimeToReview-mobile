@@ -27,7 +27,7 @@ const ChartBar = (props) => {
                 decorator={() => {
                     return tooltipPos.visible ? <View>
                         <Svg>
-                            <Circle cx={tooltipPos.x} cy={tooltipPos.y} r="13" width="40" height="40" fill="#60c3eb" stroke="#303030"/>
+                            <Circle cx={tooltipPos.x} cy={tooltipPos.y} r="15" width="45" height="45" fill="#60c3eb" stroke="#303030"/>
                             <Text
                                 fill="white"
                                 stroke="white"

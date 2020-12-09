@@ -14,13 +14,25 @@ const styles = StyleSheet.create({
 
         elevation: 2
     },
-    titleBox: {
+    infoBox: {
+        flexDirection: 'row',
         flex: 1,
         width: '90%',
-        alignItems: 'center',
-        justifyContent: 'center',
         borderBottomColor: '#F0F0F0',
         borderBottomWidth: 1,
+        position: 'relative',
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    alertIcon: {
+        position: 'absolute',
+        paddingTop: 6,
+        right: 0,
+    },
+    titleBox: {
+        width: '85%',
+        alignItems: 'center',
+        justifyContent: 'center',
         flexDirection: 'row',
     },
     titleReview: {

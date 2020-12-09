@@ -9,12 +9,13 @@ const ChartLine = (props) => {
     const [data, setData] = useState(props.data.map(({reviews}) => {
         return reviews
     }))
-    // const [data, setData] = useState([]) //Possible solution to Gambi [1]: 
+    const [selectLegend, setSelectLegend] = useState(null)
 
-    // useEffect(() => { //Possible solution to Gambi [1]: Don't work beacause a error in react-native-svg lib
-    //     setData(performance)
-    //     console.log('effect')
-    // }, [performance])
+    useEffect(() => {
+        if (props.height != 300) {
+            setSelectLegend(['Revisões/dia'])
+        }
+    }, [])
 
     return (
         <View >
@@ -26,6 +27,7 @@ const ChartLine = (props) => {
                         data: data
                     }
                     ],
+                    legend: selectLegend
                 }}
                 width={Dimensions.get("window").width * 0.95} // from react-native
                 height={props.height}
