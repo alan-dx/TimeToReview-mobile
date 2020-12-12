@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text} from 'react-native';
 import styles from './styles';
-import { RectButton } from 'react-native-gesture-handler';
+import { BorderlessButton, RectButton } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/Feather';
+import Icon2 from 'react-native-vector-icons/AntDesign';
 
 const ReviewContainer = (props) => {
 
@@ -30,7 +31,7 @@ const ReviewContainer = (props) => {
                     <Text style={styles.titleReview} numberOfLines={1}>{props.data.title}</Text>
                 </View>
                 {
-                    (delayed && props.haveDelay) && <Icon name="alert-triangle" size={15} color="red" style={styles.alertIcon} />
+                    (delayed && props.haveDelay) && <Icon name="alert-triangle" size={20} color="red" style={styles.alertIcon} />
                 }
             </View>
             <View style={styles.optionsBox}>
@@ -50,6 +51,12 @@ const ReviewContainer = (props) => {
                         </RectButton>
                     </View>
                 </View>
+                <BorderlessButton style={styles.audioButton} onPress={props.onPressAudioButton}>
+                    <Icon2 name="customerservice" size={20} color="#303030" />
+                </BorderlessButton>
+                <BorderlessButton style={styles.audioButton2} onPress={props.onPressAudioButton2}>
+                    <Icon name="stop-circle" size={20} color="#303030" />
+                </BorderlessButton>
             </View>
         </View>
     )

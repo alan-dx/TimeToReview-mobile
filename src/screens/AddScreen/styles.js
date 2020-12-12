@@ -68,7 +68,8 @@ const styles = StyleSheet.create({
     label: {
         fontFamily: 'Archivo-Bold',
         fontSize: 15,
-        marginHorizontal: 3
+        marginHorizontal: 3,
+        color: '#303030'
     },
     subLabel: {
         marginTop: 6,
@@ -86,30 +87,19 @@ const styles = StyleSheet.create({
         fontSize: 10,
         color: '#ABABAB'
     },
-    timerBox: {
-        alignItems: 'center'
-    },
-    timerInputBox: {
-        width: '100%',
+    noteAudioBox: {
+        alignItems: 'center',
+        justifyContent: 'center',
         flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'space-evenly'
     },
-    input: {
-        width: 60,
-        borderRadius: 13,
-        backgroundColor: '#E8E8E8',
-        alignItems: 'center',
-        textAlign: 'center',
-        fontFamily: 'Archivo-SemiBold',
-        fontSize: 13,
-        color: '#303030'
+    separator: {
+        height: 60,
+        width: 1,
+        backgroundColor: '#60c3eb',
     },
-    timerSeparator: {
-        fontFamily: 'Archivo-Bold',
-        color: '#303030',
-        fontSize: 15,
-        margin: 7
+    noteAudioButton: {
+        alignItems: 'center',
     }
 })
 

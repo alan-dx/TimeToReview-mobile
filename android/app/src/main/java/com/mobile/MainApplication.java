@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
+import io.github.traviskn.rnuuidgenerator.RNUUIDGeneratorPackage;
 import com.reactnativecommunity.netinfo.NetInfoPackage;
 import com.github.wuxudong.rncharts.MPAndroidChartPackage;
 import com.reactnativecommunity.asyncstorage.AsyncStoragePackage;

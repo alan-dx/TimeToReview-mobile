@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect, useRef } from 'react';
-import { View, FlatList, ToastAndroid, Text } from 'react-native';
+import { View, FlatList, ToastAndroid, Text, Linking } from 'react-native';
 import styles from './styles';
 import stylesSteps from './stylesSteps';
 import { useNavigation } from '@react-navigation/native';
@@ -13,7 +13,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import ScreenTutorial from '../../components/ScreenTutorial';
 import Icon from 'react-native-vector-icons/AntDesign';
 import Icon2 from 'react-native-vector-icons/Feather';
-
+import TrackPlayer from 'react-native-track-player';
 
 const ReviewsScreen = (props) => {
 
@@ -33,6 +33,16 @@ const ReviewsScreen = (props) => {
     useEffect(() => {
         navigation.setParams({finishCycleActive: startController})
     }, [startController])
+
+    useEffect(() => {
+
+        TrackPlayer.setupPlayer({
+
+        }).then(() => {
+            console.log('player configurado')
+        })
+        
+    }, [])
 
     //User tutorial
     let Step0 = <View style={stylesSteps.container}>
@@ -240,6 +250,29 @@ const ReviewsScreen = (props) => {
         }
     }
 
+    async function handleStartAudioPlayer(track) {
+        console.log('track-URL', track.url)
+        console.log('type', typeof(track))
+        console.log('type', typeof(track.url))
+        await TrackPlayer.reset()
+        //VAI TER Q INSTALAR A RNFS
+        // track.url = `file:///storage/emulated/0/Download/o-o-gas-versao-swingueira%20(1).mp3`
+        Linking.openURL(track.url)
+        // TrackPlayer.stop()
+        await TrackPlayer.add((track)).then(async () => {
+            let tracks = await TrackPlayer.getQueue()
+            console.log(tracks)
+            TrackPlayer.play()
+        }).catch((err) => {
+            console.log('error', err)
+        })
+        // TrackPlayer.play()
+        // O BUG É RESSOLVIDO QUANDO VOCE ABRE O FILE BROWSER NA ADDSCREEN, APESAR DE
+        // SEREM DUAS LIBS DISTINTAS
+        //PODE SER A UUID, ENTÃO COLOQUE O NA TRACK POR AQUI
+        //PODE SER QUE O ARQUIVO NÃO É CARREGADO ATE SER SELECIONADO PELO FILE BROWSER
+    }
+
     return (
         <View style={styles.container}>
             <FlatList
@@ -262,7 +295,16 @@ const ReviewsScreen = (props) => {
                     style={styles.flatlist} 
                     data={data}
                     keyExtractor={item => item._id}
-                    renderItem={({item}) => <ReviewContainer haveDelay={true} titleRightButton="CONCLUIR" data={item} onPressConclude={() => handleConcludeReview(item._id)} onPressEdit={() => handleGoToEditScreen(item)}/>}
+                    renderItem={({item}) => 
+                        <ReviewContainer 
+                            haveDelay={true} 
+                            titleRightButton="CONCLUIR" 
+                            data={item} onPressConclude={() => handleConcludeReview(item._id)} 
+                            onPressEdit={() => handleGoToEditScreen(item)}
+                            onPressAudioButton={() => handleStartAudioPlayer(item.track)}
+                            onPressAudioButton2={() => {TrackPlayer.stop()}}
+                        />
+                    }
                 />
             }
             <FloatAddButton onPress={handlePressGoToAddScreen}/>

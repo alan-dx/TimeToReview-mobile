@@ -22,6 +22,7 @@
     "react-native-chart-kit": "^6.6.0",
     "react-native-charts-wrapper": "^0.5.7",
     "react-native-color-palette": "^2.2.0",
+    "react-native-document-picker": "^4.1.0",
     "react-native-dropdown-picker": "^3.6.8",
     "react-native-email-link": "^1.10.0",
     "react-native-gesture-handler": "^1.7.0",
@@ -34,6 +35,9 @@
     "react-native-shadow": "^1.2.2",
     "react-native-step-modal": "^1.2.1",
     "react-native-svg": "^12.1.0",
+    "react-native-track-player": "^1.2.3",
+    "react-native-uuid": "^1.4.9",
+    "react-native-uuid-generator": "^6.1.1",
     "react-native-vector-icons": "^7.0.0",
     "styled-components": "^5.1.1"
   },

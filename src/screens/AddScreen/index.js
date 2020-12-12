@@ -2,19 +2,22 @@ import React, { useState, useEffect, useContext } from 'react';
 import { View, Text, KeyboardAvoidingView } from 'react-native';
 import styles from './styles';
 import Icon from 'react-native-vector-icons/AntDesign';
-import { BorderlessButton, TextInput } from "react-native-gesture-handler"
+import { BorderlessButton } from "react-native-gesture-handler"
 import Input from '../../components/Input';
 import { useNavigation } from '@react-navigation/native';
 import PickerInfo from '../../components/Picker';
 import api from '../../services/api';
 import AuthContext from '../../contexts/auth';
-import AsyncStorage from '@react-native-community/async-storage';
+import DocumentPicker from 'react-native-document-picker';
+import UUIDGenerator from 'react-native-uuid-generator';
+import logo from '../../assets/images/icons/logo.png';
 
 const AddScreen = (props) => {
 
-    const {routines, subjects, setSubjects, setRoutines, setAllReviews, allReviews, logoutContext} = useContext(AuthContext)
+    const {routines, subjects, setAllReviews, allReviews, user, logoutContext} = useContext(AuthContext)
 
     const [titleReview, setTitleReview] = useState('')
+    const [trackAudioReview, setTrackAudioReview] = useState(null)
     const [subjectReview, setSubjectReview] = useState('')
     const [routineReview, setRoutineReview] = useState('')
     const [dateNextSequenceReview, setDateNextSequenceReview] = useState('');
@@ -23,6 +26,7 @@ const AddScreen = (props) => {
 
     function handlePressGoBack() {
         navigation.goBack()
+        setTrackAudioReview('')
     }
 
     function showInfo() {
@@ -36,7 +40,8 @@ const AddScreen = (props) => {
                 title: titleReview,
                 routine_id: routineReview._id,
                 subject_id: subjectReview._id,
-                dateNextSequenceReview: dateNextSequenceReview
+                dateNextSequenceReview: dateNextSequenceReview,
+                track: trackAudioReview
             }).then((response) => {
 
                 navigation.goBack()
@@ -72,6 +77,44 @@ const AddScreen = (props) => {
         }
 
     }
+
+    async function handleAudioSelector() {
+
+        try {
+            
+            const res = await DocumentPicker.pick({
+              type: [DocumentPicker.types.audio],
+            });
+
+            let id;
+            //callback interface
+            UUIDGenerator.getRandomUUID().then((uuid) => {
+                id = uuid
+            })
+
+            let track = {
+                id: id,
+                url: res.uri,
+
+                title: titleReview,
+                artist: user.name,
+                album: 'TTR - audios',
+                artwork: logo
+            }
+
+            setTrackAudioReview(track)
+
+          } catch (err) {
+            if (DocumentPicker.isCancel(err)) {
+              // User cancelled the picker, exit any dialogs or menus and move on
+              console.log('cancelou')
+            } else {
+                console.log(err)
+              alert('Houve um erro ao selecionar o arquivo, tente novamente!')
+            }
+          }
+    }
+
     //ADICIONAR A DATA DE QUANDO FOI CRIADA
     return (
         <KeyboardAvoidingView style={styles.container}>
@@ -129,31 +172,20 @@ const AddScreen = (props) => {
                         }}
                     />
                 </View>
-                <View style={styles.timerBox}>
-                    <View style={styles.labelIconBox}>
-                        <Text style={styles.label}>Cronômetro de conclusão</Text>
-                        <Icon name="clockcircleo" size={20} color="#303030" style={{marginLeft: 3}} />
+                <View style={styles.noteAudioBox}>
+                    <View style={styles.noteAudioButton}>
+                        <Text style={styles.label}>Anotações</Text>
+                        <BorderlessButton style={{marginTop: 5}}>
+                            <Icon name="form" size={40} color="#303030" style={styles.iconBack} />
+                        </BorderlessButton>
                     </View>
-                    {/* <View style={styles.timerInputBox}>
-                        <TextInput 
-                            value={timerMin} 
-                            keyboardType="phone-pad" 
-                            onChangeText={(text) => {
-                                setTimerMin(text)
-                                setTimerSeg('00')
-                            }} 
-                            placeholder="MIN" 
-                            style={styles.input}/>
-                        <Text style={styles.timerSeparator}>:</Text>
-                        <TextInput 
-                            value={timerSeg} 
-                            keyboardType="phone-pad" 
-                            onChangeText={(text) => {
-                                setTimerSeg(text)
-                            }} 
-                            placeholder="SEG" 
-                            style={styles.input}/>
-                    </View> */}
+                    <View style={styles.separator} />
+                    <View style={styles.noteAudioButton}>
+                        <Text style={styles.label}>Áudio</Text>
+                        <BorderlessButton style={{marginTop: 5}} onPress={handleAudioSelector}>
+                            <Icon name="customerservice" size={40} color="#303030" style={styles.iconBack} />
+                        </BorderlessButton>
+                    </View>
                 </View> 
             </View>
         </KeyboardAvoidingView>

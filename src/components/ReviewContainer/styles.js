@@ -55,6 +55,8 @@ const styles = StyleSheet.create({
         width: '95%',
         flexDirection: 'row',
         justifyContent: 'space-around',
+        
+        position: 'relative'
     },
     DateButtonsBox: {
         width: '30%',
@@ -88,6 +90,16 @@ const styles = StyleSheet.create({
         flex: 1,
         borderTopRightRadius: 7,
         borderTopLeftRadius: 7,
+    },
+    audioButton: {
+        position: 'absolute',
+        right: 8,
+        top: 10
+    },
+    audioButton2: {
+        position: 'absolute',
+        left: 8,
+        top: 10
     }
     
 })

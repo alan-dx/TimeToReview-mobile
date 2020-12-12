@@ -171,7 +171,7 @@ const SettingScreen = (props) => {
                 console.log(response.customButton);
             } else {
                 let source = response;
-                console.log('else')
+                console.log(response.data)
                 setFilePath(source);
                 AsyncStorage.setItem("@TTR:profilephoto", JSON.stringify(source))
             }
