@@ -31,7 +31,6 @@ const SettingScreen = (props) => {
 
         async function loadStorageProfilePhoto() {
             let source = await AsyncStorage.getItem("@TTR:profilephoto")
-            console.log(source)
             setFilePath(JSON.parse(source))
         }
 
@@ -171,7 +170,7 @@ const SettingScreen = (props) => {
                 console.log(response.customButton);
             } else {
                 let source = response;
-                console.log(response.data)
+                console.log('uri',response.path)
                 setFilePath(source);
                 AsyncStorage.setItem("@TTR:profilephoto", JSON.stringify(source))
             }

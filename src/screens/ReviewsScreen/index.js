@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect, useRef } from 'react';
-import { View, FlatList, ToastAndroid, Text, Linking } from 'react-native';
+import { View, FlatList, ToastAndroid, Text, FetchResult, Linking } from 'react-native';
 import styles from './styles';
 import stylesSteps from './stylesSteps';
 import { useNavigation } from '@react-navigation/native';
@@ -14,6 +14,8 @@ import ScreenTutorial from '../../components/ScreenTutorial';
 import Icon from 'react-native-vector-icons/AntDesign';
 import Icon2 from 'react-native-vector-icons/Feather';
 import TrackPlayer from 'react-native-track-player';
+import RNFetchBlob from 'rn-fetch-blob';
+import RNFS from 'react-native-fs';
 
 const ReviewsScreen = (props) => {
 
@@ -251,22 +253,23 @@ const ReviewsScreen = (props) => {
     }
 
     async function handleStartAudioPlayer(track) {
-        console.log('track-URL', track.url)
-        console.log('type', typeof(track))
-        console.log('type', typeof(track.url))
+        alert(`url - ${track.url} `)
+        console.log(track.url)
         await TrackPlayer.reset()
-        //VAI TER Q INSTALAR A RNFS
-        // track.url = `file:///storage/emulated/0/Download/o-o-gas-versao-swingueira%20(1).mp3`
-        Linking.openURL(track.url)
-        // TrackPlayer.stop()
+
+        await RNFS.readFile(track.url, 'base64').then((res) => {
+            console.log(res)
+        }).catch((err) => alert(err))
+
         await TrackPlayer.add((track)).then(async () => {
             let tracks = await TrackPlayer.getQueue()
-            console.log(tracks)
-            TrackPlayer.play()
+            alert(tracks[0].url)
+            // TrackPlayer.play()
         }).catch((err) => {
             console.log('error', err)
+            alert(err)
         })
-        // TrackPlayer.play()
+        TrackPlayer.play()
         // O BUG É RESSOLVIDO QUANDO VOCE ABRE O FILE BROWSER NA ADDSCREEN, APESAR DE
         // SEREM DUAS LIBS DISTINTAS
         //PODE SER A UUID, ENTÃO COLOQUE O NA TRACK POR AQUI
@@ -302,7 +305,10 @@ const ReviewsScreen = (props) => {
                             data={item} onPressConclude={() => handleConcludeReview(item._id)} 
                             onPressEdit={() => handleGoToEditScreen(item)}
                             onPressAudioButton={() => handleStartAudioPlayer(item.track)}
-                            onPressAudioButton2={() => {TrackPlayer.stop()}}
+                            onPressAudioButton2={() => {
+                                TrackPlayer.stop()
+                                alert(RNFS.ExternalStorageDirectoryPath)
+                            }}
                         />
                     }
                 />

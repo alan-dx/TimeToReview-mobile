@@ -11,6 +11,7 @@ import AuthContext from '../../contexts/auth';
 import DocumentPicker from 'react-native-document-picker';
 import UUIDGenerator from 'react-native-uuid-generator';
 import logo from '../../assets/images/icons/logo.png';
+import RNFetchBlob from 'rn-fetch-blob';
 
 const AddScreen = (props) => {
 
@@ -87,21 +88,40 @@ const AddScreen = (props) => {
             });
 
             let id;
+            let url;
             //callback interface
-            UUIDGenerator.getRandomUUID().then((uuid) => {
+            await UUIDGenerator.getRandomUUID().then((uuid) => {
                 id = uuid
             })
 
+            await RNFetchBlob.fs
+            .stat(res.uri)
+            .then((stats) => {
+                console.log(stats.path)
+                url = `file://${stats.path}`
+            })
+            .catch((err) => {
+                console.log(err);
+                alert(err)
+            });
+
+            // await fetch(res.uri, {method: 'post'})
+            // .then(res => console.log(res))
+            // .catch(err => {
+            //     console.log(err)
+            // })
+
+
+
             let track = {
                 id: id,
-                url: res.uri,
+                url: url,
 
                 title: titleReview,
                 artist: user.name,
                 album: 'TTR - audios',
                 artwork: logo
             }
-
             setTrackAudioReview(track)
 
           } catch (err) {
