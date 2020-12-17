@@ -98,7 +98,7 @@ const AddScreen = (props) => {
             .stat(res.uri)
             .then((stats) => {
                 console.log(stats.path)
-                url = `file://${stats.path}`
+                url = {uri:"file://"+stats.path}
             })
             .catch((err) => {
                 console.log(err);
@@ -111,17 +111,29 @@ const AddScreen = (props) => {
             //     console.log(err)
             // })
 
-
-
             let track = {
                 id: id,
                 url: url,
-
+                type: 'default',
                 title: titleReview,
                 artist: user.name,
                 album: 'TTR - audios',
-                artwork: logo
+                artwork: 'https://picsum.photos/100',
             }
+
+            //ASSOCIAR AUDIO DIRETO DO GOOGLE DRIVE
+
+            // let track = {
+            //     id: '1',
+            //     url:
+            //       'https://audio-previews.elements.envatousercontent.com/files/103682271/preview.mp3',
+            //     type: 'default',
+            //     title: 'My Title',
+            //     album: 'My Album',
+            //     artist: 'Rohan Bhatia',
+            //     artwork: 'https://picsum.photos/100',
+            // }
+
             setTrackAudioReview(track)
 
           } catch (err) {

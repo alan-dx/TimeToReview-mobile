@@ -38,11 +38,20 @@ const ReviewsScreen = (props) => {
 
     useEffect(() => {
 
-        TrackPlayer.setupPlayer({
+        async function setupPlayer() {
+            await TrackPlayer.setupPlayer()
+            TrackPlayer.updateOptions({
+                stopWithApp: true,
+                capabilities: [
+                    TrackPlayer.CAPABILITY_PLAY,
+                    TrackPlayer.CAPABILITY_PAUSE,
+                    TrackPlayer.CAPABILITY_JUMP_FORWARD,
+                    TrackPlayer.CAPABILITY_JUMP_BACKWARD,
+                ],
+            });
+        }
 
-        }).then(() => {
-            console.log('player configurado')
-        })
+        setupPlayer()
         
     }, [])
 
@@ -254,22 +263,28 @@ const ReviewsScreen = (props) => {
 
     async function handleStartAudioPlayer(track) {
         alert(`url - ${track.url} `)
-        console.log(track.url)
-        await TrackPlayer.reset()
+        console.log(typeof(track.url))
+        // await TrackPlayer.reset()
 
-        await RNFS.readFile(track.url, 'base64').then((res) => {
-            console.log(res)
-        }).catch((err) => alert(err))
+        // await RNFS.readFile(track.url, 'base64').then((res) => {
+        //     console.log(res)
+        // }).catch((err) => alert(err))
 
-        await TrackPlayer.add((track)).then(async () => {
+        //ASSOCIAR AUDIO DO GOOGLE DRIVE
+
+        await TrackPlayer.add(track).then(async () => {
             let tracks = await TrackPlayer.getQueue()
             alert(tracks[0].url)
-            // TrackPlayer.play()
+            TrackPlayer.play().then(() => {
+                console.log('tocando')
+            }).catch((err) => {
+                alert(`error - ${err}`)
+            })
         }).catch((err) => {
             console.log('error', err)
             alert(err)
         })
-        TrackPlayer.play()
+        // TrackPlayer.play()
         // O BUG É RESSOLVIDO QUANDO VOCE ABRE O FILE BROWSER NA ADDSCREEN, APESAR DE
         // SEREM DUAS LIBS DISTINTAS
         //PODE SER A UUID, ENTÃO COLOQUE O NA TRACK POR AQUI
@@ -307,6 +322,7 @@ const ReviewsScreen = (props) => {
                             onPressAudioButton={() => handleStartAudioPlayer(item.track)}
                             onPressAudioButton2={() => {
                                 TrackPlayer.stop()
+                                TrackPlayer.reset()
                                 alert(RNFS.ExternalStorageDirectoryPath)
                             }}
                         />
