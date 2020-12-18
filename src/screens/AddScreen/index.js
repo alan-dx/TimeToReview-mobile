@@ -98,13 +98,14 @@ const AddScreen = (props) => {
             .stat(res.uri)
             .then((stats) => {
                 console.log(stats.path)
-                url = {uri:"file://"+stats.path}
+                url = `file://${stats.path}`
             })
             .catch((err) => {
                 console.log(err);
                 alert(err)
             });
-
+//0.63.2
+//0.62.1
             // await fetch(res.uri, {method: 'post'})
             // .then(res => console.log(res))
             // .catch(err => {

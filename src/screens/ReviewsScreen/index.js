@@ -262,7 +262,7 @@ const ReviewsScreen = (props) => {
     }
 
     async function handleStartAudioPlayer(track) {
-        alert(`url - ${track.url} `)
+        alert(`url - ${track.url}`)
         console.log(typeof(track.url))
         // await TrackPlayer.reset()
 
@@ -275,8 +275,8 @@ const ReviewsScreen = (props) => {
         await TrackPlayer.add(track).then(async () => {
             let tracks = await TrackPlayer.getQueue()
             alert(tracks[0].url)
-            TrackPlayer.play().then(() => {
-                console.log('tocando')
+            await TrackPlayer.play().then(() => {
+                alert('tocando')
             }).catch((err) => {
                 alert(`error - ${err}`)
             })
