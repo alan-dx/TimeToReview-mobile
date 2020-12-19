@@ -10,7 +10,6 @@ import api from '../../services/api';
 import AuthContext from '../../contexts/auth';
 import DocumentPicker from 'react-native-document-picker';
 import UUIDGenerator from 'react-native-uuid-generator';
-import logo from '../../assets/images/icons/logo.png';
 import RNFetchBlob from 'rn-fetch-blob';
 
 const AddScreen = (props) => {
@@ -30,8 +29,7 @@ const AddScreen = (props) => {
         setTrackAudioReview('')
     }
 
-    function showInfo() {
-        
+    function handleCreateReview() {
         const currentDate = new Date()
         
         if (!titleReview || !subjectReview || !routineReview) {
@@ -104,13 +102,6 @@ const AddScreen = (props) => {
                 console.log(err);
                 alert(err)
             });
-//0.63.2
-//0.62.1
-            // await fetch(res.uri, {method: 'post'})
-            // .then(res => console.log(res))
-            // .catch(err => {
-            //     console.log(err)
-            // })
 
             let track = {
                 id: id,
@@ -156,7 +147,7 @@ const AddScreen = (props) => {
                     <BorderlessButton onPress={handlePressGoBack}>
                         <Icon name="close" size={25} color="#F7F7F7" style={styles.iconBack} />
                     </BorderlessButton>
-                    <BorderlessButton onPress={showInfo}>
+                    <BorderlessButton onPress={handleCreateReview}>
                         <Icon name="check" size={25} color="#F7F7F7" style={styles.iconBack} />
                     </BorderlessButton>
                 </View>

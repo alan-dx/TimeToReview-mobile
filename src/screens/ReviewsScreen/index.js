@@ -14,8 +14,8 @@ import ScreenTutorial from '../../components/ScreenTutorial';
 import Icon from 'react-native-vector-icons/AntDesign';
 import Icon2 from 'react-native-vector-icons/Feather';
 import TrackPlayer from 'react-native-track-player';
-import RNFetchBlob from 'rn-fetch-blob';
 import RNFS from 'react-native-fs';
+import PlayerModal from '../../components/PlayerModal';
 
 const ReviewsScreen = (props) => {
 
@@ -29,6 +29,8 @@ const ReviewsScreen = (props) => {
     const [startController, setStartController] = useState(true)
     const [reviewInitTime, setReviewInitTime] = useState(new Date())
     const [handleOpenTutorialModal, setHandleOpenTutorialModal] = useState(false)
+    const [handleOpenPlayerModal, setHandleOpenPlayerModal] = useState(false)
+    const [trackPlayer, setTrackPlayer] = useState('')
 
     const cycleFlatList = useRef(null)
 
@@ -42,12 +44,6 @@ const ReviewsScreen = (props) => {
             await TrackPlayer.setupPlayer()
             TrackPlayer.updateOptions({
                 stopWithApp: true,
-                capabilities: [
-                    TrackPlayer.CAPABILITY_PLAY,
-                    TrackPlayer.CAPABILITY_PAUSE,
-                    TrackPlayer.CAPABILITY_JUMP_FORWARD,
-                    TrackPlayer.CAPABILITY_JUMP_BACKWARD,
-                ],
             });
         }
 
@@ -262,33 +258,25 @@ const ReviewsScreen = (props) => {
     }
 
     async function handleStartAudioPlayer(track) {
-        alert(`url - ${track.url}`)
-        console.log(typeof(track.url))
-        // await TrackPlayer.reset()
-
-        // await RNFS.readFile(track.url, 'base64').then((res) => {
-        //     console.log(res)
-        // }).catch((err) => alert(err))
-
         //ASSOCIAR AUDIO DO GOOGLE DRIVE
 
-        await TrackPlayer.add(track).then(async () => {
-            let tracks = await TrackPlayer.getQueue()
-            alert(tracks[0].url)
-            await TrackPlayer.play().then(() => {
-                alert('tocando')
-            }).catch((err) => {
-                alert(`error - ${err}`)
-            })
-        }).catch((err) => {
-            console.log('error', err)
-            alert(err)
-        })
-        // TrackPlayer.play()
-        // O BUG É RESSOLVIDO QUANDO VOCE ABRE O FILE BROWSER NA ADDSCREEN, APESAR DE
-        // SEREM DUAS LIBS DISTINTAS
-        //PODE SER A UUID, ENTÃO COLOQUE O NA TRACK POR AQUI
-        //PODE SER QUE O ARQUIVO NÃO É CARREGADO ATE SER SELECIONADO PELO FILE BROWSER
+        setHandleOpenPlayerModal(true)
+        setTrackPlayer(track)
+
+        // await TrackPlayer.add(track).then(async () => {
+        //     let tracks = await TrackPlayer.getQueue()
+        //     await TrackPlayer.play()
+        //     .catch((err) => {
+        //         alert(`Houve um erro ao iniciar o player, tente novamente!`)
+        //     })
+        // }).catch((err) => {
+        //     alert('Houve um erro ao abrir o plyaer, tente novamente!')
+        // })
+    }
+
+    function handleStopAudioPlayer() {
+        setHandleOpenPlayerModal(false)
+        setTrackPlayer('')
     }
 
     return (
@@ -330,10 +318,20 @@ const ReviewsScreen = (props) => {
                 />
             }
             <FloatAddButton onPress={handlePressGoToAddScreen}/>
-            {handleOpenTutorialModal ? 
+            {
+            handleOpenTutorialModal ? 
                 <ScreenTutorial 
                     modalVisible={handleOpenTutorialModal}
                     steps={[Step0, Step1, Step2, Step3, Step4]}
+                />
+                : null
+            }
+            {
+                handleOpenPlayerModal ?
+                <PlayerModal 
+                    modalVisible={handleOpenPlayerModal}
+                    handleCloseModal={handleStopAudioPlayer}
+                    track={trackPlayer}
                 />
                 : null
             }
