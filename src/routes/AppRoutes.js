@@ -23,6 +23,7 @@ import ProfileScreen from '../screens/ProfileScreen';
 import VerifyPassScreen from '../screens/VerifyPassScreen';
 import ChangePassScreen from '../screens/ChangePassScreen';
 import AboutScreen from '../screens/AboutScreen';
+import NotesScreen from '../screens/NotesScreen';
 
 const {Screen, Navigator} = createStackNavigator()
 
@@ -50,11 +51,6 @@ const AppRoutes = () => {
                         headerShown: true,
                         header: () => <Header route={route} navigation={navigation} title="REVISÕES" color="#F5F5F5" />
                       })}
-                    // options={{
-                    //     headerShown: true,
-                    //     header: () => <Header title="REVISÕES" color="#F5F5F5" />
-                    // }}
-                
                 />
                 <Screen 
                     name="RoutineScreen" 
@@ -147,6 +143,10 @@ const AppRoutes = () => {
                 <Screen 
                     name="AddScreen" 
                     component={AddScreen} 
+                />
+                <Screen 
+                    name="NotesScreen"
+                    component={NotesScreen}
                 />
                 <Screen 
                     name="EditScreen" 

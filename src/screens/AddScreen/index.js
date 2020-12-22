@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { View, Text, KeyboardAvoidingView } from 'react-native';
 import styles from './styles';
 import Icon from 'react-native-vector-icons/AntDesign';
+import Icon2 from 'react-native-vector-icons/Feather';
 import { BorderlessButton } from "react-native-gesture-handler"
 import Input from '../../components/Input';
 import { useNavigation } from '@react-navigation/native';
@@ -11,6 +12,7 @@ import AuthContext from '../../contexts/auth';
 import DocumentPicker from 'react-native-document-picker';
 import UUIDGenerator from 'react-native-uuid-generator';
 import RNFetchBlob from 'rn-fetch-blob';
+import InputWLabelL from '../../components/InputWLabelL';
 
 const AddScreen = (props) => {
 
@@ -21,6 +23,11 @@ const AddScreen = (props) => {
     const [subjectReview, setSubjectReview] = useState('')
     const [routineReview, setRoutineReview] = useState('')
     const [dateNextSequenceReview, setDateNextSequenceReview] = useState('');
+    const [ notesReview, setNotesReview ] = useState({
+        title: '',
+        note: '',
+        align: 'left'
+    })
 
     const navigation = useNavigation();
 
@@ -40,7 +47,8 @@ const AddScreen = (props) => {
                 routine_id: routineReview._id,
                 subject_id: subjectReview._id,
                 dateNextSequenceReview: dateNextSequenceReview,
-                track: trackAudioReview
+                track: trackAudioReview,
+                notes: notesReview
             }).then((response) => {
 
                 navigation.goBack()
@@ -115,17 +123,6 @@ const AddScreen = (props) => {
 
             //ASSOCIAR AUDIO DIRETO DO GOOGLE DRIVE
 
-            // let track = {
-            //     id: '1',
-            //     url:
-            //       'https://audio-previews.elements.envatousercontent.com/files/103682271/preview.mp3',
-            //     type: 'default',
-            //     title: 'My Title',
-            //     album: 'My Album',
-            //     artist: 'Rohan Bhatia',
-            //     artwork: 'https://picsum.photos/100',
-            // }
-
             setTrackAudioReview(track)
 
           } catch (err) {
@@ -137,6 +134,21 @@ const AddScreen = (props) => {
               alert('Houve um erro ao selecionar o arquivo, tente novamente!')
             }
           }
+    }
+
+    function handleSaveNotes(note) {
+        setNotesReview(note)
+    }
+
+    function handleGoToNotesScreen() {
+        navigation.navigate("NotesScreen", {
+            onGoBack: handleSaveNotes,
+            screenData: {
+                title: '',
+                note: '',
+                align: 'left'
+            }
+        })
     }
 
     //ADICIONAR A DATA DE QUANDO FOI CRIADA
@@ -157,17 +169,25 @@ const AddScreen = (props) => {
                 <View style={styles.dntReview}>
                     <View style={styles.labelIconBox}>
                         <Icon name="calendar" size={20} color="#303030" style={{marginRight: 3}} />
-                        <Text style={styles.label}>Data da primeira Revisão</Text>
+                        <Text style={styles.label2}>Data da primeira Revisão</Text>
                     </View>
                     <Text style={styles.subLabel}>{dateNextSequenceReview == "" ? "GERADA AUTOMATICAMENTE AO SELECIONAR UMA ROTINA" : `${dateNextSequenceReview.getDate()}/${dateNextSequenceReview.getMonth()}/${dateNextSequenceReview.getFullYear()}` }</Text>
                 </View>
-                <View style={styles.inputBox}>
+                <InputWLabelL 
+                    labelTitle="Título da Revisão"
+                    value={titleReview}
+                    secureTextEntry={false}
+                    onChangeText={setTitleReview}
+                    placeholder="Ex.: EDO de Bernoulli"
+                    textAlign="center"
+                />
+                {/* <View style={styles.inputBox}>
                     <View style={styles.labelBoxL}>
                         <View style={styles.labelFrame} />
                         <Text style={styles.label}>Título da Revisão</Text>
                     </View>
                     <Input value={titleReview} secureTextEntry={false} onChangeText={setTitleReview} textAlign="center" placeholder="EDO DE BERNOULLI" />
-                </View>
+                </View> */}
                 <View style={styles.inputBox}>
                     <View style={styles.labelBoxR}>
                         <Text style={styles.label}>Disciplina da Revisão</Text>
@@ -198,16 +218,16 @@ const AddScreen = (props) => {
                 </View>
                 <View style={styles.noteAudioBox}>
                     <View style={styles.noteAudioButton}>
-                        <Text style={styles.label}>Anotações</Text>
-                        <BorderlessButton style={{marginTop: 5}}>
-                            <Icon name="form" size={40} color="#303030" style={styles.iconBack} />
+                        <Text style={styles.label2}>Anotações</Text>
+                        <BorderlessButton style={{marginTop: 5}} onPress={handleGoToNotesScreen}>
+                            <Icon2 name="edit" size={25} color="#303030" style={styles.iconBack} />
                         </BorderlessButton>
                     </View>
                     <View style={styles.separator} />
                     <View style={styles.noteAudioButton}>
-                        <Text style={styles.label}>Áudio</Text>
+                        <Text style={styles.label2}>Áudio</Text>
                         <BorderlessButton style={{marginTop: 5}} onPress={handleAudioSelector}>
-                            <Icon name="customerservice" size={40} color="#303030" style={styles.iconBack} />
+                            <Icon2 name="music" size={25} color="#303030" style={styles.iconBack} />
                         </BorderlessButton>
                     </View>
                 </View> 

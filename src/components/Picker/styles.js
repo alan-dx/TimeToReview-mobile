@@ -11,15 +11,18 @@ const styles = StyleSheet.create({
         borderBottomLeftRadius: 15, 
         borderBottomRightRadius: 15,
         backgroundColor: '#E8E8E8',
-        width: '80%'
+        width: '80%',
     },
     dropdown: {
         borderBottomLeftRadius: 15,
         borderBottomRightRadius: 15,
         backgroundColor: '#E8E8E8',
+        borderTopColor: '#E8E8E8',
         width: '80%',
-        height: 120,
-        marginTop: -8
+        height: 98,
+        
+        marginTop: -10,
+        elevation: 1
     },
     label: {
         fontFamily: 'Archivo-SemiBold',

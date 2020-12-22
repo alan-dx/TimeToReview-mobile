@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Modal, Image, View, TouchableHighlight } from 'react-native';
 import styles from './styles';
 import Icon from 'react-native-vector-icons/Entypo';
+import Icon2 from 'react-native-vector-icons/Feather';
 import TrackPlayer from 'react-native-track-player';
 
 const PlayerModal = (props) => {
@@ -94,6 +95,9 @@ const PlayerModal = (props) => {
                             </TouchableHighlight>
                         </View>
                     </View>
+                    <TouchableHighlight underlayColor="#DDDD" style={styles.closeButton} onPress={handleStopTrack}>
+                        <Icon2 name="x" size={25} color="#303030" style={styles.iconBack} />
+                    </TouchableHighlight>
                 </View>
             </View>
         </Modal>

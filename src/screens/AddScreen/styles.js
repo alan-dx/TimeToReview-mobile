@@ -71,6 +71,11 @@ const styles = StyleSheet.create({
         marginHorizontal: 3,
         color: '#303030'
     },
+    label2: {
+        fontFamily: 'Archivo-Bold',
+        fontSize: 13,
+        marginHorizontal: 3
+    },
     subLabel: {
         marginTop: 6,
         color: '#ABABAB',

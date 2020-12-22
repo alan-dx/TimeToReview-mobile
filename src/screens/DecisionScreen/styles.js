@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
     },
     topBox: {
         marginTop: 10,
-        flex: 1,
+        flex: 2,
         alignItems: 'center',
         justifyContent: 'space-evenly'
     },
@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
     selectBox: {
         justifyContent: 'center',
         alignItems: 'center',
-        height: '55%',
+        flex: 1,
         backgroundColor: '#FFFFFF',
     },
     selectContainer: {

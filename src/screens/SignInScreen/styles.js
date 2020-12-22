@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
     labelFrame: {
         height: 1,
         flex: 1,
-        backgroundColor: '#60c3eb',
+        backgroundColor: '#e74e36',
     },
     label:{
         fontFamily:'Archivo-Bold',

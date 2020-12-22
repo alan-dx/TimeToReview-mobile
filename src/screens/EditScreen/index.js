@@ -2,20 +2,26 @@ import React, { useState, useEffect, useContext } from 'react';
 import { View, Text, KeyboardAvoidingView } from 'react-native';
 import styles from './styles';
 import Icon from 'react-native-vector-icons/AntDesign';
-import { BorderlessButton, TextInput } from "react-native-gesture-handler"
+import Icon2 from 'react-native-vector-icons/Feather';
+import { BorderlessButton } from "react-native-gesture-handler"
 import Input from '../../components/Input';
 import { useNavigation } from '@react-navigation/native';
 import PickerInfo from '../../components/Picker';
 import api from '../../services/api';
 import AuthContext from '../../contexts/auth';
+import DocumentPicker from 'react-native-document-picker';
+import UUIDGenerator from 'react-native-uuid-generator';
+import RNFetchBlob from 'rn-fetch-blob';
 
 const EditScreen = (props) => {
 
     const dataScreen = props.route.params.screenData
 
-    const {routines, subjects, setSubjects, allReviews, setAllReviews, logoutContext } = useContext(AuthContext)
+    const {routines, subjects, user, setSubjects, allReviews, setAllReviews, logoutContext } = useContext(AuthContext)
 
     const [titleReview, setTitleReview] = useState(dataScreen.title)
+    const [trackAudioReview, setTrackAudioReview] = useState(dataScreen.track)
+    const [notesReview, setNotesReview] = useState(dataScreen.notes)
     const [subjectReview, setSubjectReview] = useState(dataScreen.subject_id)
     const [routineReview, setRoutineReview] = useState(dataScreen.routine_id)
     const [dateNextSequenceReview, setDateNextSequenceReview] = useState(new Date(dataScreen.dateNextSequenceReview));
@@ -23,20 +29,35 @@ const EditScreen = (props) => {
 
     const navigation = useNavigation();
 
+    useEffect(() => {
+        let previousDate = new Date(dataScreen.dateNextSequenceReview)
+        let nextSequenceReview = dataScreen.routine_id.sequence[dataScreen.currentSequenceReview + 1]
+        // console.log(previousDate.getDate(), nextSequenceReview, previousDate.getDay() + nextSequenceReview)
+        previousDate.setDate(previousDate.getDate() + Number(nextSequenceReview))
+        
+        if (props.route.params.fromReviewsScreen) {
+            setDateNextSequenceReview(previousDate)
+        }
+
+    }, [])
+
     function handlePressGoBack() {
         navigation.goBack()
     }
 
-    function showInfo() {
+    function editReview() {
 
-        let editData = {
+        let editData = {//check if the data has been modified to decide whether or not to send
             title: titleReview != dataScreen.title ? titleReview : null,
             subject_id: subjectReview._id != dataScreen.subject_id._id ? subjectReview._id : null,
             routine_id: routineReview._id != dataScreen.routine_id._id ? routineReview._id : null,
+            track: trackAudioReview != dataScreen.track ? trackAudioReview : null,
+            notes: notesReview != dataScreen.notes ? notesReview : null
         }
 
+        console.log('editData', editData)
         
-        if (editData.title || editData.subject_id || editData.routine_id) {
+        if (editData.title || editData.subject_id || editData.routine_id || editData.track || editData.notes) {
             api.put('/editReview', editData,
             {
                 params: {
@@ -92,6 +113,85 @@ const EditScreen = (props) => {
 
     }
 
+    async function handleAudioSelector() {
+
+        try {
+            
+            const res = await DocumentPicker.pick({
+              type: [DocumentPicker.types.audio],
+            });
+
+            let id;
+            let url;
+            //callback interface
+            await UUIDGenerator.getRandomUUID().then((uuid) => {
+                id = uuid
+            })
+
+            await RNFetchBlob.fs
+            .stat(res.uri)
+            .then((stats) => {
+                console.log(stats.path)
+                url = `file://${stats.path}`
+            })
+            .catch((err) => {
+                console.log(err);
+                alert(err)
+            });
+
+            let track = {
+                id: id,
+                url: url,
+                type: 'default',
+                title: titleReview,
+                artist: user.name,
+                album: 'TTR - audios',
+                artwork: 'https://picsum.photos/100',
+            }
+
+            //ASSOCIAR AUDIO DIRETO DO GOOGLE DRIVE
+
+            // let track = {
+            //     id: '1',
+            //     url:
+            //       'https://audio-previews.elements.envatousercontent.com/files/103682271/preview.mp3',
+            //     type: 'default',
+            //     title: 'My Title',
+            //     album: 'My Album',
+            //     artist: 'Rohan Bhatia',
+            //     artwork: 'https://picsum.photos/100',
+            // }
+
+            setTrackAudioReview(track)
+
+          } catch (err) {
+            if (DocumentPicker.isCancel(err)) {
+              // User cancelled the picker, exit any dialogs or menus and move on
+              console.log('cancelou')
+            } else {
+                console.log(err)
+                alert('Houve um erro ao selecionar o arquivo, tente novamente!')
+            }
+          }
+    }
+
+    
+    function handleSaveNotes(note) {
+        setNotesReview(note)
+        console.log(note)
+    }
+
+    function handleGoToNotesScreen() {
+        navigation.navigate("NotesScreen", {
+            onGoBack: handleSaveNotes,
+            screenData: notesReview || {
+                title: '',
+                note: '',
+                align: 'left'
+            }
+        })
+    }
+
     return (
         <KeyboardAvoidingView style={styles.container}>
             <View style={styles.header}>
@@ -99,26 +199,34 @@ const EditScreen = (props) => {
                     <BorderlessButton onPress={handlePressGoBack}>
                         <Icon name="close" size={25} color="#F7F7F7" style={styles.iconBack} />
                     </BorderlessButton>
-                    <BorderlessButton onPress={showInfo}>
+                    <BorderlessButton onPress={editReview}>
                         <Icon name="check" size={25} color="#F7F7F7" style={styles.iconBack} />
                     </BorderlessButton>
                 </View>
                 <Text style={styles.headerText}>EDITAR REVISÃO</Text>
             </View>
             <View style={styles.main}>
-                <View style={styles.dntReview}>
-                    <View style={styles.labelIconBox}>
-                        <Icon name="sync" size={20} color="#303030" style={{marginRight: 3}} />
-                        <Text style={styles.label}>Índice de rotina atual:</Text>
+                <View style={styles.dntReviewBox}>
+                    <View style={styles.dntReview}>
+                        <View style={styles.labelIconBox}>
+                            <Icon name="sync" size={20} color="#303030" style={{marginRight: 3}} />
+                            <Text style={styles.label2}>Índice de rotina atual:</Text>
+                        </View>
+                        <Text style={styles.subLabel}>{currentSequenceReview}</Text>
                     </View>
-                    <Text style={styles.subLabel}>{currentSequenceReview}</Text>
-                </View>
-                <View style={styles.dntReview}>
-                    <View style={styles.labelIconBox}>
-                        <Icon name="calendar" size={20} color="#303030" style={{marginRight: 3}} />
-                        <Text style={styles.label}>Data da próxima Revisão</Text>
+                    <View style={styles.dntReview}>
+                        <View style={styles.labelIconBox}>
+                            <Icon name="calendar" size={20} color="#303030" style={{marginRight: 3}} />
+                            {
+                                props.route.params.fromReviewsScreen 
+                                ?
+                                    <Text style={styles.label2}>Próxima Revisão - após conclusão</Text>
+                                :
+                                    <Text style={styles.label2}>Próxima Revisão</Text>
+                            }
+                        </View>
+                        <Text style={styles.subLabel}>{`${dateNextSequenceReview.getDate()}/${dateNextSequenceReview.getMonth()+1}/${dateNextSequenceReview.getFullYear()}`}</Text>
                     </View>
-                    <Text style={styles.subLabel}>{`${dateNextSequenceReview.getDate()}/${dateNextSequenceReview.getMonth()+1}/${dateNextSequenceReview.getFullYear()}`}</Text>
                 </View>
                 <View style={styles.inputBox}>
                     <View style={styles.labelBoxL}>
@@ -163,31 +271,20 @@ const EditScreen = (props) => {
                         }}
                     />
                 </View>
-                <View style={styles.timerBox}>
-                    <View style={styles.labelIconBox}>
-                        <Text style={styles.label}>Cronômetro de conlusão</Text>
-                        <Icon name="clockcircleo" size={20} color="#303030" style={{marginLeft: 3}} />
+                <View style={styles.noteAudioBox}>
+                    <View style={styles.noteAudioButton}>
+                        <Text style={styles.label2}>Anotações</Text>
+                        <BorderlessButton style={{marginTop: 5}} onPress={handleGoToNotesScreen}>
+                            <Icon2 name="edit" size={25} color="#303030" style={styles.iconBack} />
+                        </BorderlessButton>
                     </View>
-                    {/* <View style={styles.timerInputBox}>
-                        <TextInput 
-                            value={timerMin} 
-                            keyboardType="phone-pad" 
-                            onChangeText={(text) => {
-                                setTimerMin(text)
-                                setTimerSeg('00')
-                            }} 
-                            placeholder="MIN" 
-                            style={styles.input}/>
-                        <Text style={styles.timerSeparator}>:</Text>
-                        <TextInput 
-                            value={timerSeg} 
-                            keyboardType="phone-pad" 
-                            onChangeText={(text) => {
-                                setTimerSeg(text)
-                            }} 
-                            placeholder="SEG" 
-                            style={styles.input}/>
-                    </View> */}
+                    <View style={styles.separator} />
+                    <View style={styles.noteAudioButton}>
+                        <Text style={styles.label2}>Áudio</Text>
+                        <BorderlessButton style={{marginTop: 5}} onPress={handleAudioSelector} >
+                            <Icon2 name="music" size={25} color="#303030" style={styles.iconBack} />
+                        </BorderlessButton>
+                    </View>
                 </View> 
             </View>
         </KeyboardAvoidingView>

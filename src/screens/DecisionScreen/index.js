@@ -26,7 +26,7 @@ const DecisionLogin = () => {
             <View style={styles.topBox}>
                 <Text style={styles.titleTop}>SEJA BEM VINDO!</Text>
                 <View style={styles.logoBox}>
-                    <Image source={logo} style={{width: 200, height: 200}} />
+                    <Image source={logo} style={{width: 250, height: 250}} />
                 </View>
             </View>
             <View style={styles.selectBox}>

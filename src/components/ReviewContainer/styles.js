@@ -94,12 +94,12 @@ const styles = StyleSheet.create({
     audioButton: {
         position: 'absolute',
         right: 8,
-        top: 10
+        top: 2
     },
-    audioButton2: {
+    noteButton: {
         position: 'absolute',
         left: 8,
-        top: 10
+        top: 2
     }
     
 })

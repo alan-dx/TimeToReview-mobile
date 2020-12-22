@@ -19,7 +19,7 @@ const LoginScreen = () => {
 
     const navigation = useNavigation();
 
-    const [logo, setLogo] = useState(new Animated.ValueXY({x: 200, y: 200 }))
+    const [logo, setLogo] = useState(new Animated.ValueXY({x: 250, y: 250 }))
 
     useEffect(() => {
         keyBoardDidShowListener = Keyboard.addListener('keyboardDidShow', keyboardDidShow)
@@ -53,13 +53,13 @@ const LoginScreen = () => {
     function keyboardDidHide() {
         Animated.parallel([
             Animated.timing(logo.x, {
-                toValue: 200,
+                toValue: 250,
                 duration: 100,
                 useNativeDriver: false
             }),
             Animated.timing(logo.y, {
-                toValue: 200,
-                duration:100,
+                toValue: 250,
+                duration: 100,
                 useNativeDriver: false
             }),
             
@@ -113,7 +113,7 @@ const LoginScreen = () => {
                         secureTextEntry={true}
                     />
                 </View>
-                <CustomButton text="LOGAR" color='#60c3eb' onPress={handleClickSignInButton}/>
+                <CustomButton text="LOGAR" color='#e74e36' onPress={handleClickSignInButton}/>
             </KeyboardAwareScrollView>
         </View>
     </View>

@@ -16,6 +16,7 @@ import Icon2 from 'react-native-vector-icons/Feather';
 import TrackPlayer from 'react-native-track-player';
 import RNFS from 'react-native-fs';
 import PlayerModal from '../../components/PlayerModal';
+import NotesModal from '../../components/NotesModal';
 
 const ReviewsScreen = (props) => {
 
@@ -30,7 +31,9 @@ const ReviewsScreen = (props) => {
     const [reviewInitTime, setReviewInitTime] = useState(new Date())
     const [handleOpenTutorialModal, setHandleOpenTutorialModal] = useState(false)
     const [handleOpenPlayerModal, setHandleOpenPlayerModal] = useState(false)
+    const [handleOpenNotesModal, setHandleOpenNotesModal] = useState(false)
     const [trackPlayer, setTrackPlayer] = useState('')
+    const [notesToShow, setNotesToShow] = useState(null)
 
     const cycleFlatList = useRef(null)
 
@@ -196,8 +199,10 @@ const ReviewsScreen = (props) => {
     }
 
     function handleGoToEditScreen(screenData) {
+        console.log(screenData)
         navigation.navigate("EditScreen", {
             screenData: screenData,
+            fromReviewsScreen: true,
             onGoBack: handleUpdateDataOnEdit
         })
     }
@@ -263,20 +268,20 @@ const ReviewsScreen = (props) => {
         setHandleOpenPlayerModal(true)
         setTrackPlayer(track)
 
-        // await TrackPlayer.add(track).then(async () => {
-        //     let tracks = await TrackPlayer.getQueue()
-        //     await TrackPlayer.play()
-        //     .catch((err) => {
-        //         alert(`Houve um erro ao iniciar o player, tente novamente!`)
-        //     })
-        // }).catch((err) => {
-        //     alert('Houve um erro ao abrir o plyaer, tente novamente!')
-        // })
     }
 
     function handleStopAudioPlayer() {
         setHandleOpenPlayerModal(false)
         setTrackPlayer('')
+    }
+
+    function handleCloseNotesModal() {
+        setHandleOpenNotesModal(false)
+    }
+
+    function handleShowNotes(notes) {
+        setHandleOpenNotesModal(true)
+        setNotesToShow(notes)
     }
 
     return (
@@ -308,13 +313,11 @@ const ReviewsScreen = (props) => {
                             data={item} onPressConclude={() => handleConcludeReview(item._id)} 
                             onPressEdit={() => handleGoToEditScreen(item)}
                             onPressAudioButton={() => handleStartAudioPlayer(item.track)}
-                            onPressAudioButton2={() => {
-                                TrackPlayer.stop()
-                                TrackPlayer.reset()
-                                alert(RNFS.ExternalStorageDirectoryPath)
-                            }}
+                            onPressNotesButton={() => handleShowNotes(item.notes)}
                         />
                     }
+                    contentContainerStyle={{paddingBottom: 160 }}
+                    
                 />
             }
             <FloatAddButton onPress={handlePressGoToAddScreen}/>
@@ -334,6 +337,16 @@ const ReviewsScreen = (props) => {
                     track={trackPlayer}
                 />
                 : null
+            }
+            {
+                handleOpenNotesModal ?
+                <NotesModal 
+                    modalVisible={handleOpenNotesModal}
+                    handleCloseModal={handleCloseNotesModal}
+                    notes={notesToShow}
+                />
+                :
+                null
             }
         </View>
     )

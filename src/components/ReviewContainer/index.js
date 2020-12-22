@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text} from 'react-native';
+import { View, Text, ToastAndroid} from 'react-native';
 import styles from './styles';
 import { BorderlessButton, RectButton } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/Feather';
-import Icon2 from 'react-native-vector-icons/AntDesign';
 
 const ReviewContainer = (props) => {
 
@@ -36,7 +35,7 @@ const ReviewContainer = (props) => {
             </View>
             <View style={styles.optionsBox}>
                 <View style={styles.DateButtonsBox}>
-                    <Text style={styles.labelDateButtons}>S</Text>
+                    <Text style={styles.labelDateButtons}> </Text>
                     <View style={styles.editButtonBox}>
                         <RectButton onPress={props.onPressEdit} style={styles.containerButton}>
                             <Text style={styles.textButton}>EDITAR</Text>
@@ -44,19 +43,34 @@ const ReviewContainer = (props) => {
                     </View>
                 </View>
                 <View style={styles.DateButtonsBox}>
-                    <Text style={styles.labelDateButtons}>{sequence}</Text>
+                    <Text numberOfLines={1} style={styles.labelDateButtons}>{sequence}</Text>
                     <View style={styles.checkButtonBox}>
                         <RectButton onPress={props.onPressConclude} style={styles.containerButton}>
                             <Text style={styles.textButton}>{props.titleRightButton}</Text>
                         </RectButton>
                     </View>
                 </View>
-                <BorderlessButton style={styles.audioButton} onPress={props.onPressAudioButton}>
-                    <Icon2 name="customerservice" size={20} color="#303030" />
-                </BorderlessButton>
-                <BorderlessButton style={styles.audioButton2} onPress={props.onPressAudioButton2}>
-                    <Icon name="stop-circle" size={20} color="#303030" />
-                </BorderlessButton>
+                {
+                    props.data.track ? 
+                        <BorderlessButton style={styles.audioButton} onPress={props.onPressAudioButton}>
+                            <Icon name="music" size={20} color="#303030" />
+                        </BorderlessButton>
+                    :
+                        <BorderlessButton style={styles.audioButton} onPress={() => {ToastAndroid.show('Não há áudio associado!', 300)}}>
+                            <Icon name="music" size={20} color="#F0F0F0" />
+                        </BorderlessButton>
+
+                }
+                {
+                    props.data.notes.title != '' ? 
+                        <BorderlessButton style={styles.noteButton} onPress={props.onPressNotesButton}>
+                            <Icon name="edit" size={20} color="#303030" />
+                        </BorderlessButton>
+                    :
+                        <BorderlessButton style={styles.noteButton} onPress={() => {ToastAndroid.show('Não há nota associada!', 300)}}>
+                            <Icon name="edit" size={20} color="#F0F0F0" />
+                        </BorderlessButton>
+                }
             </View>
         </View>
     )
