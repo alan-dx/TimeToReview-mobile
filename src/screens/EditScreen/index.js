@@ -184,11 +184,7 @@ const EditScreen = (props) => {
     function handleGoToNotesScreen() {
         navigation.navigate("NotesScreen", {
             onGoBack: handleSaveNotes,
-            screenData: notesReview || {
-                title: '',
-                note: '',
-                align: 'left'
-            }
+            screenData: notesReview
         })
     }
 

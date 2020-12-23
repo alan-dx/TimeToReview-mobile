@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
     infoText: {
-        fontFamily: 'Archivo',
+        fontFamily: 'Archivo-Medium',
         fontSize: 14,
         textAlign: 'justify',
         color: '#303030',

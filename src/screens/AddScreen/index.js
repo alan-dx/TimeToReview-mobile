@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { View, Text, KeyboardAvoidingView } from 'react-native';
+import { View, Text, KeyboardAvoidingView, Alert } from 'react-native';
 import styles from './styles';
 import Icon from 'react-native-vector-icons/AntDesign';
 import Icon2 from 'react-native-vector-icons/Feather';
@@ -107,8 +107,21 @@ const AddScreen = (props) => {
                 url = `file://${stats.path}`
             })
             .catch((err) => {
-                console.log(err);
-                alert(err)
+                Alert.alert(
+                    "Ops, algo de errado aconteceu, mas vamos tentar de novo!",
+                    "Não foi possível selecionar o arquivo desejado, mas você pode contornar esse problema"+
+                    " navegando entre as pastas do seu smartphone, procurando e selecionando o arquivo quando pressionar a opção novamente.\n\n"+
+                    "Esse erro costuma ocorrer em alguns dispositivos ao tentar selecionar um arquivo na aba RECENTES (a primeira tela exibida) do navegador de arquivos. \n\n"+
+                    "OBS.: Não se esqueça de ativar a opção 'Visualizar armazenamento interno' nas opções no canto superior direito do navegador de arquivos.",
+                    [
+                      {
+                        text: "Ok, vou tentar de novo.",
+                        onPress: () => console.log("Cancel Pressed"),
+                        style: "cancel"
+                      }
+                    ],
+                    { cancelable: false }
+                );
             });
 
             let track = {
@@ -131,7 +144,7 @@ const AddScreen = (props) => {
               console.log('cancelou')
             } else {
                 console.log(err)
-              alert('Houve um erro ao selecionar o arquivo, tente novamente!')
+                alert('Houve um erro ao selecionar o arquivo, tente novamente!')
             }
           }
     }
@@ -143,11 +156,7 @@ const AddScreen = (props) => {
     function handleGoToNotesScreen() {
         navigation.navigate("NotesScreen", {
             onGoBack: handleSaveNotes,
-            screenData: {
-                title: '',
-                note: '',
-                align: 'left'
-            }
+            screenData: notesReview
         })
     }
 

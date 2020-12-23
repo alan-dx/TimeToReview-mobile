@@ -30,30 +30,30 @@ const AllReviewsScreen = (props) => {
             Aqui você pode editar e deletar uma revisão.
         </Text>
     </View>
-    let Step1 = <View style={stylesSteps.container}> 
-    <ReviewContainer 
-            titleRightButton="DELETAR" 
-            data={{
-                routine_id: {sequence: ["1", "2", "4", "5"]},
-                subject_id: {marker: '#60c3eb'},
-                timer: '13:00',
-                title: 'REVISÃO X',
+    // let Step1 = <View style={stylesSteps.container}> 
+    // <ReviewContainer 
+    //         titleRightButton="DELETAR" 
+    //         data={{
+    //             routine_id: {sequence: ["1", "2", "4", "5"]},
+    //             subject_id: {marker: '#60c3eb'},
+    //             timer: '13:00',
+    //             title: 'REVISÃO X',
 
-            }} 
-            onPressConclude={() => {}} 
-            onPressEdit={() => {}} 
-        />
-        <Text style={stylesSteps.desciptionText}>
-            Container de Revisão.
-            {"\n"}
-            {"\n"}
-            É dessa forma que as revisões serão visualizadas. Observe que existe um botão "EDITAR" e outro "APAGAR",
-            o primeiro permite que você edite todos os detalhes da revisão, já o segundo deleta permanentemente a revisão.
-            {"\n"}
-            {"\n"}
-            O marcador colorido indica a qual matéria a revisão é associada.
-        </Text>
-    </View>
+    //         }} 
+    //         onPressConclude={() => {}} 
+    //         onPressEdit={() => {}} 
+    //     />
+    //     <Text style={stylesSteps.desciptionText}>
+    //         Container de Revisão.
+    //         {"\n"}
+    //         {"\n"}
+    //         É dessa forma que as revisões serão visualizadas. Observe que existe um botão "EDITAR" e outro "APAGAR",
+    //         o primeiro permite que você edite todos os detalhes da revisão, já o segundo deleta permanentemente a revisão.
+    //         {"\n"}
+    //         {"\n"}
+    //         O marcador colorido indica a qual matéria a revisão é associada.
+    //     </Text>
+    // </View>
 
     useEffect(() => {
         async function checkIfItsTheFirstTime() {
@@ -141,7 +141,7 @@ const AllReviewsScreen = (props) => {
             {handleOpenTutorialModal ? 
                 <ScreenTutorial 
                     modalVisible={handleOpenTutorialModal}
-                    steps={[Step0, Step1]}
+                    steps={[Step0]}
                 />
                 : null
             }

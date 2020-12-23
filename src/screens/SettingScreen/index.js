@@ -40,7 +40,7 @@ const SettingScreen = (props) => {
     function handleContactWhatsapp() {
         Linking.canOpenURL(`whatsapp://send?phone=${1111}`).then((res) => {
             if (!res) {
-                alert("Você não possui esse aplicativo!")
+                alert("Esse aplicativo não está disponível no momento!")
             } else {
                 Linking.openURL(`whatsapp://send?phone=${1111}`)
             }
@@ -50,7 +50,7 @@ const SettingScreen = (props) => {
     function handleContactFacebook() {
         Linking.canOpenURL(`fb://app`).then((res) => {
             if (!res) {
-                alert("Você não possui esse aplicativo!")
+                alert("Esse aplicativo não está disponível no momento!")
             } else {
                 Linking.openURL(`fb://app`)
             }
@@ -60,7 +60,7 @@ const SettingScreen = (props) => {
     function handleContactInstagram() {
         Linking.canOpenURL(`instagram://user?username=alan_almj`).then((res) => {
             if (!res) {
-                alert("Você não possui esse aplicativo!")
+                alert("Esse aplicativo não está disponível no momento!")
             } else {
                 Linking.openURL(`instagram://user?username=alan_almj`)
             }

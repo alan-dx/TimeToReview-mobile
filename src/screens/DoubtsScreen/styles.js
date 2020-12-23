@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
         position: 'relative'
     },
     doubtItemText: {
-        fontFamily: 'Archivo',
+        fontFamily: 'Archivo-SemiBold',
         fontSize: 15,
         color: '#303030'
     },

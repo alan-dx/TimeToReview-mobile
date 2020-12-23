@@ -1,19 +1,17 @@
 import React from 'react';
 import styles from './styles';
-import {View, Text, Image} from 'react-native';
+import {View, Text, Image, ScrollView} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import Icon from 'react-native-vector-icons/AntDesign';
-import Icon3 from 'react-native-vector-icons/SimpleLineIcons';
 import CustomButton from '../../components/CustomButton';
-import logo from '../../assets/images/icons/logo.png';
-import { ScrollView } from 'react-native-gesture-handler';
+import logoImage from '../../assets/images/icons/logo.png';
+// import { ScrollView } from 'react-native-gesture-handler';
 import CurveChartLine from '../../components/CurveChartLine';
 
 const AboutScreen = () => {
     return (
         <View style={styles.container}>
             <View style={styles.logoBox}>
-                <Image source={logo} style={{width: 200, height: 200}} />
+                <Image source={logoImage} style={{width: 200, height: 200}} />
             </View>
             <ScrollView style={styles.aboutBox}>
                 <View style={styles.aboutTextBox}>
@@ -44,9 +42,9 @@ const AboutScreen = () => {
                         {"\t"} Por exemplo, é muito fácil lembrar de um evento marcante, como o dia da sua aprovação no vestibular ou o
                         da sua formatura. Em contrapartida, é bem pouco provável que você lembre-se de como foi seu almoço a 7 dias atrás. {"\n"}
                         {"\n"}
-                        <View >
+                        {/* <View >
                             <Text style={styles.titleChart}>Curva do Esquecimento - aproximação</Text>
-                        </View>
+                        </View> */}
                         <CurveChartLine />
                         O gráfico acima demonstra que a retenção do conteúdo estudado chega próximo de 30% nas primeiras 24 horas. Dessa forma, revisar o contéudo periodicamente é
                         extremamente importante, pois, assim, o seu cérebro passará a considerar o conteúdo como uma "memória forte", diminuindo significativamente as chances de 

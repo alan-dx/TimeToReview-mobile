@@ -14,10 +14,6 @@ const NotesScreen = (props) => {
     
     const navigation = useNavigation()
 
-    useEffect(() => {
-        console.log(props.route.params)
-    }, [])
-
     const [ titleNote, setTitleNote ] = useState(props.route.params?.screenData.title || '')
     const [ alignText, setAlignText ] = useState(props.route.params?.screenData.align || 'left')
     const [ textNote, setTextNote ] = useState(props.route.params?.screenData.note || '')

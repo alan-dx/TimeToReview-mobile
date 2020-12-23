@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, Text, Modal, TouchableHighlight} from 'react-native'
 import styles from './styles'
-import Icon2 from 'react-native-vector-icons/Feather'
+import Icon from 'react-native-vector-icons/Feather'
 
 
 const NotesModal = (props) => {
@@ -14,20 +14,23 @@ const NotesModal = (props) => {
         >
             <View style={styles.modalBox}>
                 <View style={styles.modalCard}>
-                    <View>
-                        <Text>{props.notes.title}</Text>
+                    <View style={styles.titleBox}>
+                        <View style={styles.titleLabelBox}>
+                            <Text numberOfLines={1} style={styles.titleText}>{props.notes.title}</Text>
+                        </View>
+                        <TouchableHighlight underlayColor="#DDDD" style={styles.closeButton} onPress={props.handleCloseModal}>
+                            <Icon name="x" size={25} color="#e74e36" style={styles.iconBack} />
+                        </TouchableHighlight>
                     </View>
-                    <View>
+                    <View style={styles.notesBox}>
                         <Text 
-                            style={{textAlign: props.notes.align}}
+                            style={[styles.noteText, {textAlign: props.notes.align}]}
                         >
                             {props.notes.note}
                         </Text>
                     </View>
                 </View>
-                <TouchableHighlight underlayColor="#DDDD" style={styles.closeButton} onPress={props.handleCloseModal}>
-                    <Icon2 name="x" size={25} color="#303030" style={styles.iconBack} />
-                </TouchableHighlight>
+
             </View>
         </Modal>
     )
