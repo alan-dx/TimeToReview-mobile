@@ -161,7 +161,7 @@ const SettingScreen = (props) => {
 
             } else if (response.error) {
                 console.log('ImagePicker Error: ', response.error);
-                alert("Seu dispositivo não é compatível com essa funcionalidade...")
+                alert("Precisamos dessa permissão...")
             } else if (response.customButton) {
                 console.log(
                 'User tapped custom button: ',

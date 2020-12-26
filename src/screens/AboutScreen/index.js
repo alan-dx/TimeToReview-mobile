@@ -1,10 +1,7 @@
 import React from 'react';
 import styles from './styles';
 import {View, Text, Image, ScrollView} from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import CustomButton from '../../components/CustomButton';
 import logoImage from '../../assets/images/icons/logo.png';
-// import { ScrollView } from 'react-native-gesture-handler';
 import CurveChartLine from '../../components/CurveChartLine';
 
 const AboutScreen = () => {
@@ -33,7 +30,7 @@ const AboutScreen = () => {
                     <View style={styles.textMarker} />
                     <Text style={styles.aboutText}>
                         <Text style={{fontWeight: "bold"}}>Fundamento: </Text> A motivação para desenvolver essa aplicação é baseada na 
-                        <Text style={{fontWeight: 'bold'}}> Curva do Esquecimento</Text>, tal conceito foi apresentado pelo psicólogo alemão 
+                        <Text style={{fontWeight: 'bold'}}> Curva do Esquecimento</Text>, um conceito apresentado pelo psicólogo alemão 
                         <Text style={{fontWeight: 'bold'}}> Hermann Ebbinghaus</Text>, em 1885. Em resumo, a curva pressupõe o declínio da retenção de 
                         memória com o tempo, ou seja, nosso cérebro tem uma tendência natural a apagar nossas memórias, logo quanto mais o tempo passa, mais esquecemos o que foi visto ou lido por nós. {"\n"}
                         {"\t"} Entretanto, o estudo de Ebbinghaus relaciona-se com o conceito da <Text style={{fontWeight: 'bold'}}>força da memória</Text>, 
@@ -42,9 +39,9 @@ const AboutScreen = () => {
                         {"\t"} Por exemplo, é muito fácil lembrar de um evento marcante, como o dia da sua aprovação no vestibular ou o
                         da sua formatura. Em contrapartida, é bem pouco provável que você lembre-se de como foi seu almoço a 7 dias atrás. {"\n"}
                         {"\n"}
-                        {/* <View >
+                        <View >
                             <Text style={styles.titleChart}>Curva do Esquecimento - aproximação</Text>
-                        </View> */}
+                        </View>
                         <CurveChartLine />
                         O gráfico acima demonstra que a retenção do conteúdo estudado chega próximo de 30% nas primeiras 24 horas. Dessa forma, revisar o contéudo periodicamente é
                         extremamente importante, pois, assim, o seu cérebro passará a considerar o conteúdo como uma "memória forte", diminuindo significativamente as chances de 

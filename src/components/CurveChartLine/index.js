@@ -72,9 +72,9 @@ const CurveChartLine = (props) => {
                     });
                 }}
                 chartConfig={{
-                    backgroundColor: "#F5F5F5",
-                    backgroundGradientFrom: "#F5F5F5",
-                    backgroundGradientTo: "#F5F5F5",
+                    backgroundColor: "#FFFF",
+                    backgroundGradientFrom: "#FFF",
+                    backgroundGradientTo: "#FFF",
                     decimalPlaces: 0, // optional, defaults to 2dp
                     color: (opacity = 1) => `rgba(231, 78, 54, ${opacity})`,
                     labelColor: (opacity = 1) => `rgba(48, 48, 48, ${opacity})`,

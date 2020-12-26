@@ -105,7 +105,7 @@ const AppRoutes = () => {
                     component={AboutScreen}
                     options={{
                         headerShown: true,
-                        header: () => <Header title="SOBRE" color="#F5F5F5" />
+                        header: () => <Header title="SOBRE" color="#FFF" />
                     }}
                 />
                 <Screen 

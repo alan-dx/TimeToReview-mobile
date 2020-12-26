@@ -1,5 +1,6 @@
-import React from 'react';
-import StepModal from "react-native-step-modal";
+import React from 'react'
+import StepModal from "react-native-step-modal"
+
 
 const ScreenTutorial = (props) => {
 

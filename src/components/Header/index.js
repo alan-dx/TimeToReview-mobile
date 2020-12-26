@@ -17,7 +17,7 @@ const Header = (props) => {
     
             if (props.route?.params.finishCycleActive) {//EM OUTRAS TELAS PASSE SEMPRE COMO TRUE
                 navigation.goBack()
-                BackHandler.addEventListener("hardwareBackPress", () => {// Make the hardware back button back again in another screens,
+                BackHandler.addEventListener("hardwareBackPress", () => {// To make the hardware back button back again in another screens,
                     //put this below in useEffect make the app close, because do a double goBack
                     navigation.goBack()
                     return false

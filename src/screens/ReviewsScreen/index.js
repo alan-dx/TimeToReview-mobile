@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect, useRef } from 'react';
-import { View, FlatList, ToastAndroid, Text, FetchResult, Linking } from 'react-native';
+import { View, FlatList, ToastAndroid, Text, PermissionsAndroid, Alert } from 'react-native';
 import styles from './styles';
 import stylesSteps from './stylesSteps';
 import { useNavigation } from '@react-navigation/native';
@@ -14,7 +14,6 @@ import ScreenTutorial from '../../components/ScreenTutorial';
 import Icon from 'react-native-vector-icons/AntDesign';
 import Icon2 from 'react-native-vector-icons/Feather';
 import TrackPlayer from 'react-native-track-player';
-import RNFS from 'react-native-fs';
 import PlayerModal from '../../components/PlayerModal';
 import NotesModal from '../../components/NotesModal';
 
@@ -63,76 +62,91 @@ const ReviewsScreen = (props) => {
             Aqui é onde você irá criar, editar e concluir uma revisão pendente.
         </Text>
     </View>
-    // let Step1 = <View style={stylesSteps.container}>
-    //     <View style={stylesSteps.floatAddButton}>
-    //         <Icon name="plus" size={20} color="#FCFCFC" />
-    //     </View>
-    //     <Text style={stylesSteps.desciptionText}>Esse é o botão que você ira utilizar quando desejar criar novas revisões!</Text>
-    // </View>
-    // let Step2 = <View style={stylesSteps.container}>
-    //     <View style={stylesSteps.timerBox}>
-    //         <View style={stylesSteps.timerController}>
-    //             <Icon  name="check" size={25} color="#303030" />
-    //         </View>
-    //         <Text style={stylesSteps.timerText2}>Início: 17:25:32</Text>
-    //             <Text style={stylesSteps.timerText2}> Término: 17:48:12</Text>
-    //             <View>
-    //                 <Text style={stylesSteps.timerText2}>Cont.</Text>
-    //                 <View style={stylesSteps.timerCountReviews}>
-    //                         <Text style={stylesSteps.timerText}>7</Text>
-    //                 </View>
-    //             </View>
-    //             <View style={stylesSteps.timerChronometerBox}>
-    //                 <Text style={stylesSteps.timerText2}>Período</Text>
-    //                 <View style={stylesSteps.timerChronometer}>
-    //                     <Text style={stylesSteps.timerText}>00:27:40</Text>
-    //                 </View>
-    //             </View>
-    //     </View>
-    //     <Text style={stylesSteps.desciptionText}>Esse é o controlador de ciclos.
-    //         {"\n"}
-    //         {"\n"}
-    //         Seu objetivo é auxiliar no gerenciamento do desempenho em cada período de revisão.
-    //         A quantidade de ciclos é definida de acordo com seu método de estudos, você pode fazer todas as revisões do dia de uma única vez ou fazer
-    //         isso em intervalos, fica a seu critério.
-    //         {"\n"}
-    //         {"\n"}
-    //         Ao finalizar um ciclo, outro é criado automaticamente!
-    //     </Text>
-    // </View>
-    // let Step3 = <View style={stylesSteps.container}> 
-    // <ReviewContainer 
-    //         titleRightButton="CONCLUIR" 
-    //         data={{
-    //             routine_id: {sequence: ["1", "2", "4", "5"]},
-    //             subject_id: {marker: '#60c3eb'},
-    //             timer: '13:00',
-    //             title: 'REVISÃO X',
-
-    //         }} 
-    //         onPressConclude={() => {}} 
-    //         onPressEdit={() => {}} 
-    //     />
-    //     <Text style={stylesSteps.desciptionText}>
-    //         Container de Revisão.
-    //         {"\n"}
-    //         {"\n"}
-    //         É dessa forma que as revisões serão visualizadas. Observe que existe um botão "EDITAR" e outro "CONCLUIR",
-    //         o primeiro permite que você edite todos os detalhes, já o segundo conclue e calcula a data da próxima revisão.
-    //         {"\n"}
-    //         {"\n"}
-    //         O marcador colorido indica a qual matéria a revisão é associada.
-    //     </Text>
-    // </View>
-    // let Step4 = <View style={stylesSteps.container}> 
-    //     <Icon2 name="alert-triangle" size={35} color="red" />
-    //     <Text style={stylesSteps.desciptionText}>
-    //         Revisão atrasada!
-    //         {"\n"}
-    //         {"\n"}
-    //         Quando uma revisão estiver em atraso você visualizará esse ícone junto ao container.
-    //     </Text>
-    // </View>
+    let Step1 = <View style={stylesSteps.container}>
+        <View style={stylesSteps.floatAddButton}>
+            <Icon name="plus" size={20} color="#FCFCFC" />
+        </View>
+        <Text style={stylesSteps.desciptionText}>Esse é o botão que você ira utilizar quando desejar criar novas revisões!</Text>
+    </View>
+    let Step2 = <View style={stylesSteps.container}>
+        <View style={stylesSteps.timerBox}>
+            <View style={stylesSteps.timerController}>
+                <Icon  name="check" size={25} color="#303030" />
+            </View>
+            <Text style={stylesSteps.timerText2}>Início: 17:25:32</Text>
+                <Text style={stylesSteps.timerText2}> Término: 17:48:12</Text>
+                <View>
+                    <Text style={stylesSteps.timerText2}>Cont.</Text>
+                    <View style={stylesSteps.timerCountReviews}>
+                            <Text style={stylesSteps.timerText}>7</Text>
+                    </View>
+                </View>
+                <View style={stylesSteps.timerChronometerBox}>
+                    <Text style={stylesSteps.timerText2}>Período</Text>
+                    <View style={stylesSteps.timerChronometer}>
+                        <Text style={stylesSteps.timerText}>00:27:40</Text>
+                    </View>
+                </View>
+        </View>
+        <Text style={stylesSteps.desciptionText}>Esse é o controlador de ciclos.
+            {"\n"}
+            {"\n"}
+            Seu objetivo é auxiliar no gerenciamento do desempenho em cada período de revisão.
+            A quantidade de ciclos é definida de acordo com seu método de estudos, você pode fazer todas as revisões do dia de uma única vez ou fazer
+            isso em intervalos, fica a seu critério.
+            {"\n"}
+            {"\n"}
+            Ao finalizar um ciclo, outro é criado automaticamente!
+        </Text>
+    </View>
+    let Step3 = <View style={stylesSteps.container}> 
+    <ReviewContainer 
+            titleRightButton="CONCLUIR" 
+            data={{
+                routine_id: {sequence: ["1", "2", "4", "5"]},
+                subject_id: {marker: '#60c3eb'},
+                timer: '13:00',
+                title: 'REVISÃO X',
+                notes: {
+                    title: 'ratata',
+                    note: '',
+                    align: 'left'
+                },
+                track: {
+                    id: '11111',
+                    url: '11111',
+                    type: 'default',
+                    title: 'dasdsad',
+                    artist: 'asdsdsd',
+                    album: 'TTR - audios',
+                    artwork: 'https://picsum.photos/100',
+                }
+            }} 
+            onPressConclude={() => {}} 
+            onPressEdit={() => {}}
+            onPressAudioButton={() => {}}
+            onPressNotesButton={() => {}}
+        />
+        <Text style={stylesSteps.desciptionText}>
+            Container de Revisão.
+            {"\n"}
+            {"\n"}
+            É dessa forma que as revisões serão visualizadas. Observe que existe um botão "EDITAR" e outro "CONCLUIR",
+            o primeiro permite que você edite todos os detalhes, já o segundo conclue e calcula a data da próxima revisão.
+            {"\n"}
+            {"\n"}
+            O marcador colorido indica a qual matéria a revisão é associada.
+        </Text>
+    </View>
+    let Step4 = <View style={stylesSteps.container}> 
+        <Icon2 name="alert-triangle" size={35} color="red" />
+        <Text style={stylesSteps.desciptionText}>
+            Revisão atrasada!
+            {"\n"}
+            {"\n"}
+            Quando uma revisão estiver em atraso você visualizará esse ícone junto ao container.
+        </Text>
+    </View>
 
     useEffect(() => {
         async function checkIfItsTheFirstTime() {
@@ -265,8 +279,38 @@ const ReviewsScreen = (props) => {
     async function handleStartAudioPlayer(track) {
         //ASSOCIAR AUDIO DO GOOGLE DRIVE
 
-        setHandleOpenPlayerModal(true)
-        setTrackPlayer(track)
+        try {
+            const granted = await PermissionsAndroid.requestMultiple([
+              PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+              PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
+            ]);
+          } catch (err) {
+            alert(err)
+          }
+
+          const readGranted = await PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE); 
+          const writeGranted = await PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE);
+
+          if(!readGranted || !writeGranted) {
+
+            Alert.alert(
+                "Opa, precisamos dessa permissão!",
+                "Nosso App precisa dessa permissão para reproduzir o áudio, pois é por meio dela que o player irá ler o arquivo"+
+                [
+                  {
+                    text: "Certo, vamos tentar de novo!",
+                    onPress: () => console.log("Cancel Pressed"),
+                    style: "cancel"
+                  }
+                ],
+                { cancelable: false }
+            )
+            
+          } else {
+              setHandleOpenPlayerModal(true)
+              setTrackPlayer(track)
+          }
+
 
     }
 
@@ -325,7 +369,7 @@ const ReviewsScreen = (props) => {
             handleOpenTutorialModal ? 
                 <ScreenTutorial 
                     modalVisible={handleOpenTutorialModal}
-                    steps={[Step0]}
+                    steps={[Step0, Step1, Step2, Step3, Step4]}
                 />
                 : null
             }
