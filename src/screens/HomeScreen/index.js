@@ -1,5 +1,5 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, BackHandler } from 'react-native';
 
 import styles from './styles';
 import stylesSteps from './stylesSteps';
@@ -98,9 +98,7 @@ const HomeScreen = () => {
     }
 
     function handleUpdateChartOnBack() {
-        console.log('aaa')
-        const currentDate = new Date()
-        console.log(performance[currentDate.getDay()])
+        console.log('atualizou o gráfico')
         setLoadingChart(false)//Gambi
     }
 

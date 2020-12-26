@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect, useRef } from 'react';
-import { View, FlatList, ToastAndroid, Text, PermissionsAndroid, Alert } from 'react-native';
+import { View, FlatList, ToastAndroid, Text, PermissionsAndroid, Alert, BackHandler } from 'react-native';
 import styles from './styles';
 import stylesSteps from './stylesSteps';
 import { useNavigation } from '@react-navigation/native';
@@ -36,8 +36,28 @@ const ReviewsScreen = (props) => {
 
     const cycleFlatList = useRef(null)
 
-    useEffect(() => {
-        navigation.setParams({finishCycleActive: startController})
+    useEffect(() => {//pass params to Header
+        
+        navigation.setParams({
+            finishCycleActive: startController,
+            handleStopCycle: handleStopCycle
+        })
+
+        BackHandler.addEventListener("hardwareBackPress", () => {
+
+            console.log('---------> entrou no listener')
+    
+            if (!startController) {//I could call handleStartStopController or this
+                console.log('here')
+                handleStopCycle()
+            }
+            props.route?.params.onGoBack()
+            navigation.goBack()
+
+            return true // to disable back button original action
+            // if not disable, this is will cause a double goBack()
+        })
+
     }, [startController])
 
     useEffect(() => {
@@ -197,7 +217,7 @@ const ReviewsScreen = (props) => {
         setPerformance(performance)
         
         if (startController) {
-            handleStartPauseController()
+            handleStartStopCycleController()
         }
     }
 
@@ -229,7 +249,41 @@ const ReviewsScreen = (props) => {
         setData(newData)
     }
 
-    async function handleStartPauseController() {
+    async function handleStopCycle() { //created because need pass it to Header component like a component
+
+        console.log('-------> call handleStopCycle')
+        setStartController(true)
+        const currentDate = new Date()
+
+        let chronometer = new Date(currentDate - reviewInitTime)
+        dataCycles[dataCycles.length - 1].finish = timeFormat(currentDate.getHours(), currentDate.getMinutes(), currentDate.getSeconds())
+        dataCycles[dataCycles.length - 1].do = true
+        dataCycles[dataCycles.length - 1].chronometer = chronometer
+
+        dataCycles.push({
+            init: '00:00:00', 
+            finish: '00:00:00', 
+            reviews: 0, 
+            chronometer: new Date(new Date().setUTCHours(0,0,0,0)),
+            do: false
+        })
+
+        // setDataCycles(dataCycles)
+
+        await api.post('/concludeCycle', {
+            day: currentDate.getDay(),
+            cycles: dataCycles
+        }).then((response) => {
+            console.log(response.data)
+        }).catch((err) => {
+            alert(err)
+        })
+
+        ToastAndroid.show('Novo ciclo criado!', 1600)
+
+    }
+
+    async function handleStartStopCycleController() {
         
         const currentDate = new Date()
 
@@ -245,33 +299,7 @@ const ReviewsScreen = (props) => {
 
         } else {
 
-            setStartController(true)
-
-            let chronometer = new Date(currentDate - reviewInitTime)
-            dataCycles[dataCycles.length - 1].finish = timeFormat(currentDate.getHours(), currentDate.getMinutes(), currentDate.getSeconds())
-            dataCycles[dataCycles.length - 1].do = true
-            dataCycles[dataCycles.length - 1].chronometer = chronometer
-
-            dataCycles.push({
-                init: '00:00:00', 
-                finish: '00:00:00', 
-                reviews: 0, 
-                chronometer: new Date(new Date().setUTCHours(0,0,0,0)),
-                do: false
-            })
-
-            // setDataCycles(dataCycles)
-
-            await api.post('/concludeCycle', {
-                day: currentDate.getDay(),
-                cycles: dataCycles
-            }).then((response) => {
-                console.log(response.data)
-            }).catch((err) => {
-                alert(err)
-            })
-
-            ToastAndroid.show('Novo ciclo criado!', 1600)
+            handleStopCycle()//have note on function scope
 
         }
     }
@@ -340,7 +368,7 @@ const ReviewsScreen = (props) => {
                 renderItem={item => 
                     <CicleContainer
                         data={item}
-                        handleStartPauseController={handleStartPauseController} 
+                        handleStartPauseController={handleStartStopCycleController} 
                         startController={startController} 
                     />
                 }
