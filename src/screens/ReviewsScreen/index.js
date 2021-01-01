@@ -307,6 +307,10 @@ const ReviewsScreen = (props) => {
     async function handleStartAudioPlayer(track) {
         //ASSOCIAR AUDIO DO GOOGLE DRIVE
 
+        if (startController) {
+            handleStartStopCycleController()
+        }
+
         try {
             const granted = await PermissionsAndroid.requestMultiple([
               PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
@@ -354,6 +358,11 @@ const ReviewsScreen = (props) => {
     function handleShowNotes(notes) {
         setHandleOpenNotesModal(true)
         setNotesToShow(notes)
+        
+        if (startController) {
+            handleStartStopCycleController()
+        }
+
     }
 
     return (
@@ -384,6 +393,7 @@ const ReviewsScreen = (props) => {
                             titleRightButton="CONCLUIR" 
                             data={item} onPressConclude={() => handleConcludeReview(item._id)} 
                             onPressEdit={() => handleGoToEditScreen(item)}
+                            haveExtraOptions={true}
                             onPressAudioButton={() => handleStartAudioPlayer(item.track)}
                             onPressNotesButton={() => handleShowNotes(item.notes)}
                         />

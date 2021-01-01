@@ -5,7 +5,10 @@ import StepModal from "react-native-step-modal"
 const ScreenTutorial = (props) => {
 
     return (
-        <StepModal stepComponents={props.steps} />
+        <StepModal 
+            stepComponents={props.steps} 
+            handleCloseModal={() => {}}
+        />
     )
 }
 

@@ -8,8 +8,9 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgba(0,0,0,0.4)'
     },
     modalCard: {
-        height: 250,
+        height: 220,
         width: 350,
+        
         borderRadius: 10,
         backgroundColor: '#FFF',
 
@@ -18,13 +19,16 @@ const styles = StyleSheet.create({
     },
     imageBox: {
         flex: 2,
+
+       marginBottom: 10, 
+        alignItems: 'center',
+        justifyContent: 'flex-start'
     },
     controllerBox: {
         flex: 1,
         margin: 5,
 
         alignItems: 'center',
-        justifyContent: 'center'
 
     },
     controllerOptionsBox: {

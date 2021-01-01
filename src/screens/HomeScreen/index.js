@@ -12,6 +12,7 @@ import { BorderlessButton } from 'react-native-gesture-handler';
 import { useFocusEffect, useIsFocused, useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-community/async-storage';
 import ScreenTutorial from '../../components/ScreenTutorial';
+import TipsModal from '../../components/TipsModal';
 
 const HomeScreen = () => {
 
@@ -23,10 +24,12 @@ const HomeScreen = () => {
     const navigation = useNavigation()
     const { performance, subjects, routines, allReviews, setReviews } = useContext(AuthContext);
     const [numberOfReviews, setNumberOfReviews] = useState(0)
-    const [isLoading, setIsLoading] = useState(false)
-    const [dataChart, setDataChart] = useState(performance)
+    const [isLoading] = useState(false)
+    const [dataChart] = useState(performance)
     const [loadingChart, setLoadingChart] = useState(true)
     const [handleOpenTutorialModal, setHandleOpenTutorialModal] = useState(false)
+    const [handleOpenTipsModal, setHandleOpenTipsModal] = useState(false)
+    const [handelShowTips0, setHandleShowTips0] = useState(false)
 
     useFocusEffect(
         useCallback(() => {
@@ -58,7 +61,6 @@ const HomeScreen = () => {
 
     async function checkIfItsTheFirstTime() { //See useFocusEffect
         const firstTimeOnScreen = await AsyncStorage.getItem("@TTR:firstTimeHomeScreen")
-        console.log('asda', firstTimeOnScreen)
         if (!firstTimeOnScreen) {
             setHandleOpenTutorialModal(true)
             await AsyncStorage.setItem('@TTR:firstTimeHomeScreen', 'true')
@@ -93,8 +95,18 @@ const HomeScreen = () => {
         }
     }
 
-    function handleGoToBePremiumScreen() {
-        navigation.navigate('BePremiumScreen')
+    async function handleOpenTips() {
+
+        setHandleOpenTipsModal(true)
+        const firstTimeOnScreen = await AsyncStorage.getItem("@TTR:firstTimeOpenTips")
+
+        if (!firstTimeOnScreen) {
+            await AsyncStorage.setItem('@TTR:firstTimeOpenTips', 'true')
+            setHandleShowTips0(true)
+        } else {
+            setHandleShowTips0(false)
+        }
+
     }
 
     function handleUpdateChartOnBack() {
@@ -146,7 +158,7 @@ const HomeScreen = () => {
                     </MenuButton>
                 </View>
                 <View style={styles.menuItemBox}>
-                    <MenuButton color="#FFF" textColor="#606060" onPress={handleGoToBePremiumScreen} title="Dicas de Estudo">
+                    <MenuButton color="#FFF" textColor="#606060" onPress={handleOpenTips} title="Dicas de Estudo">
                         <Icon name="bulb1" size={23} color="#303030" />
                     </MenuButton>
                 </View>
@@ -159,6 +171,14 @@ const HomeScreen = () => {
         </View>
         { handleOpenTutorialModal ? 
             <ScreenTutorial steps={[Step0]} /> :
+            null
+        }
+        {
+            handleOpenTipsModal ?
+            <TipsModal 
+                handleCloseModal={(() => {setHandleOpenTipsModal(false)})}
+                handelShowTips0={handelShowTips0}
+            /> :
             null
         }
     </>

@@ -4,12 +4,11 @@ const styles = StyleSheet.create({
     inputBox: {
         alignItems: 'center',
     },
-    labelBoxL: {
+    labelBoxR: {
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'center',
         width: '90%',
-        alignSelf: 'flex-start',
+        alignSelf: 'flex-end',
     },
     labelFrame: {
         height: 1,
@@ -18,8 +17,10 @@ const styles = StyleSheet.create({
     label: {
         fontFamily: 'Archivo-Bold',
         fontSize: 15,
+        color: '#303030',
+        
         marginHorizontal: 3,
-        color: '#303030'
+        marginTop: 3,
     },
     input: {
         backgroundColor: '#E8E8E8',

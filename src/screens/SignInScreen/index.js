@@ -3,13 +3,13 @@ import { Animated, View, Text, TextInput, Keyboard } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { useNavigation } from '@react-navigation/native';
 import NetInfo from '@react-native-community/netinfo';
-
 import CustomButton from '../../components/CustomButton';
 import logoImage from '../../assets/images/icons/logo.png';
 
 import AuthContext from '../../contexts/auth';
 
 import styles from './styles';
+import { BorderlessButton } from 'react-native-gesture-handler';
 
 const LoginScreen = () => {
 
@@ -19,7 +19,7 @@ const LoginScreen = () => {
 
     const navigation = useNavigation();
 
-    const [logo, setLogo] = useState(new Animated.ValueXY({x: 250, y: 250 }))
+    const [logo] = useState(new Animated.ValueXY({x: 250, y: 250 }))
 
     useEffect(() => {
         keyBoardDidShowListener = Keyboard.addListener('keyboardDidShow', keyboardDidShow)
@@ -71,6 +71,10 @@ const LoginScreen = () => {
         signInContext({email, password})
     }
 
+    function handleGoToForgotPassword() {
+        navigation.navigate("ForgotPassword")
+    }
+
     return (
         <View style={styles.container}>
             <View style={styles.topBox}>
@@ -82,7 +86,7 @@ const LoginScreen = () => {
             <KeyboardAwareScrollView 
                 resetScrollToCoords={{ x: 0, y: 0 }}
                 contentContainerStyle={styles.inputGroup}
-                scrollEnabled={false}
+                scrollEnabled={true}
                 enableOnAndroid={true}              
             >
                 <View style={styles.inputBlock}>
@@ -114,6 +118,11 @@ const LoginScreen = () => {
                     />
                 </View>
                 <CustomButton text="LOGAR" color='#e74e36' onPress={handleClickSignInButton}/>
+                <View style={styles.forgotPasswordBox}>
+                    <BorderlessButton onPress={handleGoToForgotPassword}>
+                        <Text style={styles.forgotPasswordText}>Esqueceu a senha?</Text>
+                    </BorderlessButton>
+                </View>
             </KeyboardAwareScrollView>
         </View>
     </View>

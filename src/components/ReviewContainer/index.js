@@ -51,23 +51,31 @@ const ReviewContainer = (props) => {
                     </View>
                 </View>
                 {
-                    props.data.track ? 
+                    props.data.track  && props.haveExtraOptions  ? 
                         <BorderlessButton style={styles.audioButton} onPress={props.onPressAudioButton}>
                             <Icon name="music" size={20} color="#303030" />
                         </BorderlessButton>
                     :
-                        <BorderlessButton style={styles.audioButton} onPress={() => {ToastAndroid.show('Não há áudio associado!', 300)}}>
+                        <BorderlessButton style={styles.audioButton} onPress={() => {
+                            if (props.haveExtraOptions) {
+                                ToastAndroid.show('Não há áudio associado!', 300)
+                            }
+                        }}>
                             <Icon name="music" size={20} color="#F0F0F0" />
                         </BorderlessButton>
 
                 }
-                {
-                    props.data.notes.title != '' ? 
+                { 
+                    props.data.notes.title != '' && props.haveExtraOptions  ? 
                         <BorderlessButton style={styles.noteButton} onPress={props.onPressNotesButton}>
                             <Icon name="edit" size={20} color="#303030" />
                         </BorderlessButton>
                     :
-                        <BorderlessButton style={styles.noteButton} onPress={() => {ToastAndroid.show('Não há nota associada!', 300)}}>
+                        <BorderlessButton style={styles.noteButton} onPress={() => {
+                            if (props.haveExtraOptions) {
+                                ToastAndroid.show('Não há nota associada!', 300)
+                            }
+                        }}>
                             <Icon name="edit" size={20} color="#F0F0F0" />
                         </BorderlessButton>
                 }

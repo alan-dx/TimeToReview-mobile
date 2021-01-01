@@ -4,6 +4,7 @@ import styles from './styles';
 import Icon from 'react-native-vector-icons/Entypo';
 import Icon2 from 'react-native-vector-icons/Feather';
 import TrackPlayer from 'react-native-track-player';
+import musicIcon from '../../assets/images/icons/music.png';
 
 const PlayerModal = (props) => {
 
@@ -54,7 +55,6 @@ const PlayerModal = (props) => {
         }
     }
 
-
     return (
         <Modal
             animationType="fade"
@@ -65,9 +65,8 @@ const PlayerModal = (props) => {
                 <View style={styles.modalCard}>
                     <View style={styles.imageBox}>
                         <Image 
-                            source={{uri: props.track.artwork}}
-                            style={{width: 350, flex: 1, borderTopRightRadius: 10, borderTopLeftRadius: 10}}
-                            resizeMode="cover"
+                            source={musicIcon}
+                            style={{width: 400, height: 200, borderTopRightRadius: 10, borderTopLeftRadius: 10}}
                         />
                     </View>
                     <View style={styles.controllerBox}>

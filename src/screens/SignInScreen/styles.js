@@ -80,6 +80,19 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         paddingHorizontal: '1%'
     },
+    forgotPasswordBox: {
+        flexDirection: 'row',
+        width: '80%',
+        
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginTop: 10
+    },
+    forgotPasswordText: {
+        fontFamily: 'Archivo-SemiBold',
+        color: '#303030',
+        fontSize: 15
+    }
 })
 
 export default styles;

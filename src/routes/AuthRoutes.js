@@ -6,6 +6,8 @@ import DecisionScreen from '../screens/DecisionScreen';
 import SignInScreen from '../screens/SignInScreen';
 import SignUpScreen from '../screens/SignUpScreen';
 import Header from '../components/Header';
+import ForgotPasswordScreen from '../screens/ForgotPasswordScreen';
+import ResetPasswordScreen from '../screens/ResetPasswordScreen';
 
 const { Navigator, Screen } = createStackNavigator();
 
@@ -27,6 +29,16 @@ const AuthRoutes = () => {
                     name="SignUp" 
                     options={{headerShown: true, header: () => <Header title="CADASTRO" color="#FFF" />}} 
                     component={SignUpScreen} 
+                />
+                <Screen 
+                    name="ForgotPassword" 
+                    options={{headerShown: true, header: () => <Header title="" color="#FFF" />}} 
+                    component={ForgotPasswordScreen} 
+                />
+                <Screen 
+                    name="ResetPassword" 
+                    options={{headerShown: true, header: () => <Header title="" color="#FFF" />}} 
+                    component={ResetPasswordScreen} 
                 />
             </Navigator>
         </NavigationContainer>
