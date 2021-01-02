@@ -15,7 +15,6 @@ const ReviewContainer = (props) => {
         let reviewDate = new Date(props.data.dateNextSequenceReview)
 
         if (reviewDate < currentDate) {
-            console.log(reviewDate)
             setDelayed(true)
         }
 

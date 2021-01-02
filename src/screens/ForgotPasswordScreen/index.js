@@ -1,7 +1,6 @@
 import { useNavigation } from '@react-navigation/native'
-import React from 'react'
+import React, {useState} from 'react'
 import {View, Text, Alert} from 'react-native'
-import { useState } from 'react/cjs/react.development'
 import CustomButton from '../../components/CustomButton'
 import InputWLabelL from '../../components/InputWLabelL'
 import api from '../../services/api'
@@ -27,7 +26,7 @@ const ForgotPasswordScreen = () => {
                 if (err = 'Error: Request failed with status code 404') {
                     Alert.alert(
                         "Ops... Verifique os dados",
-                        "Não há usuário cadastrado neste email, verifique e tente novamente!",
+                        "Não há usuário cadastrado neste email, verifique se o email esta correto e tente novamente!",
                         [
                           {
                             text: "Ok",

@@ -190,13 +190,6 @@ const AddScreen = (props) => {
                     placeholder="Ex.: EDO de Bernoulli"
                     textAlign="center"
                 />
-                {/* <View style={styles.inputBox}>
-                    <View style={styles.labelBoxL}>
-                        <View style={styles.labelFrame} />
-                        <Text style={styles.label}>Título da Revisão</Text>
-                    </View>
-                    <Input value={titleReview} secureTextEntry={false} onChangeText={setTitleReview} textAlign="center" placeholder="EDO DE BERNOULLI" />
-                </View> */}
                 <View style={styles.inputBox}>
                     <View style={styles.labelBoxR}>
                         <Text style={styles.label}>Disciplina da Revisão</Text>

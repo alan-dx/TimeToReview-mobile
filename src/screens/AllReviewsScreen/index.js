@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { View, Text, FlatList } from 'react-native';
+import { View, Text, FlatList, ToastAndroid } from 'react-native';
 import styles from './styles';
 import stylesSteps from './stylesSteps';
 import { useNavigation } from '@react-navigation/native';
@@ -8,6 +8,9 @@ import api from '../../services/api';
 import AuthContext from '../../contexts/auth';
 import AsyncStorage from '@react-native-community/async-storage';
 import ScreenTutorial from '../../components/ScreenTutorial';
+import Icon from 'react-native-vector-icons/Feather';
+import { RectButton } from 'react-native-gesture-handler';
+import FilterModal from '../../components/FIlterModal';
 
 const AllReviewsScreen = (props) => {
 
@@ -19,6 +22,8 @@ const AllReviewsScreen = (props) => {
     const [data, setData] = useState(allReviews)
     const navigation = useNavigation()
     const [handleOpenTutorialModal, setHandleOpenTutorialModal] = useState(false)
+    const [handleOpenFilterModal, setOpenFilterModal] = useState(false)
+    const [listIsFiltered, setListIsFiltered] = useState(false)
 
     //User tutorial
     let Step0 = <View style={stylesSteps.container}>
@@ -133,7 +138,6 @@ const AllReviewsScreen = (props) => {
     }
 
     function handleUpdateDataOnEdit(passData) {
-        console.log(passData)
         const newData = data
         setData([])
         const index = data.findIndex(item => item._id == passData._id)
@@ -143,8 +147,59 @@ const AllReviewsScreen = (props) => {
         
     }
 
+    function handleOpenFilter() {
+        setOpenFilterModal(true)
+    }
+
+    function handleCloseModal(filterOption) {
+        setOpenFilterModal(false)
+        if (filterOption) {
+            //use _id because it is on both (subjects and routines) and is unique
+            setData(allReviews.filter(item => {
+                return (item.subject_id._id == filterOption._id) || (item.routine_id._id == filterOption._id) 
+            }))
+            setListIsFiltered(true)
+        }
+    }
+
+    function handleVerifyIsFilterd() {
+        if (listIsFiltered) {
+            ToastAndroid.show('Revisões filtradas!', 600)
+        } else {
+            ToastAndroid.show('Revisões SEM filtro!', 600)
+        }
+    }
+
+    function handleResetList() {
+        if (listIsFiltered) {
+            setData(allReviews)
+            ToastAndroid.show("Filtro excluído!", 600)
+            setListIsFiltered(false)
+        }
+    }
+
     return (
         <View style={styles.container}>
+            <View style={styles.filterBox}>
+                <View style={{flexDirection: 'row'}}>
+                    <RectButton style={styles.filterOptionsButton} onPress={handleVerifyIsFilterd}>
+                        {
+                            listIsFiltered 
+                            ?
+                            <Icon name="filter" size={20} color="#303030" />
+                            :
+                            <Icon name="filter" size={20} color="#F0F0F0" />
+                        }
+                    </RectButton>
+                    <RectButton style={styles.filterOptionsButton} onPress={handleResetList}>
+                        <Icon name="list" size={20} color="#303030" />
+                    </RectButton>
+                </View>
+                <RectButton style={styles.filterButton} onPress={handleOpenFilter}>
+                    <Text style={styles.filterText}>Filtrar</Text>
+                    <Icon name="search" size={20} color="#303030" />
+                </RectButton>
+            </View>
             {data != null &&
                 <FlatList 
                     style={styles.flatlist} 
@@ -157,6 +212,14 @@ const AllReviewsScreen = (props) => {
                 <ScreenTutorial 
                     modalVisible={handleOpenTutorialModal}
                     steps={[Step0, Step1]}
+                />
+                : null
+            }
+            {
+                handleOpenFilterModal ?
+                <FilterModal
+                    modalVisible={handleOpenFilterModal}
+                    handleCloseModal={handleCloseModal}
                 />
                 : null
             }

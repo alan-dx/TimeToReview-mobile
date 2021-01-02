@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useContext} from 'react';
-import { Animated, View, Text, TextInput, KeyboardAvoidingView, Keyboard } from 'react-native';
+import { Animated, View, Text, TextInput, KeyboardAvoidingView, Keyboard, Alert } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { useNavigation } from '@react-navigation/native';
 import NetInfo from '@react-native-community/netinfo';
@@ -66,6 +66,13 @@ const LoginScreen = () => {
         ]).start()
     }
 
+    function validationEmail(email) {
+        //regex function
+        var re = /^(([^<>()\[\]\\.,;:\s@”]+(\.[^<>()\[\]\\.,;:\s@”]+)*)|(“.+”))@((\[[0–9]{1,3}\.[0–9]{1,3}\.[0–9]{1,3}\.[0–9]{1,3}])|(([a-zA-Z\-0–9]+\.)+[a-zA-Z]{2,}))$/;
+        
+        return re.test(email);
+    }
+
     const navigation = useNavigation();
 
     function handleClickSignUpButton() {
@@ -73,8 +80,24 @@ const LoginScreen = () => {
             return alert("As senhas não conferem! Verifique e tente novamente.")
         }
         if (password && cPassword && name && email) {
-            signUpContext({name, email, password})
-            navigation.goBack()
+            
+            if (validationEmail(email)) {
+                signUpContext({name, email, password})
+                navigation.goBack()
+            } else {
+                Alert.alert(
+                    "Email Inválido",
+                    "Por favor insira um email válido.",
+                    [
+                      {
+                        text: "Ok",
+                        onPress: () => {},
+                        style: "cancel"
+                      },
+                    ],
+                    { cancelable: false }
+                )
+            }
         } else {
             alert("Você precisa preencher todos os campos antes de continuar!")
         }

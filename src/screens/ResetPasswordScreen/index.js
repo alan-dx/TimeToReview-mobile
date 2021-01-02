@@ -1,7 +1,6 @@
 import { useNavigation } from '@react-navigation/native'
-import React from 'react'
+import React, {useState} from 'react'
 import {View, Text, Alert, ToastAndroid} from 'react-native'
-import { useState } from 'react/cjs/react.development'
 import CustomButton from '../../components/CustomButton'
 import InputWLabelL from '../../components/InputWLabelL'
 import InputWLabelR from '../../components/InputWLabelR'
@@ -127,9 +126,8 @@ const ResetPasswordScreen = (props) => {
                 value={token}
                 secureTextEntry={false}
                 onChangeText={setToken}
-                placeholder="email@example.com"
+                placeholder="a3iu8o2oiu11kj3a12jda"
                 textAlign="center"
-                keyboardType="email-address"
                 lineColor="#e74e36"
             />
             <InputWLabelR

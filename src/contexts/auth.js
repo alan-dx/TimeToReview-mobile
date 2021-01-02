@@ -1,6 +1,7 @@
 import React, {createContext, useState, useEffect} from 'react';
 import api from '../services/api';
 import AsyncStorage from '@react-native-community/async-storage';
+import { Alert } from 'react-native';
 
 const AuthContext = createContext();
 
@@ -56,7 +57,7 @@ export const AuthProvider = (props) => {
         } catch (error) {
             console.log(error)
             if (error == 'Error: Request failed with status code 401') {
-                alert(`Senha/Email Incorretos. Verifique e tente novament!`)
+                alert(`Senha/Email Incorretos. Verifique e tente novamente!`)
             } else if ( error == 'Error: Request failed with status code 404') {
                 alert('Usuário não encontrado! Verifique se há uma conta cadastrada ' + 
                 'com esse email, caso contrário entre em contato com nossa equipe.')
@@ -73,7 +74,18 @@ export const AuthProvider = (props) => {
             })
         } catch (error) {
             if (error == "Error: Request failed with status code 400") {
-                alert("Usuário já cadastrado! Verifique os dados e tente novamente.")
+                Alert.alert(
+                    "Email já cadastrado!",
+                    "Esse email já possui uma conta associada, verifique e tente novamente.",
+                    [
+                      {
+                        text: "Ok",
+                        onPress: () => {},
+                        style: "cancel"
+                      },
+                    ],
+                    { cancelable: false }
+                  )
             } else if (error == "Error: Request failed with status code 500") {
                 alert("Houve um erro interno no servidor, tente novamente mais tarde!")
             } else {

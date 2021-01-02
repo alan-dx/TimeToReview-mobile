@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useContext} from 'react';
-import { Animated, View, Text, TextInput, Keyboard } from 'react-native';
+import { Animated, View, Text, TextInput, Keyboard, Alert } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { useNavigation } from '@react-navigation/native';
 import NetInfo from '@react-native-community/netinfo';
@@ -68,7 +68,22 @@ const LoginScreen = () => {
 
 
     function handleClickSignInButton() {
-        signInContext({email, password})
+        if (email != '' && password != '') {
+            signInContext({email, password})
+        } else {
+            Alert.alert(
+                "Verifique os dados",
+                "Preencha os campos solicitados!",
+                [
+                  {
+                    text: "Ok",
+                    onPress: () => {},
+                    style: "cancel"
+                  },
+                ],
+                { cancelable: false }
+              )
+        }
     }
 
     function handleGoToForgotPassword() {

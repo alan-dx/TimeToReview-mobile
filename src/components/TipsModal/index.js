@@ -111,7 +111,6 @@ const TipsModal = (props) => {
         return 1 + Math.floor(((tipsArray.length) - 1) * Math.random())
     }
 
-
     return (
         <StepModal 
             stepComponents={props.handelShowTips0 ? tipsArray[0] : tipsArray[handleChoiceTips()]} 
