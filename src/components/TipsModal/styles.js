@@ -8,14 +8,14 @@ const styles = StyleSheet.create({
         //modal height = 400
     },
     descriptionText: {
-        fontFamily: 'Archivo-SemiBold',
-        fontSize: 15,
+        fontFamily: 'Archivo-Medium',
+        fontSize: 16,
         textAlign: 'center',
         color: '#303030',
     },
     tipTitle: {
         fontFamily: 'Archivo-Bold',
-        fontSize: 20,
+        fontSize: 22,
         textAlign: 'center',
         color: '#303030',
         

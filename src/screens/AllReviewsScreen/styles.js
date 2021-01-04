@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
     },
     filterButton: {
         width: '30%',
-        borderRadius: 9,
+        borderRadius: 7,
         flexDirection: 'row',
         backgroundColor: '#FFF',
 
@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
     },
     filterOptionsButton: {
         width: 35,
-        borderRadius: 9,
+        borderRadius: 7,
         flexDirection: 'row',
         backgroundColor: '#FFF',
 

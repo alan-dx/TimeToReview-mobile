@@ -20,8 +20,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         width: '100%',
         height: 40,
-        borderBottomColor: '#60c3eb',
-        borderBottomWidth: 1,
 
         alignItems: 'center',
         justifyContent: 'center',
@@ -36,13 +34,14 @@ const styles = StyleSheet.create({
     titleText: {
         fontFamily: 'Archivo-Bold',
         fontSize: 20,
+        color: '#303030'
     },
     closeButton: {
         backgroundColor: '#FFF',
         borderRadius: 50,
 
         position: 'absolute',
-        right: 5
+        left: 8
     },
     notesBox: {
         width: '90%',
@@ -54,7 +53,8 @@ const styles = StyleSheet.create({
     },
     noteText: {
         fontSize: 15,
-        fontFamily: 'Archivo-Medium'
+        fontFamily: 'Archivo-Medium',
+        color: '#303030'
     }
 })
 

@@ -33,7 +33,6 @@ const HomeScreen = () => {
 
     useFocusEffect(
         useCallback(() => {
-            console.log('homescreen')
             const currentDate = new Date()
             currentDate.setHours(3,0,0,0)
             const filteredReviews = allReviews.filter(item => new Date(item.dateNextSequenceReview) <= currentDate)
@@ -97,16 +96,21 @@ const HomeScreen = () => {
 
     async function handleOpenTips() {
 
-        setHandleOpenTipsModal(true)
         const firstTimeOnScreen = await AsyncStorage.getItem("@TTR:firstTimeOpenTips")
-
+        
         if (!firstTimeOnScreen) {
             await AsyncStorage.setItem('@TTR:firstTimeOpenTips', 'true')
             setHandleShowTips0(true)
+            setHandleOpenTipsModal(true)
         } else {
             setHandleShowTips0(false)
+            setHandleOpenTipsModal(true)
         }
 
+    }
+
+    async function handleCloseTipsModal() {
+        setHandleOpenTipsModal(false)
     }
 
     function handleUpdateChartOnBack() {
@@ -176,13 +180,12 @@ const HomeScreen = () => {
         {
             handleOpenTipsModal ?
             <TipsModal 
-                handleCloseModal={(() => {setHandleOpenTipsModal(false)})}
+                handleCloseModal={handleCloseTipsModal}
                 handelShowTips0={handelShowTips0}
             /> :
             null
         }
     </>
-    const landing = <><Text>Carregando</Text></>
 
     return (
         <View style={styles.container}>

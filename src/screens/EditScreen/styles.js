@@ -10,8 +10,10 @@ const styles = StyleSheet.create({
         maxHeight: 250,
         width: '100%',
         backgroundColor: '#60c3eb',
+
         alignItems: 'center',
         justifyContent: 'center',
+        position: 'relative'
     },
     iconsBox: {
         width: '96%',
@@ -29,6 +31,15 @@ const styles = StyleSheet.create({
         color: '#F7F7F7',
         fontSize: 32,
         alignSelf: 'center'
+    },
+    createdAtText: {
+        fontFamily: 'Archivo-Bold',
+        color: '#FFF',
+        fontSize: 13,
+
+        position: 'absolute',
+        bottom: 5,
+        left: 5
     },
     main: {
        flex: 1,

@@ -19,7 +19,7 @@ const NotesModal = (props) => {
                             <Text numberOfLines={1} style={styles.titleText}>{props.notes.title}</Text>
                         </View>
                         <TouchableHighlight underlayColor="#DDDD" style={styles.closeButton} onPress={props.handleCloseModal}>
-                            <Icon name="x" size={25} color="#e74e36" style={styles.iconBack} />
+                            <Icon name="x" size={25} color="#303030" style={styles.iconBack} />
                         </TouchableHighlight>
                     </View>
                     <View style={styles.notesBox}>

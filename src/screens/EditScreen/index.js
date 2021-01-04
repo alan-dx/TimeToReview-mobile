@@ -26,6 +26,7 @@ const EditScreen = (props) => {
     const [routineReview, setRoutineReview] = useState(dataScreen.routine_id)
     const [dateNextSequenceReview, setDateNextSequenceReview] = useState(new Date(dataScreen.dateNextSequenceReview));
     const [currentSequenceReview, setCurrentSequenceReview] = useState(dataScreen.routine_id.sequence[dataScreen.currentSequenceReview])
+    const [createdDate] = useState(new Date(dataScreen.createdAt))
 
     const navigation = useNavigation();
 
@@ -200,6 +201,7 @@ const EditScreen = (props) => {
                     </BorderlessButton>
                 </View>
                 <Text style={styles.headerText}>EDITAR REVISÃO</Text>
+                <Text style={styles.createdAtText}>Criação: {createdDate.getDate()}/{createdDate.getMonth()}/{createdDate.getFullYear()}</Text>
             </View>
             <View style={styles.main}>
                 <View style={styles.dntReviewBox}>
@@ -216,9 +218,9 @@ const EditScreen = (props) => {
                             {
                                 props.route.params.fromReviewsScreen 
                                 ?
-                                    <Text style={styles.label2}>Próxima Revisão - após conclusão</Text>
+                                    <Text style={styles.label2}>Próxima revisão - após conclusão</Text>
                                 :
-                                    <Text style={styles.label2}>Próxima Revisão</Text>
+                                    <Text style={styles.label2}>Próxima revisão agendada para:</Text>
                             }
                         </View>
                         <Text style={styles.subLabel}>{`${dateNextSequenceReview.getDate()}/${dateNextSequenceReview.getMonth()+1}/${dateNextSequenceReview.getFullYear()}`}</Text>

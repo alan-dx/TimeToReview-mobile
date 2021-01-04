@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
     performanceButtonText: {
         color: '#303030',
         fontFamily: 'Archivo-SemiBold',
-        fontSize: 18,
+        fontSize: 17,
 
         marginTop: 20
     },
