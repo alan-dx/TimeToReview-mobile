@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text } from 'react-native';
 import { RectButton } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/AntDesign';
-import InfoModal from '../../components/InfoModal';
+import CustomModal from '../../components/CustomModal';
 import styles from './styles';
 
 const DoubtsScreen = () => {
@@ -119,11 +119,23 @@ const DoubtsScreen = () => {
                 </View>
             </View>
             {
-              handleDoubtModal ?  <InfoModal
+              handleDoubtModal ?  <CustomModal
                     modalVisible={handleDoubtModal}
                     handleCloseModal={handleCloseDoubtModal}
-                    infoData={infoData[selectInfoData]}
-                /> : null
+                    modalTitle="INFORMAÇÕES"
+                    modalCardHeight={280}
+                    didNotShowCheckButton={true}
+                >
+                    <View style={styles.modalInfoBox}>
+                        <View style={{flexDirection: 'row'}}>
+                            <View style={styles.textMarker} />
+                            <Text style={styles.modalInfoTitle}>{infoData[selectInfoData].title}</Text>
+                        </View>
+                        <View>
+                            <Text style={styles.modalInfoText}>{infoData[selectInfoData].info}</Text>
+                        </View>
+                    </View>
+                </CustomModal> : null
             }
         </View>
     )

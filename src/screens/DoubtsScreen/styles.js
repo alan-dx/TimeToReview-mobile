@@ -32,6 +32,28 @@ const styles = StyleSheet.create({
         right: 0,
         alignItems: 'center',
         justifyContent: 'center'
+    },
+    modalInfoBox: {
+        padding: 8,
+        flex: 1
+    },
+    modalInfoTitle: {
+        fontWeight: 'bold',
+    },
+    modalInfoText: {
+        fontFamily: 'Archivo-Medium',
+        fontSize: 14,
+        textAlign: 'justify',
+        color: '#303030',
+    },
+    textMarker: {
+        width: 8, 
+        height: 8, 
+        backgroundColor: '#303030',
+        borderRadius: 10,
+
+        marginVertical: 5,
+        marginHorizontal: 10
     }
 })
 
