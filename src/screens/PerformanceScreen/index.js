@@ -179,6 +179,7 @@ const PerformanceScreen = () => {
                     <Text style={styles.subText}>{allReviews.length} revisões cadastradas</Text>
                     <ChartPiee data={subjects} />
                 </View>
+                
                 <View style={styles.performanceItemBox}>
                     {/* Melhorar o cálculo das médias */}
                     <Text style={styles.textBold}>REVISÕES/DIA</Text>

@@ -45,7 +45,7 @@ export const AuthProvider = (props) => {
         try {
 
             const response = await api.post('/signIn', data)
-    
+            console.log('------->', response.data)
             if (response.data) {
                 const { token } = response.data;
                 api.defaults.headers["Authorization"] = `Bearer ${token}`

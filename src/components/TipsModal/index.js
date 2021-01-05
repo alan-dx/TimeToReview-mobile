@@ -39,7 +39,7 @@ const TipsModal = (props) => {
     }, [])
 
     let Tips0 = <View style={styles.container}>
-        <Text style={[styles.descriptionText, {fontWeight: "bold"}]}>
+        <Text style={styles.descriptionText}>
             Bem vindo{"(a)"} as dicas de estudo!
             {"\n"}
             {"\n"}

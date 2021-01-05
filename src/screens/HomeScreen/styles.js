@@ -5,11 +5,11 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     graphBox: {
-        height: '55%',
+        flex: 1,
         backgroundColor:'#F5F5F5',
 
         alignItems: 'center',
-        justifyContent: 'space-between',
+        justifyContent: 'space-around',
     },
     graphBoxTitle: {
         color: '#303030',
@@ -17,16 +17,11 @@ const styles = StyleSheet.create({
         fontSize: 22,
     },
     performanceBox: {
-        position: 'relative',
         alignItems: 'center',
-        marginBottom: 2,
     },
     performanceButtonBox: {
         borderRadius: 8,
-        backgroundColor: '#FFF',
 
-        position: 'absolute',
-        bottom: 25,
         alignSelf: 'center',
         alignItems: 'center',
         justifyContent: 'center',
@@ -46,15 +41,13 @@ const styles = StyleSheet.create({
         color: '#303030',
         fontFamily: 'Archivo-SemiBold',
         fontSize: 17,
-
-        marginTop: 20
     },
     menuBox: {
         backgroundColor:'#FFFF',
         borderTopRightRadius: 20,
         borderTopLeftRadius: 20,
 
-        flex: 1,
+        height: '45%',
         paddingHorizontal: 5,
         paddingBottom: 3,
 

@@ -1,5 +1,5 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
-import { View, Text, BackHandler } from 'react-native';
+import { View, Text, Dimensions } from 'react-native';
 
 import styles from './styles';
 import stylesSteps from './stylesSteps';
@@ -126,7 +126,7 @@ const HomeScreen = () => {
         <View style={styles.graphBox}>
             <Text style={styles.graphBoxTitle}>Você possui {numberOfReviews} revisões pendentes!</Text>
             {/* NESSE GRÁFICO INDICAR A QUANTIDADE DE REVISÕES POR DIA */}
-            {loadingChart ? <Chart height={220} elevation={2} data={dataChart} /> : <Text>Atualizando...</Text>}
+            {loadingChart ? <Chart height={Dimensions.get("window").height * 0.3} elevation={2} data={dataChart} /> : <Text>Atualizando...</Text>}
             <View style={styles.performanceBox}>
                 <View style={styles.performanceButtonBox}>
                     <BorderlessButton onPress={handleClickGoToPerformanceScreen} style={styles.performanceButton}>
