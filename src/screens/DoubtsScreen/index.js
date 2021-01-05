@@ -121,7 +121,7 @@ const DoubtsScreen = () => {
             {
               handleDoubtModal ?  <CustomModal
                     modalVisible={handleDoubtModal}
-                    handleCloseModal={handleCloseDoubtModal}
+                    handleCloseModalButton={handleCloseDoubtModal}
                     modalTitle="INFORMAÇÕES"
                     modalCardHeight={280}
                     didNotShowCheckButton={true}

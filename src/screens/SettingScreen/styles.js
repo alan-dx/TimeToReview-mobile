@@ -69,6 +69,56 @@ const styles = StyleSheet.create({
         width: '50%',
         justifyContent: 'space-evenly',
         marginTop: 3,
+    },
+    timeModalScrollBox: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        position: 'relative',
+    },
+    timeModalScrollLabel: {
+        fontSize: 17,
+        color: '#303030',
+        fontFamily: 'Archivo-Bold'
+    },
+    timeModalTimerScroll: {
+        height: 90,
+        width: 85,
+        alignItems: 'center',
+        flexDirection: 'row',
+    },
+    timeModalScrollItem:{
+        width: 40,
+        height: 30,
+        alignItems: 'center'
+    },
+    timeModalScrollText: {
+        fontFamily: 'Archivo-Medium',
+        fontSize: 17,
+        color: '#303030',
+    },
+    timeModalScrollSelectItemLeft: {
+        width: 40,
+        height: 30,
+        borderTopColor: '#60c3eb',
+        borderTopWidth: 1,
+        borderBottomColor: '#60c3eb',
+        borderBottomWidth: 1,
+        
+        position: 'absolute',
+        top: 30
+    },
+    timeModalScrollSelectItemRight: {
+        width: 40,
+        height: 30,
+        borderTopColor: '#60c3eb',
+        borderTopWidth: 1,
+        borderBottomColor: '#60c3eb',
+        borderBottomWidth: 1,
+        
+        position: 'absolute',
+        top: 30,
+        right: 0
     }
 })
 

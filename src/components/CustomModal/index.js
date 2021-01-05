@@ -1,12 +1,18 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { View, Text, Modal, TouchableHighlight } from 'react-native'
 import styles from './styles'
 import Icon from 'react-native-vector-icons/Feather'
 
 const CustomModal = (props) => {
 
+    useEffect(() => {
+        if (props.modalUseEffect) {
+            props.modalUseEffect()
+        }
+    }, [])
+
     function handleCancelButton() {
-        props.handleCloseModal()
+        props.handleCloseModalButton()
 
         if (props.handleExtraCancelButton) {
             props.handleExtraCancelButton()
@@ -14,10 +20,8 @@ const CustomModal = (props) => {
     }
 
     function handleConfirmButton() {
-        props.handleCloseModal()
-        
-        if (props.handleExtraConfirmButton) {
-            props.handleExtraConfirmButton()
+        if (props.handleConfirmModalButton) {
+            props.handleConfirmModalButton()
         }
     }
 

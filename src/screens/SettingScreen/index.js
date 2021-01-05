@@ -1,12 +1,11 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { View, Image, Text, Linking, Alert, ToastAndroid } from 'react-native';
+import React, { useContext, useEffect, useState, useRef } from 'react';
+import { View, Image, Text, Linking, Alert, ToastAndroid, ScrollView } from 'react-native';
 import styles from './styles';
 import Icon from 'react-native-vector-icons/Feather';
 import Icon2 from 'react-native-vector-icons/AntDesign';
 import Icon3 from 'react-native-vector-icons/FontAwesome';
 import AuthContext from '../../contexts/auth';
 import { RectButton } from 'react-native-gesture-handler';
-import TimeModal from '../../components/TimeModal';
 import api from '../../services/api';
 import notifications from '../../services/notifications';
 import PushNotification from 'react-native-push-notification';
@@ -14,6 +13,7 @@ import { useNavigation } from '@react-navigation/native';
 import ImagePicker from 'react-native-image-picker';
 import AsyncStorage from '@react-native-community/async-storage';
 import ReportModal from '../../components/ReportModal';
+import CustomModal from '../../components/CustomModal';
 
 const SettingScreen = (props) => {
 
@@ -36,6 +36,28 @@ const SettingScreen = (props) => {
 
         loadStorageProfilePhoto()
     }, [])
+    
+    // timeModal
+    const minRef = useRef()
+    const hourRef = useRef()
+
+    let hours = [...Array(24).keys()]
+    let minutes = [...Array(60).keys()]
+
+    function handleSelectTime(e, data, fun) {
+        let posY = e.nativeEvent.contentOffset.y
+        fun(data[Math.round(posY/30)])
+    }
+
+    function scrollToTime(hour, minute) { //called on modalUseEffect of customModal
+        let posYHour = hour * 30
+        let posYMin = minute * 30
+        hourRef.current.scrollTo({x: 0, y: posYHour, animated: true})
+        minRef.current.scrollTo({x: 0, y: posYMin, animated: true})
+
+    }
+    //timeModal
+
 
     function handleContactWhatsapp() {
         Linking.canOpenURL(`whatsapp://send?phone=${1111}`).then((res) => {
@@ -67,11 +89,12 @@ const SettingScreen = (props) => {
         })
     }
 
-    function handleCloseTimeModal() {
+    function handleCloseTimeModalAndConfirm() {
         setHandleTimeModal(false)
         api.post("/setTimeReminder", {
             date: new Date(0,0,0,timeHour, timeMin)
         }).then((res) => {
+            console.log(res.data.reminderTime)
             const currentDate = new Date()
             const reminderTime = new Date(res.data.reminderTime)
             user.reminderTime = reminderTime
@@ -110,6 +133,9 @@ const SettingScreen = (props) => {
                 }
         })
 
+    }
+    function handleCloseTimeModalAndCancel() {
+        setHandleTimeModal(false)
     }
 
     function handleResetCharts() {
@@ -273,14 +299,65 @@ const SettingScreen = (props) => {
             </View>
             {   
                 //Resolve useRef undefined
-                handleTimeModal ? <TimeModal
-                    timeHour={timeHour}
-                    timeMin={timeMin}
-                    setTimeHour={setTimeHour}
-                    setTimeMin={setTimeMin}
+                handleTimeModal ? <CustomModal
                     modalVisible={handleTimeModal}
-                    handleCloseModal={handleCloseTimeModal}
-                /> : null
+                    handleCloseModalButton={handleCloseTimeModalAndCancel}
+                    handleConfirmModalButton={handleCloseTimeModalAndConfirm}
+                    modalUseEffect={() => {setTimeout(() => {
+                        scrollToTime(timeHour, timeMin)
+                    }, 10)}}
+                    modalCardHeight={200}
+                    modalTitle="HORA LEMBRETE"
+                >
+                    <View style={styles.timeModalScrollBox}>
+                        <Text style={styles.timeModalScrollLabel}>Selecione um horário</Text>
+                        <View style={styles.timeModalTimerScroll}>
+                            {/* O TAMANHO DO SCROLL DA INCOMBATIVEL COM ALGUNS DISPOSITIVOS, ESTA RECEBENDO VALORES QUEBRADOS */}
+                            <View style={styles.timeModalScrollSelectItemLeft} />
+                            <View style={styles.timeModalScrollSelectItemRight} />
+                                <ScrollView
+                                    ref={hourRef}
+                                    showsVerticalScrollIndicator={false}
+                                    decelerationRate="fast"
+                                    contentContainerStyle={{
+                                        paddingVertical: 30,
+                                    }}
+                                    snapToInterval={30}
+                                    onMomentumScrollEnd={(e) => handleSelectTime(e, hours, setTimeHour)}
+                                >
+                                    {hours.map((value, key) => { 
+                                        return (
+                                            <View key={key} style={styles.timeModalScrollItem}>
+                                                <Text style={styles.timeModalScrollText}>
+                                                    {value < 10 ? '0' + value : value}
+                                                </Text>
+                                            </View>
+                                        )}
+                                    )}
+                                </ScrollView>
+                                <Text style={{fontSize: 20, marginBottom: 5}}>:</Text>
+                                <ScrollView
+                                    ref={minRef}
+                                    showsVerticalScrollIndicator={false}
+                                    decelerationRate="fast"
+                                    snapToInterval={30}
+                                    contentContainerStyle={{
+                                        paddingVertical: 30,
+                                    }}
+                                    onMomentumScrollEnd={(e) => handleSelectTime(e, minutes, setTimeMin)}
+
+                                >
+                                    {minutes.map((value, key) => (
+                                        <View key={key} style={styles.timeModalScrollItem}>
+                                            <Text style={styles.timeModalScrollText}>
+                                                {value < 10 ? '0' + value : value}
+                                            </Text>
+                                        </View>
+                                    ))}
+                                </ScrollView>
+                        </View>
+                    </View>
+                </CustomModal> : null
             }
             {
                 handleReportModal ? <ReportModal 
