@@ -6,7 +6,6 @@ import Icon from 'react-native-vector-icons/Feather';
 import AuthContext from '../../contexts/auth';
 import ImagePicker from 'react-native-image-picker';
 import AsyncStorage from '@react-native-community/async-storage';
-import InputModal from '../../components/InputModal';
 import api from '../../services/api';
 import { useNavigation } from '@react-navigation/native';
 import CustomModal from '../../components/CustomModal';
@@ -126,7 +125,7 @@ const ProfileScreen = () => {
             </View>
             {
                 handleOpenInputModal ?
-                    <CustomModal 
+                    <CustomModal
                         modalVisible={handleOpenInputModal}
                         handleConfirmModalButton={handleCloseAndConfimModal}
                         handleCloseModalButton={handleCloseModal}

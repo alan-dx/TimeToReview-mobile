@@ -12,6 +12,7 @@ const Input = (props) => {
             onChangeText={(text) => props.onChangeText(text)}
             value={props.value}
             secureTextEntry={props.secureTextEntry}
+            onKeyPress={() => {console.log(asdasd)}}
         />
     )
 }

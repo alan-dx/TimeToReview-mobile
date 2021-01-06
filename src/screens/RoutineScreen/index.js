@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, TextInput } from 'react-native';
 import styles from './styles';
 import stylesSteps from './stylesSteps';
 import Icon from 'react-native-vector-icons/AntDesign';
@@ -8,9 +8,9 @@ import FloatAddButton from '../../components/FloatAddButton';
 import RoutineContainer from '../../components/RoutineContainer';
 import AuthContext from '../../contexts/auth';
 import api from '../../services/api';
-import MyModal from '../../components/MyModal';
 import ScreenTutorial from '../../components/ScreenTutorial';
 import AsyncStorage from '@react-native-community/async-storage';
+import CustomModal from '../../components/CustomModal';
 
 const RoutineScreen = (props) => {
 
@@ -118,9 +118,9 @@ const RoutineScreen = (props) => {
                 }
             })
         } else {
-            setModalAddVisible(false)
             setSequenceRoutine('')
             setDataToEdit('')
+            alert('Preenhca o campo corretamente!')
         }
 
     }
@@ -217,6 +217,31 @@ const RoutineScreen = (props) => {
             setDataToEdit('')
         }
     }
+    
+    function handleOnInputChange(text) {
+        //previousValue don't worked
+        setSequenceRoutine(() => {
+
+            if (text[text.length - 1] != ',' && text[text.length - 1] != '.' && text[text.length - 1] != '-' && text[text.length - 1] != ' ') {
+                console.log('sdas')
+                if ((text > sequenceRoutine) && (sequenceRoutine.length > 0)) {
+                    //String.replace() doesn't worked when repeat a number
+                    let text2 = `${text.substr(0, text.length - 1)}-${text.substr(-1,1)}`
+    
+                    return text2
+                } else if (text < sequenceRoutine) {
+                    
+                    return text.substr(0, text.length - 1)//this delete the last word on string
+                } else {
+                    //used when sequenceRoutine.length == 0
+                    return text
+                }
+            } else {
+                return text.substr(0, text.length - 1)//this delete the last word on string
+            }
+
+        })
+    }
 
     return (
         <View style={styles.container}>
@@ -228,23 +253,66 @@ const RoutineScreen = (props) => {
                     renderItem={({item}) => <RoutineContainer onPressEdit={() => handlePressEditRoutine(item)} onPressDelete={() => handlePressDeleteRoutine(item)} data={item} />}
                 />
             }
-            <MyModal
-                modalTitle="ADICIONAR ROTINA"
-                modalVisible={modalAddVisible}
-                handleCloseModal={handleCloseAddModal} 
-                handleCloseModalAndAdd={handleCloseModalAndAdd}
-                sequenceRoutine={sequenceRoutine}
-                setSequenceRoutine={setSequenceRoutine}
-            />
-            <MyModal
-                modalTitle="EDITAR ROTINA"
-                modalVisible={modalEditVisible}
-                handleCloseModal={handleCloseEditModal}
-                handleCloseModalAndAdd={handleCloseModalAndEdit}
-                sequenceRoutine={sequenceRoutine}
-                setSequenceRoutine={setSequenceRoutine}
-                data={dataToEdit}
-            />
+            {
+                modalAddVisible ?
+                <CustomModal
+                    modalTitle="ADICIONAR ROTINA"
+                    modalVisible={modalAddVisible}
+                    handleCloseModalButton={handleCloseAddModal} 
+                    handleConfirmModalButton={handleCloseModalAndAdd}
+                    modalCardHeight={300}
+                >
+                    <TextInput
+                        style={styles.modalRoutineInput}
+                        keyboardType={"number-pad"}
+                        value={sequenceRoutine}
+                        onChangeText={handleOnInputChange}
+                        textAlign="center"
+                        placeholder="1-3-7-15-21-30"
+                    />
+                    <View style={styles.routineModalInfoBox}>
+                        <Text style={styles.routineModalInfoText}>
+                            Insira a sequência da rotina que deseja criar, digite apenas os números, pois a formatação é feita automaticamente. <Text style={{fontWeight: 'bold'}}>Exemplo: (1-3-7-14-21-30)</Text>
+                            {'\n'}
+                            {'\n'}
+                            Lembre-se, cada dígito indica após quantos dias, a partir da última revisão, a revisão associada será realizada.
+                            {'\n'}
+                            {'\n'}
+                            Caso deseje que uma revisão seja feita no mesmo dia de sua criação, insira <Text style={{fontWeight: 'bold'}}>0</Text> como primeiro dígito da sequência.
+                        </Text>
+                    </View>
+                </CustomModal> : null
+            }
+            {
+                modalEditVisible ?
+                <CustomModal
+                    modalTitle="EDITAR ROTINA"
+                    modalVisible={modalEditVisible}
+                    handleCloseModalButton={handleCloseEditModal} 
+                    handleConfirmModalButton={handleCloseModalAndEdit}
+                    modalCardHeight={300}
+                >
+                    <TextInput
+                        style={styles.modalRoutineInput}
+                        keyboardType={"number-pad"}
+                        value={sequenceRoutine}
+                        onChangeText={handleOnInputChange}
+                        textAlign="center"
+                        placeholder="1-3-7-15-21-30"
+                    />
+                    <View style={styles.routineModalInfoBox}>
+                    <Text style={styles.routineModalInfoText}>
+                            Insira a sequência da rotina que deseja criar, digite apenas os números, pois a formatação é feita automaticamente. <Text style={{fontWeight: 'bold'}}>Exemplo: (1-3-7-14-21-30)</Text>
+                            {'\n'}
+                            {'\n'}
+                            Lembre-se, cada dígito indica após quantos dias, a partir da última revisão, a revisão associada será realizada.
+                            {'\n'}
+                            {'\n'}
+                            Caso deseje que uma revisão seja feita no mesmo dia de sua criação, insira <Text style={{fontWeight: 'bold'}}>0</Text> como primeiro dígito da sequência.
+                        </Text>
+                    </View>
+                </CustomModal> : null
+            }
             <FloatAddButton onPress={handleOpenAddModal} />
             { handleOpenTutorialModal ? 
                <ScreenTutorial steps={[Step0, Step1, Step2]} /> 

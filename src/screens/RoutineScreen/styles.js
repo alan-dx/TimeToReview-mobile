@@ -52,6 +52,27 @@ const styles = StyleSheet.create({
     },
     buttonBox: {
         flexDirection: 'row'
+    },
+    routineModalInfoBox: {
+        width: '90%',
+    },
+    routineModalInfoText: {
+        fontFamily: 'Archivo',
+        fontSize: 14,
+        textAlign: 'center',
+        color: '#303030',
+
+        marginTop: 10
+    },
+    modalRoutineInput: {
+        backgroundColor: '#E8E8E8',
+        width: '80%',
+        borderRadius: 15,
+        height: 54,
+        paddingLeft: 15,
+        fontFamily: 'Archivo-SemiBold',
+        fontSize: 13,
+        color: '#303030'
     }
 })
 
