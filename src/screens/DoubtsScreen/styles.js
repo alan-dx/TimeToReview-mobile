@@ -39,6 +39,8 @@ const styles = StyleSheet.create({
     },
     modalInfoTitle: {
         fontWeight: 'bold',
+        color: '#303030',
+        fontSize: 14
     },
     modalInfoText: {
         fontFamily: 'Archivo-Medium',

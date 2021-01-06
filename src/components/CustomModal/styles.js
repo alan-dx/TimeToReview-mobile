@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
 
         alignItems: "center",
         justifyContent: 'space-evenly',
-        position: 'relative'
+        position: 'relative',
     },
     modalHeader: {
         width: '95%',
@@ -34,7 +34,11 @@ const styles = StyleSheet.create({
         fontSize: 17
     },
     modalBody: {
-        flex: 1
+        flex: 1,
+        width: '100%',
+        
+        alignItems: 'center',
+        justifyContent: 'center'
     }
 })
 

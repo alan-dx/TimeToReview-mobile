@@ -119,6 +119,38 @@ const styles = StyleSheet.create({
         position: 'absolute',
         top: 30,
         right: 0
+    },
+    reportModalInfoBox: {
+        width: '90%',
+
+        marginVertical: 5,
+        flexDirection: 'row'
+    },
+    reportModalInfoText: {
+        fontFamily: 'Archivo',
+        fontSize: 14,
+        textAlign: 'justify',
+        color: '#303030',
+
+    },
+    textMarker: {
+        width: 6, 
+        height: 6, 
+        backgroundColor: '#303030',
+        borderRadius: 10,
+
+        margin: 5
+    },
+    reportModalCustomButton: {
+        height: 50,
+        borderRadius: 10,
+        width: '90%',
+        backgroundColor: '#60c3eb',
+
+        marginTop: 30,
+        alignSelf: 'center',
+        alignItems: 'center',
+        justifyContent: 'center'
     }
 })
 

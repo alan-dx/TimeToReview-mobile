@@ -97,6 +97,30 @@ const styles = StyleSheet.create({
         fontFamily: 'Archivo-SemiBold',
         fontSize: 15
     },
+    modalNameBody: {
+        flex: 1,
+        width : '100%',
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    modalNameInputLabel: {
+        fontFamily: 'Archivo-SemiBold',
+        fontSize: 16,
+        textAlign: 'justify',
+        color: '#303030',
+
+        marginBottom: 10
+    },
+    modalNameInput: {
+        backgroundColor: '#E8E8E8',
+        width: '80%',
+        borderRadius: 15,
+        height: 54,
+        paddingLeft: 15,
+        fontFamily: 'Archivo-SemiBold',
+        fontSize: 13,
+        color: '#303030'
+    }
 })
 
 export default styles;

@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState, useRef } from 'react';
-import { View, Image, Text, Linking, Alert, ToastAndroid, ScrollView } from 'react-native';
+import { View, Image, Text, Linking, Alert, ToastAndroid, ScrollView, TouchableHighlight } from 'react-native';
 import styles from './styles';
 import Icon from 'react-native-vector-icons/Feather';
 import Icon2 from 'react-native-vector-icons/AntDesign';
@@ -12,7 +12,7 @@ import PushNotification from 'react-native-push-notification';
 import { useNavigation } from '@react-navigation/native';
 import ImagePicker from 'react-native-image-picker';
 import AsyncStorage from '@react-native-community/async-storage';
-import ReportModal from '../../components/ReportModal';
+import { openComposer } from 'react-native-email-link';
 import CustomModal from '../../components/CustomModal';
 
 const SettingScreen = (props) => {
@@ -360,10 +360,28 @@ const SettingScreen = (props) => {
                 </CustomModal> : null
             }
             {
-                handleReportModal ? <ReportModal 
+                handleReportModal ? <CustomModal 
                     modalVisible={handleReportModal}
-                    handleCloseModal={handleCloseReportModal}
-                />: null
+                    handleCloseModalButton={handleCloseReportModal}
+                    modalCardHeight={250}
+                    modalTitle="ENTRE EM CONTATO"
+                >
+                    <View style={styles.reportModalInfoBox}>
+                        <View style={styles.textMarker} />
+                        <Text style={styles.reportModalInfoText}>
+                            Relate bugs, sugestões, agradecimentos ou qualquer problema que tenha enfrentado em nosso App. Nosso 
+                            objetivo sempre será trazer a melhor experiência possível para nossos usuários.
+                        </Text>
+                    </View>
+                    <TouchableHighlight style={styles.reportModalCustomButton} underlayColor={"#72c3eb"} onPress={() => {
+                        openComposer({
+                            to: 'suportettr@gmail.com',
+                            subject: 'O que deseja relatar?',
+                            })
+                    }} >
+                        <Text style={styles.modalHeaderText}>CONTATE</Text>
+                    </TouchableHighlight>
+                </CustomModal>: null
             }
 
         </View>

@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { View, Text, Image } from 'react-native';
+import { View, Text, Image, TextInput } from 'react-native';
 import { BorderlessButton, RectButton } from 'react-native-gesture-handler';
 import styles from './styles';
 import Icon from 'react-native-vector-icons/Feather';
@@ -9,6 +9,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import InputModal from '../../components/InputModal';
 import api from '../../services/api';
 import { useNavigation } from '@react-navigation/native';
+import CustomModal from '../../components/CustomModal';
 
 const ProfileScreen = () => {
 
@@ -16,6 +17,7 @@ const ProfileScreen = () => {
     const { user, setUser, allReviews, subjects, routines, logoutContext } = useContext(AuthContext)
     const [filePath, setFilePath] = useState(null)
     const [handleOpenInputModal, setHandleOpenInputModal] = useState(false)
+    const [inputNameModalValue, setInputNameModalValue] = useState(user.name)
 
     useEffect(()  => {
         async function loadStorageProfilePhoto() {
@@ -60,17 +62,17 @@ const ProfileScreen = () => {
         setHandleOpenInputModal(false)
     }
 
-    async function handleCloseAndConfimModal(newName) {
+    async function handleCloseAndConfimModal() {
 
         await api.post('/changeUserName', {
-            name: newName
+            name: inputNameModalValue
         }).then((response) => {
-            user.name = newName
+            user.name = inputNameModalValue
             setUser(user)
             handleCloseModal()
 
             navigation.setParams({
-                passData: newName
+                passData: inputNameModalValue
             })
 
         }).catch((err) => {
@@ -124,12 +126,24 @@ const ProfileScreen = () => {
             </View>
             {
                 handleOpenInputModal ?
-                    <InputModal 
+                    <CustomModal 
                         modalVisible={handleOpenInputModal}
-                        handleCloseAndConfirmModal={handleCloseAndConfimModal}
-                        handleCloseModal={handleCloseModal}
-                        inputValue={user.name}
-                    /> : null
+                        handleConfirmModalButton={handleCloseAndConfimModal}
+                        handleCloseModalButton={handleCloseModal}
+                        modalCardHeight={200}
+                        modalTitle="EDITAR NOME"
+                    >
+                        <View style={styles.modalNameBody}>
+                            <Text style={styles.modalNameInputLabel}>Insira o seu Nome: </Text>
+                            <TextInput
+                                style={styles.modalNameInput}
+                                keyboardType={"default"}
+                                value={inputNameModalValue}
+                                onChangeText={(text) => setInputNameModalValue(text)}
+                                textAlign="center"
+                            />
+                        </View>
+                    </CustomModal> : null
             }
         </View>
     )
