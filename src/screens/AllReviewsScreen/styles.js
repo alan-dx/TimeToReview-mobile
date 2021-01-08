@@ -46,6 +46,38 @@ const styles = StyleSheet.create({
         marginRight: 10,
 
         elevation: 2
+    },
+    filterModalTitleOptions: {
+        fontFamily: 'Archivo-Bold',
+        color: '#303030',
+        fontSize: 17,
+    },
+    filterModalOptionsBox: {
+        flexDirection: 'row',
+        width: '90%',
+
+        alignItems: 'center',
+        justifyContent: 'space-evenly',
+        marginTop: 10
+    },
+    filterModalSwitchItemBox: {
+        flexDirection: 'row',
+
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    filterModalSwitchItemText: {
+        fontFamily: 'Archivo-SemiBold',
+        fontSize: 14,
+        color: '#303030',
+
+        marginHorizontal: 5
+    },
+    filterModalInfoText: {
+        fontFamily: 'Archivo-Medium',
+        color: '#303030',
+        fontSize: 14,
+        textAlign: 'center'
     }
 })
 

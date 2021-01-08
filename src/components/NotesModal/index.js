@@ -1,7 +1,8 @@
 import React from 'react';
-import {View, Text, Modal, TouchableHighlight} from 'react-native'
+import {View, Text, Modal, TouchableHighlight, TextInput} from 'react-native'
 import styles from './styles'
 import Icon from 'react-native-vector-icons/Feather'
+import { ScrollView } from 'react-native-gesture-handler';
 
 
 const NotesModal = (props) => {
@@ -23,11 +24,13 @@ const NotesModal = (props) => {
                         </TouchableHighlight>
                     </View>
                     <View style={styles.notesBox}>
-                        <Text 
-                            style={[styles.noteText, {textAlign: props.notes.align}]}
+                        <ScrollView
+                            showsVerticalScrollIndicator
                         >
-                            {props.notes.note}
-                        </Text>
+                            <Text style={[styles.noteText, {textAlign: props.notes.align}]}>
+                                {props.notes.note}
+                            </Text>
+                        </ScrollView>
                     </View>
                 </View>
 

@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
     performanceItemBox: {
         width: '95%',
         backgroundColor: '#FFF',
-        borderRadius: 20,
+        borderRadius: 15,
 
         elevation: 2,
         marginTop: 2,
@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
     },
     textBold: {
         marginTop: 5,
-        fontFamily: 'Archivo-SemiBold',
+        fontFamily: 'Archivo-Bold',
         fontSize: 17,
         color: '#303030'
     },

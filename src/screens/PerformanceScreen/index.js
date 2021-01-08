@@ -32,14 +32,17 @@ const PerformanceScreen = () => {
     //User tutorial
     let Step0 = <View style={stylesSteps.container}>
         <Text style={stylesSteps.desciptionText}>
-            Seja bem vindo a tela de desempenho.
+            Esta é a tela de Desempenho.
             {"\n"}
             {"\n"}
             Aqui você tem acesso a informações gerais de sua performance em nosso aplicativo, tais como: número de revisões/dia,
             porcentagem por matéria, desempenho diário e muito mais.
             {"\n"}
             {"\n"}
-            Aproveite e tire o máximo de proveito desses dados.
+            Aproveite e tire o máximo de proveito desses dados!
+            {"\n"}
+            {"\n"}
+            Você pode interagir com os gráficos para ter acesso a informações extras.
         </Text>
     </View>
 
@@ -157,8 +160,8 @@ const PerformanceScreen = () => {
                     <Text style={styles.textBold}>INFORMAÇÕES GERAIS</Text>
                     <View style={styles.lineChartPieBox} />
                     <View style={{alignItems: 'flex-start', width: '90%', paddingVertical: 10}}>
+                        <Text style={styles.subText}>Sequência mais utilizada: {routines[mostUseRoutine].label || 'Verificando...'} </Text>
                         <Text style={styles.subText}>Dia de maior desempenho: {bestPerformanceDay} </Text>
-                        <Text style={styles.subText}>Rotina mais utilizada: {routines[mostUseRoutine].label || 'Verificando...'} </Text>
                         <Text style={styles.subText}>Matéria de maior uso: {subjects[mostUseSubject].label}</Text>
                     </View>
                 </View>

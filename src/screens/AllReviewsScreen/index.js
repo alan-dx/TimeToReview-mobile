@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { View, Text, FlatList, ToastAndroid } from 'react-native';
+import {Switch, View, Text, FlatList, ToastAndroid } from 'react-native';
 import styles from './styles';
 import stylesSteps from './stylesSteps';
 import { useNavigation } from '@react-navigation/native';
@@ -10,7 +10,8 @@ import AsyncStorage from '@react-native-community/async-storage';
 import ScreenTutorial from '../../components/ScreenTutorial';
 import Icon from 'react-native-vector-icons/Feather';
 import { RectButton } from 'react-native-gesture-handler';
-import FilterModal from '../../components/FIlterModal';
+import CustomModal from '../../components/CustomModal';
+import PickerInfo from '../../components/Picker';
 
 const AllReviewsScreen = (props) => {
 
@@ -24,6 +25,11 @@ const AllReviewsScreen = (props) => {
     const [handleOpenTutorialModal, setHandleOpenTutorialModal] = useState(false)
     const [handleOpenFilterModal, setOpenFilterModal] = useState(false)
     const [listIsFiltered, setListIsFiltered] = useState(false)
+    //FilterList
+    const [isEnabled, setIsEnabled] = useState(true)
+    const [filterOption, setFilterOption] = useState(null)
+    //FilterList
+
 
     //User tutorial
     let Step0 = <View style={stylesSteps.container}>
@@ -31,7 +37,7 @@ const AllReviewsScreen = (props) => {
             Essa é a tela que irá listar todas as suas revisões.
             {"\n"}
             {"\n"}
-            Aqui você pode editar e deletar uma revisão.
+            Aqui você pode visualizar, editar ou deletar uma revisão.
         </Text>
     </View>
     let Step1 = <View style={stylesSteps.container}> 
@@ -67,11 +73,34 @@ const AllReviewsScreen = (props) => {
             Container de Revisão.
             {"\n"}
             {"\n"}
-            É dessa forma que as revisões serão visualizadas. Observe que existe um botão "EDITAR" e outro "APAGAR",
-            o primeiro permite que você edite todos os detalhes da revisão, já o segundo deleta permanentemente a revisão.
+            É dessa forma que as revisões serão visualizadas, observe que existe um botão "EDITAR" e outro "DELETAR",
+            o primeiro permite que você edite todos os detalhes da revisão, já o segundo deleta permanentemente a mesma.
             {"\n"}
             {"\n"}
             O marcador colorido indica a qual matéria a revisão é associada.
+        </Text>
+    </View>
+    let Step2 = <View style={stylesSteps.container}>
+        <View style={styles.filterButton}>
+            <Text style={styles.filterText}>Filtrar</Text>
+            <Icon name="search" size={20} color="#303030" />
+        </View>
+        <Text style={stylesSteps.desciptionText}>
+            Este botão permite filtrar a lista de revisões a partir das matérias ou sequência existentes.
+        </Text>
+    </View>
+    let Step3 = <View style={stylesSteps.container}>
+        <View style={styles.filterOptionsButton}>
+            <Icon name="filter" size={20} color="#303030" />
+        </View>
+        <Text style={stylesSteps.desciptionText}>
+            Este ícone indica se há um filtro aplicado na lista.
+        </Text>
+        <View style={[styles.filterOptionsButton, {marginTop: 10}]}>
+            <Icon name="list" size={20} color="#303030" />
+        </View>
+        <Text style={stylesSteps.desciptionText}>
+            Por fim, este botão remove o filto existente.
         </Text>
     </View>
 
@@ -90,6 +119,12 @@ const AllReviewsScreen = (props) => {
     }, [])
     //User tutorial
 
+    //FilterList
+    function toggleSwitchFilterModal() {
+        setFilterOption(null)
+        setIsEnabled(previousState => !previousState)
+    }
+    //FilterList
 
     async function handleDeleteReview(review) {
 
@@ -151,7 +186,7 @@ const AllReviewsScreen = (props) => {
         setOpenFilterModal(true)
     }
 
-    function handleCloseModal(filterOption) {
+    function handleCloseAndConfirmFilterModal() {
         setOpenFilterModal(false)
         if (filterOption) {
             //use _id because it is on both (subjects and routines) and is unique
@@ -160,6 +195,10 @@ const AllReviewsScreen = (props) => {
             }))
             setListIsFiltered(true)
         }
+    }
+
+    function handleCloseAndCancelFilterModal() {
+        setOpenFilterModal(false)
     }
 
     function handleVerifyIsFilterd() {
@@ -173,7 +212,7 @@ const AllReviewsScreen = (props) => {
     function handleResetList() {
         if (listIsFiltered) {
             setData(allReviews)
-            ToastAndroid.show("Filtro excluído!", 600)
+            ToastAndroid.show("Filtro removido!", 600)
             setListIsFiltered(false)
         }
     }
@@ -209,18 +248,58 @@ const AllReviewsScreen = (props) => {
                 />
             }
             {handleOpenTutorialModal ? 
-                <ScreenTutorial 
+                <ScreenTutorial
                     modalVisible={handleOpenTutorialModal}
-                    steps={[Step0, Step1]}
+                    steps={[Step0, Step1, Step2, Step3]}
                 />
                 : null
             }
             {
                 handleOpenFilterModal ?
-                <FilterModal
+                <CustomModal
                     modalVisible={handleOpenFilterModal}
-                    handleCloseModal={handleCloseModal}
-                />
+                    handleCloseModalButton={handleCloseAndCancelFilterModal} 
+                    handleConfirmModalButton={handleCloseAndConfirmFilterModal}
+                    modalCardHeight={310}
+                    modalTitle="FILTRAR REVISÕES"
+                >
+                    <View style={{alignItems: 'center'}}>
+                        <Text style={styles.filterModalTitleOptions}>Filtrar por:</Text>
+                        <View style={styles.filterModalOptionsBox}>
+                            <View style={styles.filterModalSwitchItemBox}>
+                                <Text style={styles.filterModalSwitchItemText}>Matéria</Text>
+                                <Switch 
+                                    trackColor={{ false: "#60c3eb", true: "#e74e36" }}
+                                    thumbColor={isEnabled ? "#f4f3f4" : "#f4f3f4"}
+                                    ios_backgroundColor="#3e3e3e"
+                                    onValueChange={toggleSwitchFilterModal}
+                                    value={isEnabled}
+                                />
+                                <Text style={styles.filterModalSwitchItemText}>Sequência</Text>
+                            </View>
+                        </View>
+                    </View>
+                    {
+                        isEnabled
+                            &&
+                        <PickerInfo 
+                            placeholder="1-3-5-7-21-30" 
+                            data={routines}
+                            onChangeItem={setFilterOption}
+                        />
+
+                    }
+                    {
+                        !isEnabled
+                            &&
+                        <PickerInfo 
+                            placeholder="CÁLCULO III" 
+                            data={subjects}
+                            onChangeItem={setFilterOption}
+                        />
+                    }
+                    <Text style={styles.filterModalInfoText}>Selecione uma matéria ou sequência para filtrar suas revisões.</Text>
+                </CustomModal>
                 : null
             }
         </View>

@@ -21,7 +21,7 @@ const SubjectScreen = (props) => {
     //User tutorial
     let Step0 = <View style={stylesSteps.container}>
         <Text style={stylesSteps.desciptionText}>
-            Seja bem vindo a tela de Matérias.
+            Esta é a tela de Matérias!
             {"\n"}
             {"\n"}
             Aqui é onde você poderá visualizar todas as matérias que criar.
@@ -48,7 +48,7 @@ const SubjectScreen = (props) => {
             {"\n"}
             {"\n"}
             É dessa forma que as suas matérias de estudo irão aparecer, cada container possui o nome da matéria, a quantidade de revisões
-            associadas, um marcador colorido {"(selecionado na criação da matéria)"}.
+            associadas e um marcador colorido {"(selecionado durante a criação da matéria)"}.
         </Text>
     </View>
     

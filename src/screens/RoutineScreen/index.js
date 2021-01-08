@@ -26,14 +26,13 @@ const RoutineScreen = (props) => {
     //User tutorial
     let Step0 = <View style={stylesSteps.container}>
         <Text style={stylesSteps.desciptionText}>
-            Seja bem vindo a tela de Rotinas.
+            Esta é a tela de Sequências.
             {"\n"}
             {"\n"}
-            Aqui é onde você poderá visualizar todas as rotinas criadas. 
+            Aqui é onde você poderá visualizar, criar ou editar as sequências existentes. 
             {"\n"}
             {"\n"}
-            As rotinas são os ciclos de repetição
-            usados no cálculo das datas de revisão de cada conteúdo.
+            As sequências são utilizadas no cálculo das datas em que cada revisão ocorre.
         </Text>
     </View>
     let Step1 = <View style={stylesSteps.container}>
@@ -41,11 +40,11 @@ const RoutineScreen = (props) => {
             <Icon name="plus" size={20} color="#FCFCFC" />
         </View>
         <Text style={stylesSteps.desciptionText}>
-            Esse é o botão que você ira utilizar quando desejar criar novas rotinas!
+            Esse é o botão que você ira utilizar quando desejar criar novas sequências!
             {"\n"}
             {"\n"}
-            Por padrão, uma rotina de revisão já vem criada junto com o App. Essa rotina foi desenvolvida pela
-            nossa equipe com base na curva de esquecimento, entretanto você é livre para criar suas próprias rotinas personalizadas.
+            Por padrão, já existe uma sequência de revisão criada automaticamente pelo app, essa sequência foi desenvolvida pela
+            nossa equipe com base na curva de esquecimento (verifique a sessão "Sobre" no menu de configurações), entretanto você é livre para criar suas próprias rotinas personalizadas.
         </Text>
     </View>
     let Step2 = <View style={stylesSteps.container}>
@@ -57,14 +56,13 @@ const RoutineScreen = (props) => {
             }
         />
         <Text style={stylesSteps.desciptionText}>
-            Container de rotina.
+            Container de Sequência.
             {"\n"}
             {"\n"}
-            É dessa forma que as suas rotinas irão aparecer, cada container possui a sequência da rotina, quantidade de revisões associadas e 
-            dois botões: "EDITAR" e "CONCLUIR". O primeio permite modificar a rotina em questão, já o segundo permite que você apague a rotina.
+            É dessa forma que as sequências são visualizadas, interaga com o container para deletar ou editar uma sequência.
             {"\n"}
             {"\n"}
-            Só será possível apagar uma rotina quando não houver revisões associadas a ela!
+            Só será possível deletar uma sequência quando não houver revisões associadas a ela!
         </Text>
     </View>
 
@@ -256,11 +254,11 @@ const RoutineScreen = (props) => {
             {
                 modalAddVisible ?
                 <CustomModal
-                    modalTitle="ADICIONAR ROTINA"
+                    modalTitle="ADICIONAR SEQUÊNCIA"
                     modalVisible={modalAddVisible}
                     handleCloseModalButton={handleCloseAddModal} 
                     handleConfirmModalButton={handleCloseModalAndAdd}
-                    modalCardHeight={300}
+                    modalCardHeight={320}
                 >
                     <TextInput
                         style={styles.modalRoutineInput}
@@ -272,10 +270,11 @@ const RoutineScreen = (props) => {
                     />
                     <View style={styles.routineModalInfoBox}>
                         <Text style={styles.routineModalInfoText}>
-                            Insira a sequência da rotina que deseja criar, digite apenas os números, pois a formatação é feita automaticamente. <Text style={{fontWeight: 'bold'}}>Exemplo: (1-3-7-14-21-30)</Text>
+                        Insira a sequência que deseja criar, digite apenas os números, pois a formatação é feita automaticamente. <Text style={{fontWeight: 'bold'}}>Exemplo: (1-3-7-14-21-30)</Text>
                             {'\n'}
                             {'\n'}
-                            Lembre-se, cada dígito indica após quantos dias, a partir da última revisão, a revisão associada será realizada.
+                            Lembre-se, cada dígito indica após quantos dias, a partir da última revisão, a revisão associada será realizada, com excessão do primeiro dígito, já que
+                            este indica a quantidade de de dias após a criação.
                             {'\n'}
                             {'\n'}
                             Caso deseje que uma revisão seja feita no mesmo dia de sua criação, insira <Text style={{fontWeight: 'bold'}}>0</Text> como primeiro dígito da sequência.
@@ -286,11 +285,11 @@ const RoutineScreen = (props) => {
             {
                 modalEditVisible ?
                 <CustomModal
-                    modalTitle="EDITAR ROTINA"
+                    modalTitle="EDITAR SEQUÊNCIA"
                     modalVisible={modalEditVisible}
                     handleCloseModalButton={handleCloseEditModal} 
                     handleConfirmModalButton={handleCloseModalAndEdit}
-                    modalCardHeight={300}
+                    modalCardHeight={320}
                 >
                     <TextInput
                         style={styles.modalRoutineInput}
@@ -302,10 +301,11 @@ const RoutineScreen = (props) => {
                     />
                     <View style={styles.routineModalInfoBox}>
                     <Text style={styles.routineModalInfoText}>
-                            Insira a sequência da rotina que deseja criar, digite apenas os números, pois a formatação é feita automaticamente. <Text style={{fontWeight: 'bold'}}>Exemplo: (1-3-7-14-21-30)</Text>
+                            Insira a sequência que deseja criar, digite apenas os números, pois a formatação é feita automaticamente. <Text style={{fontWeight: 'bold'}}>Exemplo: (1-3-7-14-21-30)</Text>
                             {'\n'}
                             {'\n'}
-                            Lembre-se, cada dígito indica após quantos dias, a partir da última revisão, a revisão associada será realizada.
+                            Lembre-se, cada dígito indica após quantos dias, a partir da última revisão, a revisão associada será realizada, com excessão do primeiro dígito, já que
+                            este indica a quantidade de de dias após a criação.
                             {'\n'}
                             {'\n'}
                             Caso deseje que uma revisão seja feita no mesmo dia de sua criação, insira <Text style={{fontWeight: 'bold'}}>0</Text> como primeiro dígito da sequência.

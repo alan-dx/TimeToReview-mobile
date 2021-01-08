@@ -76,17 +76,22 @@ const ReviewsScreen = (props) => {
     //User tutorial
     let Step0 = <View style={stylesSteps.container}>
         <Text style={stylesSteps.desciptionText}>
-            Seja bem vindo a tela de Revisões.
+            Seja bem-vindo(a) a tela de Revisões.
             {"\n"}
             {"\n"}
-            Aqui é onde você irá criar, editar e concluir uma revisão pendente.
+            Aqui é onde você poderá criar, editar e concluir uma revisão pendente.
         </Text>
     </View>
     let Step1 = <View style={stylesSteps.container}>
         <View style={stylesSteps.floatAddButton}>
             <Icon name="plus" size={20} color="#FCFCFC" />
         </View>
-        <Text style={stylesSteps.desciptionText}>Esse é o botão que você ira utilizar quando desejar criar novas revisões!</Text>
+        <Text style={stylesSteps.desciptionText}>
+            Esse é o botão que você ira utilizar quando desejar criar novas revisões!
+            {'\n'}
+            {'\n'}
+            Ao pressiona-lo, você será enviado para a tela de Adicionar Revisões.
+        </Text>
     </View>
     let Step2 = <View style={stylesSteps.container}>
         <View style={stylesSteps.timerBox}>
@@ -111,12 +116,11 @@ const ReviewsScreen = (props) => {
         <Text style={stylesSteps.desciptionText}>Esse é o controlador de ciclos.
             {"\n"}
             {"\n"}
-            Seu objetivo é auxiliar no gerenciamento do desempenho em cada período de revisão.
-            A quantidade de ciclos é definida de acordo com seu método de estudos, você pode fazer todas as revisões do dia de uma única vez ou fazer
-            isso em intervalos, fica a seu critério.
+            Seu objetivo é auxiliar no gerenciamento de seu desempenho e calcular o tempo gasto em cada período de revisão.
             {"\n"}
             {"\n"}
-            Ao finalizar um ciclo, outro é criado automaticamente!
+            O seu funcionamento é automatizado, sempre que você interage com uma revisão um ciclo é iniciado e o mesmo é finalizado ao voltar para o menu,
+            entretanto você também pode controlá-lo manualmente, criando e finalizando quantos ciclos quiser.
         </Text>
     </View>
     let Step3 = <View style={stylesSteps.container}> 
@@ -151,22 +155,43 @@ const ReviewsScreen = (props) => {
             Container de Revisão.
             {"\n"}
             {"\n"}
-            É dessa forma que as revisões serão visualizadas. Observe que existe um botão "EDITAR" e outro "CONCLUIR",
-            o primeiro permite que você edite todos os detalhes, já o segundo conclue e calcula a data da próxima revisão.
+            É dessa forma que as revisões serão visualizadas, ao pressionar o botão "CONCLUIR" a revisão será concluída e a próxima
+            data de revisão automaticamente calculada.
             {"\n"}
             {"\n"}
-            O marcador colorido indica a qual matéria a revisão é associada.
+            O marcador colorido indica a qual matéria a revisão pertence, também é possível visualizar a sequência associada.
         </Text>
     </View>
     let Step4 = <View style={stylesSteps.container}> 
         <Icon2 name="alert-triangle" size={35} color="red" />
         <Text style={stylesSteps.desciptionText}>
-            Revisão atrasada!
+            Revisão em atraso!
             {"\n"}
             {"\n"}
-            Quando uma revisão estiver em atraso você visualizará esse ícone junto ao container.
+            Quando uma revisão estiver atrasada este símbolo aparece junto ao seu container.
         </Text>
     </View>
+    let Step5 = <View style={stylesSteps.container}> 
+        <Icon2 name="edit" size={35} color="#303030" />
+        <Text style={stylesSteps.desciptionText}>
+            Anotações!
+            {"\n"}
+            {"\n"}
+            Durante a criação de uma revisão você também pode associar uma anotação a mesma, para visualizá-la pressione o
+            ícone acima presente na revisão.
+        </Text>
+    </View>
+    let Step6 = <View style={stylesSteps.container}> 
+        <Icon2 name="music" size={35} color="#303030" />
+        <Text style={stylesSteps.desciptionText}>
+            Ouvir áudio associado!
+            {"\n"}
+            {"\n"}
+            Além disso, você pode associar, também, um arquivo de áudio na revisão, ao pressionar o ícone acima (presente no container)
+            o player será inicializado.
+        </Text>
+    </View>
+    
 
     useEffect(() => {
         async function checkIfItsTheFirstTime() {
@@ -407,7 +432,7 @@ const ReviewsScreen = (props) => {
             handleOpenTutorialModal ? 
                 <ScreenTutorial 
                     modalVisible={handleOpenTutorialModal}
-                    steps={[Step0, Step1, Step2, Step3, Step4]}
+                    steps={[Step0, Step1, Step2, Step3, Step4, Step5, Step6]}
                 />
                 : null
             }

@@ -33,12 +33,12 @@ const styles = StyleSheet.create({
     },
     titleText: {
         fontFamily: 'Archivo-Bold',
-        fontSize: 20,
+        fontSize: 18,
         color: '#303030'
     },
     closeButton: {
         backgroundColor: '#FFF',
-        borderRadius: 50,
+    borderRadius: 50,
 
         position: 'absolute',
         left: 8

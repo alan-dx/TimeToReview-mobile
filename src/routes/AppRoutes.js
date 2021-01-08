@@ -57,7 +57,7 @@ const AppRoutes = () => {
                     component={RoutineScreen} 
                     options={{
                         headerShown: true,
-                        header: () => <Header title="ROTINAS" color="#F5F5F5" />
+                        header: () => <Header title="SEQUÊNCIAS" color="#F5F5F5" />
                     }} 
                 />
                 <Screen 

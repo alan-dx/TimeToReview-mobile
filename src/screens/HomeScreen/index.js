@@ -145,7 +145,7 @@ const HomeScreen = () => {
                     </MenuButton>
                 </View>
                 <View style={styles.menuItemBox}>
-                    <MenuButton color="#FFF" textColor="#606060" onPress={handleClickGoToRoutineScreen} title="Rotinas" subtitle="7 Rotinas">
+                    <MenuButton color="#FFF" textColor="#606060" onPress={handleClickGoToRoutineScreen} title="Sequências" subtitle="7 Rotinas">
                         <Icon name="sync" size={23} color="#303030" />
                     </MenuButton>
                 </View>
@@ -162,7 +162,7 @@ const HomeScreen = () => {
                     </MenuButton>
                 </View>
                 <View style={styles.menuItemBox}>
-                    <MenuButton color="#FFF" textColor="#606060" onPress={handleOpenTips} title="Dicas de Estudo">
+                    <MenuButton color="#FFF" textColor="#606060" onPress={handleOpenTips} title="Dica de Estudo">
                         <Icon name="bulb1" size={23} color="#303030" />
                     </MenuButton>
                 </View>
