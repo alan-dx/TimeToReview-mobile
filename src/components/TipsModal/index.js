@@ -79,10 +79,7 @@ const TipsModal = (props) => {
 
     let Tips2 = <View style={styles.container}>
         <Text style={styles.tipTitle}>CRIE ACRÓSTICOS!</Text>
-        <Image
-            source={acrostico}
-            style={{width: 420, height: 115, marginBottom: 10}}
-        />
+        <Text style={styles.tipSubTitle}>Quem Matou Lampião: (Q=m.L)</Text>
         <Text style={styles.descriptionText}>
             Acrósticos são frases formadas por palavras cuja as letras são dicas para o que precisa ser lembrado.
         </Text>

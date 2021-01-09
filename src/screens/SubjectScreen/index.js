@@ -21,10 +21,10 @@ const SubjectScreen = (props) => {
     //User tutorial
     let Step0 = <View style={stylesSteps.container}>
         <Text style={stylesSteps.desciptionText}>
-            Esta é a tela de Matérias!
+            Esta é a tela de Disciplinas!
             {"\n"}
             {"\n"}
-            Aqui é onde você poderá visualizar todas as matérias que criar.
+            Aqui é onde você terá acesso a todos as disciplinas que criar.
         </Text>
     </View>
     
@@ -33,7 +33,7 @@ const SubjectScreen = (props) => {
             <Icon name="plus" size={20} color="#FCFCFC" />
         </View>
         <Text style={stylesSteps.desciptionText}>
-            Esse é o botão que você ira utilizar quando desejar criar uma nova Matéria!
+            Esse é o botão que você ira utilizar quando desejar criar uma nova disciplinas!
         </Text>
     </View>
     
@@ -41,14 +41,14 @@ const SubjectScreen = (props) => {
         <SubjectContainer 
             onPressEdit={() => {}} 
             onPressDelete={() => {}}
-            data={{"associatedReviews": ["1", "2", "3"],  "label": "Matéria X", "marker": "#ff9900", "value": "Cálculo B"}}
+            data={{"associatedReviews": ["1", "2", "3"],  "label": "Disciplina X", "marker": "#ff9900", "value": "Cálculo B"}}
         />
         <Text style={stylesSteps.desciptionText}>
-            Container de Matéria.
+            Container de Disciplina.
             {"\n"}
             {"\n"}
-            É dessa forma que as suas matérias de estudo irão aparecer, cada container possui o nome da matéria, a quantidade de revisões
-            associadas e um marcador colorido {"(selecionado durante a criação da matéria)"}.
+            É dessa forma que as suas disciplinas de estudo irão aparecer, cada container possui o nome, a quantidade de revisões
+            associadas e um marcador colorido {"(selecionado durante a criação da disciplina)"}.
         </Text>
     </View>
     
@@ -114,7 +114,7 @@ const SubjectScreen = (props) => {
                 }
             }).then((response) => {
                 if (response) {
-                    alert("Matéria deletada com sucesso!")
+                    alert("Disciplina deletada com sucesso!")
                     const newData = data.filter(item => item._id != subject._id)
                     setData(newData)
                     setSubjects(newData)
@@ -127,11 +127,11 @@ const SubjectScreen = (props) => {
                     alert("Sessão expirada!")
                     logoutContext()
                 } else {
-                    alert('Houve um erro ao tentar deletar sua matéria no banco de dados, tente novamente!')
+                    alert('Houve um erro ao tentar deletar sua disciplina no banco de dados, tente novamente!')
                 }
             })
         } else {
-            alert("Você não pode deletar esta matéria, pois ainda há revisões associadas a ela!")
+            alert("Você não pode deletar esta disciplina, pois ainda há revisões associadas a ela!")
         }
     }
 

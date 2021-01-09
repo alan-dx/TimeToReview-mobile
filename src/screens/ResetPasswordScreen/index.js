@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/native'
 import React, {useState} from 'react'
-import {View, Text, Alert, ToastAndroid} from 'react-native'
+import {View, Alert} from 'react-native'
 import CustomButton from '../../components/CustomButton'
 import InputWLabelL from '../../components/InputWLabelL'
 import InputWLabelR from '../../components/InputWLabelR'

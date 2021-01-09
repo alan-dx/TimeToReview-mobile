@@ -1,7 +1,9 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { useContext, useState } from 'react';
-import { View, Text, TextInput } from 'react-native';
+import { View } from 'react-native';
 import CustomButton from '../../components/CustomButton';
+import InputWLabelL from '../../components/InputWLabelL';
+import InputWLabelR from '../../components/InputWLabelR';
 import AuthContext from '../../contexts/auth';
 import api from '../../services/api';
 import styles from './styles';
@@ -39,36 +41,28 @@ const ChangePassScreen = () => {
 
     return (
         <View style={styles.container}>
-            <View style={styles.inputBlock}>
-                <View style={styles.labelBoxL}>
-                    <View style={styles.labelFrame} />
-                    <Text style={styles.label}>Insira a nova senha:</Text>
-                </View>
-                <TextInput
-                    style={styles.input}
-                    placeholder="******"
-                    placeholderTextColor="#565656"
-                    onChangeText={e => setPassword(e)}
-                    value={password}
-                    secureTextEntry
-                    keyboardType="default"
-                />
+            <InputWLabelR
+                labelTitle="Nova Senha"
+                value={password}
+                secureTextEntry={true}
+                onChangeText={setPassword}
+                placeholder="******"
+                textAlign="center"
+                lineColor="#e74e36"
+            />
+            <InputWLabelL
+                labelTitle="Confirme a Nova Senha"
+                value={cPassword}
+                secureTextEntry={true}
+                onChangeText={setCPassword}
+                placeholder="******"
+                textAlign="center"
+                lineColor="#e74e36"
+                marginTop={20}
+            />
+            <View style={styles.buttonBox}>
+                <CustomButton text="REDEFINIR" color='#e74e36' onPress={handleCheckPass} />
             </View>
-            <View style={styles.inputBlock}>
-                    <View style={styles.labelBoxR}>
-                        <Text style={styles.label}>Confirme a nova senha:</Text>
-                        <View style={styles.labelFrame} />
-                    </View>
-                    <TextInput
-                        style={styles.input}
-                        placeholder="******"
-                        placeholderTextColor="#565656"
-                        onChangeText={e => setCPassword(e)}
-                        value={cPassword}
-                        secureTextEntry={true}
-                    />
-                </View>
-            <CustomButton text="REDEFINIR" color='#e74e36' onPress={handleCheckPass} />
         </View>
     )
 }

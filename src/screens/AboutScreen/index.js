@@ -21,7 +21,7 @@ const AboutScreen = () => {
                 <View style={styles.aboutTextBox}>
                     <View style={styles.textMarker} />
                     <Text style={styles.aboutText}>
-                        <Text style={{fontWeight: "bold"}}>Como funciona?</Text> Basicamente a ideia é gerenciar o conteúdo estudado
+                        <Text style={{fontWeight: "bold"}}>Como funciona?</Text> Basicamente, a ideia é gerenciar o conteúdo estudado
                         com base em ciclos de revisão. Dessa forma, o usuário mantém o conteúdo estudado sempre em dia,
                         diminuindo as chances de esquecê-lo, uma vez que o aplicativo indicara os assuntos que deverão ser revisados diariamente.
                     </Text>

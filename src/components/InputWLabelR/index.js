@@ -5,7 +5,7 @@ import styles from './styles'
 const InputWLabelR = (props) => {
 
     return (
-        <View style={styles.inputBox}>
+        <View style={[styles.inputBox, {marginTop: props.marginTop}]}>
             <View style={styles.labelBoxR}>
                 <Text style={styles.label}>{props.labelTitle}</Text>
                 <View style={[styles.labelFrame, {backgroundColor: props.lineColor || '#60c3f1'}]} />

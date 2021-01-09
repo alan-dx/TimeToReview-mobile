@@ -2,6 +2,7 @@ import { useNavigation } from '@react-navigation/native';
 import React, { useContext, useState } from 'react';
 import { View, Text, TextInput } from 'react-native';
 import CustomButton from '../../components/CustomButton';
+import InputWLabelL from '../../components/InputWLabelL';
 import AuthContext from '../../contexts/auth';
 import api from '../../services/api';
 import styles from './styles';
@@ -32,22 +33,18 @@ const VerifyPassScreen = () => {
 
     return (
         <View style={styles.container}>
-            <View style={styles.inputBlock}>
-                <View style={styles.labelBoxL}>
-                    <View style={styles.labelFrame} />
-                    <Text style={styles.label}>Insira a senha atual:</Text>
-                </View>
-                <TextInput
-                    style={styles.input}
-                    placeholder="****"
-                    placeholderTextColor="#565656"
-                    onChangeText={e => setPassowrd(e)}
-                    value={password}
-                    secureTextEntry
-                    keyboardType="default"
-                />
+            <InputWLabelL
+                labelTitle="Senha atual"
+                value={password}
+                secureTextEntry={true}
+                onChangeText={setPassowrd}
+                placeholder="******"
+                textAlign="center"
+                lineColor="#60c3eb"
+            />
+            <View style={styles.buttonBox}>
+                <CustomButton text="CONTINUAR" color='#60c3eb' onPress={handleCheckPass} />
             </View>
-            <CustomButton text="CONTINUAR" color='#60c3eb' onPress={handleCheckPass} />
         </View>
     )
 }

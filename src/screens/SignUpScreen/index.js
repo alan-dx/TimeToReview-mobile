@@ -9,6 +9,8 @@ import logoImage from '../../assets/images/icons/logo.png';
 
 import AuthContext from '../../contexts/auth';
 import styles from './styles';
+import InputWLabelL from '../../components/InputWLabelL';
+import InputWLabelR from '../../components/InputWLabelR';
 
 const LoginScreen = () => {
 
@@ -19,7 +21,7 @@ const LoginScreen = () => {
     const [password, setPassword] = useState('')
     const [cPassword, setCPassword] = useState('')
 
-    const [logo, setLogo] = useState(new Animated.ValueXY({x: 250, y: 250 }))
+    const [logo] = useState(new Animated.ValueXY({x: 250, y: 250 }))
 
     useEffect(() => {
         keyBoardDidShowListener = Keyboard.addListener('keyboardDidShow', keyboardDidShow)
@@ -109,7 +111,6 @@ const LoginScreen = () => {
                 <View style={styles.logoBox}>
                     <Animated.Image source={logoImage} style={{width: logo.x, height: logo.y}} />
                 </View>
-
             </View>
         <View style={styles.selectBox}>
             <KeyboardAwareScrollView
@@ -118,62 +119,45 @@ const LoginScreen = () => {
                 scrollEnabled={true}
                 enableOnAndroid={true}              
             >
-                <View style={styles.inputBlock}>
-                    <View style={styles.labelBoxR}>
-                        <Text style={styles.label}>Qual seu nome?</Text>
-                        <View style={styles.labelFrame} />
-                    </View>
-                    <TextInput
-                        style={styles.input}
-                        placeholderTextColor="#565656"
-                        value={name}
-                        onChangeText={e => setName(e)}
-                        autoCapitalize="words"
-                    />
+                <InputWLabelL
+                    labelTitle="Seu Nome"
+                    value={name}
+                    secureTextEntry={false}
+                    onChangeText={setName}
+                    placeholder="Nome Sobrenome"
+                    textAlign="center"
+                />
+                <InputWLabelR
+                    labelTitle="Seu Email"
+                    value={email}
+                    secureTextEntry={false}
+                    onChangeText={setEmail}
+                    placeholder="email@example.com"
+                    textAlign="center"
+                    keyboardType="email-address"
+                    marginTop={10}
+                />
+                <InputWLabelL
+                    labelTitle="Nova Senha"
+                    value={password}
+                    secureTextEntry={true}
+                    onChangeText={setPassword}
+                    placeholder="******"
+                    textAlign="center"
+                    marginTop={10}
+                />
+                <InputWLabelR
+                    labelTitle="Confirme a Senha"
+                    value={cPassword}
+                    secureTextEntry={true}
+                    onChangeText={setCPassword}
+                    placeholder="******"
+                    textAlign="center"
+                    marginTop={10}
+                />
+                <View style={styles.buttonBox}>
+                    <CustomButton text="CADASTRAR" color='#60c3eb' onPress={handleClickSignUpButton} />
                 </View>
-                <View style={styles.inputBlock}>
-                    <View style={styles.labelBoxL}>
-                        <View style={styles.labelFrame} />
-                        <Text style={styles.label}>Seu Email</Text>
-                    </View>
-                    <TextInput
-                        style={styles.input}
-                        placeholder="email@example.com"
-                        placeholderTextColor="#565656"
-                        value={email}
-                        onChangeText={e => setEmail(e)}
-                        keyboardType="email-address"
-                    />
-                </View>
-                <View style={styles.inputBlock}>
-                    <View style={styles.labelBoxR}>
-                        <Text style={styles.label}>Sua senha</Text>
-                        <View style={styles.labelFrame} />
-                    </View>
-                    <TextInput
-                        style={styles.input}
-                        placeholder="******"
-                        placeholderTextColor="#565656"
-                        value={password}
-                        onChangeText={e => setPassword(e)}
-                        secureTextEntry={true}
-                    />
-                </View>
-                <View style={styles.inputBlock}>
-                    <View style={styles.labelBoxL}>
-                        <View style={[styles.labelFrame, {width: '28%'}]} />
-                        <Text style={styles.label}>Confirme a senha</Text>
-                    </View>
-                    <TextInput
-                        style={styles.input}
-                        placeholder="******"
-                        placeholderTextColor="#565656"
-                        value={cPassword}
-                        onChangeText={e => setCPassword(e)}
-                        secureTextEntry={true}
-                    />
-                </View>
-                <CustomButton text="CADASTRAR" color='#60c3eb' onPress={handleClickSignUpButton} />
             </KeyboardAwareScrollView>
         </View>
     </KeyboardAvoidingView>

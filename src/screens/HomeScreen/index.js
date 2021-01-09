@@ -1,5 +1,5 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
-import { View, Text, Dimensions } from 'react-native';
+import { View, Text, Dimensions, Alert, ActivityIndicator } from 'react-native';
 
 import styles from './styles';
 import stylesSteps from './stylesSteps';
@@ -25,7 +25,7 @@ const HomeScreen = () => {
     const { performance, subjects, routines, allReviews, setReviews } = useContext(AuthContext);
     const [numberOfReviews, setNumberOfReviews] = useState(0)
     const [isLoading] = useState(false)
-    const [dataChart] = useState(performance)
+    const [dataChart, setData] = useState(performance)
     const [loadingChart, setLoadingChart] = useState(true)
     const [handleOpenTutorialModal, setHandleOpenTutorialModal] = useState(false)
     const [handleOpenTipsModal, setHandleOpenTipsModal] = useState(false)
@@ -38,7 +38,7 @@ const HomeScreen = () => {
             const filteredReviews = allReviews.filter(item => new Date(item.dateNextSequenceReview) <= currentDate)
             setReviews(filteredReviews)
             setNumberOfReviews(filteredReviews.length)
-            setLoadingChart(true)//Gambi
+            // setLoadingChart(true)//Gambi (solved)
 
             checkIfItsTheFirstTime()
 
@@ -74,6 +74,12 @@ const HomeScreen = () => {
         })
     }
 
+    function handleUpdateChartOnBack() {
+        //to update homescreen chart (solved Gambi)
+        // setLoadingChart(false)//Gambi
+        setData(performance)
+    }
+
     function handleClickGoToRoutineScreen() {
         navigation.navigate('RoutineScreen')
     }
@@ -90,7 +96,18 @@ const HomeScreen = () => {
         if (subjects.length != 0 && routines.length != 0) {
             navigation.navigate('PerformanceScreen')
         } else {
-            alert('Você ainda não criou uma matéria ou rotina! Elas são necessárias para visualizar os dados de desempenho.')
+            Alert.alert(
+                "Ops... calma ai!",
+                "Você não criou nenhuma disiciplina/sequência ainda, antes de visualizar os dados de desempenho é necessário ter ao menos uma sequênica e disciplina criadas.",
+                [
+                  {
+                    text: "Ok!",
+                    onPress: () => console.log("Cancel Pressed"),
+                    style: "cancel"
+                  }
+                ],
+                { cancelable: false }
+              );
         }
     }
 
@@ -113,11 +130,6 @@ const HomeScreen = () => {
         setHandleOpenTipsModal(false)
     }
 
-    function handleUpdateChartOnBack() {
-        console.log('atualizou o gráfico')
-        setLoadingChart(false)//Gambi
-    }
-
     function handleClickGoToAllReviewsScreen() {
         navigation.navigate("AllReviewsScreen")
     }
@@ -126,7 +138,7 @@ const HomeScreen = () => {
         <View style={styles.graphBox}>
             <Text style={styles.graphBoxTitle}>Você possui {numberOfReviews} revisões pendentes!</Text>
             {/* NESSE GRÁFICO INDICAR A QUANTIDADE DE REVISÕES POR DIA */}
-            {loadingChart ? <Chart height={Dimensions.get("window").height * 0.3} elevation={2} data={dataChart} /> : <Text>Atualizando...</Text>}
+            <Chart showLabel height={Dimensions.get("window").height * 0.3} elevation={2} data={dataChart} />
             <View style={styles.performanceBox}>
                 <View style={styles.performanceButtonBox}>
                     <BorderlessButton onPress={handleClickGoToPerformanceScreen} style={styles.performanceButton}>
@@ -145,19 +157,19 @@ const HomeScreen = () => {
                     </MenuButton>
                 </View>
                 <View style={styles.menuItemBox}>
-                    <MenuButton color="#FFF" textColor="#606060" onPress={handleClickGoToRoutineScreen} title="Sequências" subtitle="7 Rotinas">
+                    <MenuButton color="#FFF" textColor="#606060" onPress={handleClickGoToRoutineScreen} title="Sequências">
                         <Icon name="sync" size={23} color="#303030" />
                     </MenuButton>
                 </View>
                 <View style={styles.menuItemBox}>
-                    <MenuButton color="#FFF" textColor="#606060" onPress={handleClickGoToAllReviewsScreen} title="Todas Revisões" subtitle="7 Rotinas">
+                    <MenuButton color="#FFF" textColor="#606060" onPress={handleClickGoToAllReviewsScreen} title="Todas Revisões">
                         <Icon name="profile" size={23} color="#303030" />
                     </MenuButton>
                 </View>
             </View>
             <View style={styles.menuRow}>
                 <View style={styles.menuItemBox}>
-                    <MenuButton color="#FFF" textColor="#606060" onPress={handleClickGoToSubjectScreen} title="Matérias" subtitle="12 Matérias">
+                    <MenuButton color="#FFF" textColor="#606060" onPress={handleClickGoToSubjectScreen} title="Disciplinas">
                         <Icon name="book" size={23} color="#303030" />
                     </MenuButton>
                 </View>

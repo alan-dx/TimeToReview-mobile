@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { Modal, Image, View, TouchableHighlight } from 'react-native';
+import React, { useState } from 'react';
+import { Modal, Image, View, TouchableHighlight, Text } from 'react-native';
 import styles from './styles';
 import Icon from 'react-native-vector-icons/Entypo';
 import Icon2 from 'react-native-vector-icons/Feather';
@@ -10,12 +10,9 @@ const PlayerModal = (props) => {
 
     const [handlePlayOrPause, setHandlePlayOrPause] = useState(true)
 
-    useEffect(() => {
-        console.log(props.track)
-    })
-
     async function handlePlayTrack() {
         await TrackPlayer.add(props.track).then(async () => {
+            console.log(props.track)
             // let tracks = await TrackPlayer.getQueue()
             await TrackPlayer.play()
             .then(() => {
@@ -70,6 +67,7 @@ const PlayerModal = (props) => {
                         />
                     </View>
                     <View style={styles.controllerBox}>
+                        <Text numberOfLines={1} style={styles.controllerTrackTitle}>{props.track.artist} - {props.track.title}</Text>
                         <View style={styles.controllerOptionsBox}>
                             <TouchableHighlight underlayColor="#DDDD" onPress={handleBackwardTrack} style={styles.controllerButton}>
                                 <Icon  name="controller-fast-backward" size={30} color="#303030" />

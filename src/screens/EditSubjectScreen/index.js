@@ -8,6 +8,7 @@ import { useNavigation } from '@react-navigation/native';
 import ColorPicker from '../../components/ColorPicker';
 import api from '../../services/api';
 import AuthContext from '../../contexts/auth';
+import InputWLabelL from '../../components/InputWLabelL';
 
 const EditSubjectScreen = (props) => {
 
@@ -71,20 +72,22 @@ const EditSubjectScreen = (props) => {
                 <Text style={styles.headerText}>EDITAR DISCIPLINA</Text>
             </View>
             <View style={styles.main}>
-                    <View style={styles.inputBox}>
-                        <View style={styles.labelBoxL}>
-                            <View style={styles.labelFrame} />
-                            <Text style={styles.label}>Nome da Disciplina</Text>
-                        </View>
-                    <Input value={titleSubject} secureTextEntry={false} onChangeText={setTitleSubject} textAlign="center" placeholder="EDO DE BERNOULLI" />
+                <InputWLabelL
+                    labelTitle="Título da Revisão"
+                    value={titleSubject}
+                    secureTextEntry={false}
+                    onChangeText={setTitleSubject}
+                    placeholder="Ex.: EDO de Bernoulli"
+                    textAlign="center"
+                    lineColor="#e74e36"
+                />
+                <View style={styles.inputBox}>
+                    <View style={styles.labelBoxR}>
+                        <Text style={styles.label}>Cor do disciplina</Text>
+                        <View style={styles.labelFrame} />
                     </View>
-                    <View style={styles.inputBox}>
-                        <View style={styles.labelBoxR}>
-                            <Text style={styles.label}>Cor do Marcador</Text>
-                            <View style={styles.labelFrame} />
-                        </View>
-                        <ColorPicker markerSubject={markerSubject} setMarkerSubject={setMarkerSubject} />
-                    </View>
+                    <ColorPicker markerSubject={markerSubject} setMarkerSubject={setMarkerSubject} />
+                </View>
             </View>
         </View>
     )

@@ -16,6 +16,10 @@ const RoutineScreen = (props) => {
 
     const {routines, setRoutines, logoutContext, allReviews} = useContext(AuthContext)
 
+    useEffect(() => {
+        console.log(routines)
+    }, [])
+
     const [data, setData] = useState(routines)
     const [modalAddVisible, setModalAddVisible] = useState(false)
     const [modalEditVisible, setModalEditVisible] = useState(false)
@@ -43,8 +47,8 @@ const RoutineScreen = (props) => {
             Esse é o botão que você ira utilizar quando desejar criar novas sequências!
             {"\n"}
             {"\n"}
-            Por padrão, já existe uma sequência de revisão criada automaticamente pelo app, essa sequência foi desenvolvida pela
-            nossa equipe com base na curva de esquecimento (verifique a sessão "Sobre" no menu de configurações), entretanto você é livre para criar suas próprias rotinas personalizadas.
+            Por padrão, já existe uma sequência de revisão criada automaticamente pelo App, essa sequência foi desenvolvida pela
+            nossa equipe com base na curva de esquecimento (verifique a sessão "Sobre" no menu de configurações), entretanto você é livre para criar suas próprias sequências personalizadas.
         </Text>
     </View>
     let Step2 = <View style={stylesSteps.container}>
@@ -112,7 +116,7 @@ const RoutineScreen = (props) => {
                     alert("Sessão expirada!")
                     logoutContext()
                 } else {
-                    alert('Houve um erro ao tentar salvar sua rotina no banco de dados, tente novamente!')
+                    alert('Houve um erro ao tentar salvar sua sequência no banco de dados, tente novamente!')
                 }
             })
         } else {
@@ -130,7 +134,7 @@ const RoutineScreen = (props) => {
                     id: routine._id
                 }
             }).then((response) => {
-                alert("Rotina deletada com sucesso!")
+                alert("Sequência deletada com sucesso!")
                 const newData = data.filter(item => item._id != routine._id)
                 setData(newData)
                 setRoutines(newData)
@@ -144,11 +148,11 @@ const RoutineScreen = (props) => {
                 } else if (err = 'Error: Request failed with status code 401') {
                     alert('Opa! Isso não deveria acontecer, entre em contato com o suporte relatando um erro do tipo NTO')
                 } else {
-                    alert('Houve um erro ao tentar salvar sua rotina no banco de dados, tente novamente!')
+                    alert('Houve um erro ao tentar salvar sua sequência no banco de dados, tente novamente!')
                 }
             })
         } else {
-            alert("Você não pode deletar esta rotina, pois ainda há revisões associadas a ela!")
+            alert("Você não pode deletar esta sequência, pois ainda há revisões associadas a ela!")
         }
     }
 
@@ -205,11 +209,11 @@ const RoutineScreen = (props) => {
                     alert("Sessão expirada!")
                     logoutContext()
                 } else {
-                    alert('Houve um erro ao tentar salvar sua rotina no banco de dados, tente novamente!')
+                    alert('Houve um erro ao tentar salvar sua sequência no banco de dados, tente novamente!')
                 }
             })
         } else {
-            alert('ROTINA NÃO EDITADA. Você não pode criar uma rotina sem uma sequência de revisão, preencha todos os campos corretamente!')
+            alert('SEQUÊNCIA NÃO EDITADA. Você não pode criar uma sequência vazia, preencha todos os campos corretamente!')
             setModalEditVisible(false)
             setSequenceRoutine('')
             setDataToEdit('')

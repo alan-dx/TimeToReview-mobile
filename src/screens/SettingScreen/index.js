@@ -62,7 +62,7 @@ const SettingScreen = (props) => {
     function handleContactWhatsapp() {
         Linking.canOpenURL(`whatsapp://send?phone=${1111}`).then((res) => {
             if (!res) {
-                alert("Esse aplicativo não está disponível no momento!")
+                alert("Esta aplicação não esta disponível em seu dispositivo!")
             } else {
                 Linking.openURL(`whatsapp://send?phone=${1111}`)
             }
@@ -72,7 +72,7 @@ const SettingScreen = (props) => {
     function handleContactFacebook() {
         Linking.canOpenURL(`fb://app`).then((res) => {
             if (!res) {
-                alert("Esse aplicativo não está disponível no momento!")
+                alert("Esta aplicação não esta disponível em seu dispositivo!")
             } else {
                 Linking.openURL(`fb://app`)
             }
@@ -80,11 +80,11 @@ const SettingScreen = (props) => {
     }
 
     function handleContactInstagram() {
-        Linking.canOpenURL(`instagram://user?username=alan_almj`).then((res) => {
+        Linking.canOpenURL(`instagram://user?username=instagram`).then((res) => {
             if (!res) {
-                alert("Esse aplicativo não está disponível no momento!")
+                alert("Esta aplicação não esta disponível em seu dispositivo!")
             } else {
-                Linking.openURL(`instagram://user?username=alan_almj`)
+                Linking.openURL(`instagram://user?username=instagram`)
             }
         })
     }
@@ -379,7 +379,7 @@ const SettingScreen = (props) => {
                             subject: 'O que deseja relatar?',
                             })
                     }} >
-                        <Text style={styles.modalHeaderText}>CONTATE</Text>
+                        <Text style={styles.reportModalCustomButtonText}>CONTATE</Text>
                     </TouchableHighlight>
                 </CustomModal>: null
             }

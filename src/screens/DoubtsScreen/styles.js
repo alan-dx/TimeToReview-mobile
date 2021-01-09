@@ -7,31 +7,9 @@ const styles = StyleSheet.create({
 
         alignItems: 'center'
     },
-    doubtItemBox: {
-        width: '95%',
-        height: 40,
-        backgroundColor: '#FFF',
-        elevation: 2,
-        borderRadius: 10,
-        
-        paddingLeft: 5,
-        marginVertical: 5,
-        alignItems: 'center',
-        flexDirection: 'row',
-        position: 'relative'
-    },
-    doubtItemText: {
-        fontFamily: 'Archivo-SemiBold',
-        fontSize: 15,
-        color: '#303030'
-    },
-    doubtItemButtonBox: {
-        width: '10%',
-        
-        position: 'absolute',
-        right: 0,
-        alignItems: 'center',
-        justifyContent: 'center'
+    flatlist: {
+        flex: 1,
+        width: '100%',
     },
     modalInfoBox: {
         padding: 8,

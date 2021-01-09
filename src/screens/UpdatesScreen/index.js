@@ -3,7 +3,6 @@ import { View, Text } from 'react-native';
 import styles from './styles';
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/AntDesign';
-import Icon3 from 'react-native-vector-icons/SimpleLineIcons';
 import CustomButton from '../../components/CustomButton';
 
 
@@ -23,7 +22,7 @@ const UpdatesScreen = () => {
                     Nosso aplicativo esta em constante desenvolvimento, dia após dia nossa equipe busca maneiras
                     de aperfeiçoar e melhorar o desempenho da aplicação e, consequentemente, a experiência de nossos usuários. Dessa forma, buscamos
                     formas de inovar e desenvolver novas funcionalidades para melhorar o desempenho dos seus estudos, aqui você pode visualizar algumas dessas
-                    novidades que estão por vir:
+                    novidades que estão em desenvolvimento:
                 </Text>
             </View>
             <View style={styles.updateItemBox}> 
@@ -36,12 +35,8 @@ const UpdatesScreen = () => {
                     <Text style={styles.updateItemText}>Mais dicas de estudo;</Text>
                 </View>
                 <View style={styles.updateItem}>
-                    <Icon3 name="microphone" size={25} color="#303030" style={{marginRight: 5}} />
-                    <Text style={styles.updateItemText}>Aúdios associados as revisões;</Text>
-                </View>
-                <View style={styles.updateItem}>
-                    <Icon name="tagso" size={25} color="#303030" style={{marginRight: 5}} />
-                    <Text style={styles.updateItemText}>Anotações associadas as revisões;</Text>
+                    <Icon name="picture" size={25} color="#303030" style={{marginRight: 5}} />
+                    <Text style={styles.updateItemText}>Imagens associadas às revisões;</Text>
                 </View>
             </View>
             <View style={styles.updateBox}>

@@ -51,7 +51,12 @@ const styles = StyleSheet.create({
 
         position: 'absolute',
         marginTop: 10,
-        right: 5,
+        left: 5,
+    },
+    controllerTrackTitle: {
+        fontFamily: 'Archivo-SemiBold',
+        fontSize: 15,
+        color: '#303030'
     }
 })
 

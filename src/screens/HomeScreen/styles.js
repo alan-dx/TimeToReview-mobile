@@ -4,6 +4,16 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
     },
+    loadingChartBox: {
+        width: '95%',
+        backgroundColor:'#FFF',
+        borderRadius: 20,
+
+        alignItems: 'center',
+        justifyContent: 'center',
+
+        elevation: 2
+    },
     graphBox: {
         flex: 1,
         backgroundColor:'#F5F5F5',

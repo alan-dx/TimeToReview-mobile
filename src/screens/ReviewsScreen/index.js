@@ -21,7 +21,7 @@ const ReviewsScreen = (props) => {
 
     const currentDate = new Date()
 
-    const { reviews, allReviews, setAllReviews, performance, setPerformance, logoutContext } = useContext(AuthContext)
+    const { reviews, subjects, routines, allReviews, setAllReviews, performance, setPerformance, logoutContext } = useContext(AuthContext)
 
     const [data, setData] = useState(reviews)
     const [dataCycles, setDataCycles] = useState(performance[currentDate.getDay()].cycles)
@@ -38,20 +38,21 @@ const ReviewsScreen = (props) => {
 
     useEffect(() => {//pass params to Header
         
-        navigation.setParams({
+        navigation.setParams({//cause the warn error: "SET_PARAMS dont handled by any navigator...", but don't worry is working fine
             finishCycleActive: startController,
             handleStopCycle: handleStopCycle
         })
 
         BackHandler.addEventListener("hardwareBackPress", () => {
+            //listener to call onGoBack function to update the ChartMenu component, because goBack action doesn't re-render the screen and components
+            //and to end current cycle also onGoBack
 
-            console.log('---------> entrou no listener')
-    
             if (!startController) {//I could call handleStartStopController or this
                 console.log('here')
                 handleStopCycle()
             }
-            props.route?.params.onGoBack()
+
+            props.route?.params.onGoBack()//call function onGoBack to UpdateChart
             navigation.goBack()
 
             return true // to disable back button original action
@@ -247,9 +248,24 @@ const ReviewsScreen = (props) => {
     }
 
     function handlePressGoToAddScreen() {
-        navigation.navigate("AddScreen", {
-            onGoBack: handleUpdateDataOnAdd
-        })
+        if ((subjects.length != 0) && (routines.length != 0)) {
+            navigation.navigate("AddScreen", {
+                onGoBack: handleUpdateDataOnAdd
+            })
+        } else {
+            Alert.alert(
+                "Ops... calma ai!",
+                "Você não criou nenhuma disiciplina/sequência ainda, antes de criar uma revisão é necessário ter ao menos uma disciplina e sequência criadas.",
+                [
+                  {
+                    text: "Ok!",
+                    onPress: () => console.log("Cancel Pressed"),
+                    style: "cancel"
+                  }
+                ],
+                { cancelable: false }
+              );
+        }
     }
 
     function handleUpdateDataOnAdd(passData) {

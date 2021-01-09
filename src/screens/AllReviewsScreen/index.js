@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import {Switch, View, Text, FlatList, ToastAndroid } from 'react-native';
+import {Switch, View, Text, FlatList, ToastAndroid, Alert } from 'react-native';
 import styles from './styles';
 import stylesSteps from './stylesSteps';
 import { useNavigation } from '@react-navigation/native';
@@ -127,42 +127,58 @@ const AllReviewsScreen = (props) => {
     //FilterList
 
     async function handleDeleteReview(review) {
+        
+        Alert.alert(
+            "Atenção!",
+            "Você realmente deseja deletar esta revisão?",
+            [
+              {
+                text: "Cancelar",
+                onPress: () => console.log("Cancel Pressed"),
+                style: "cancel"
+              },
+              { text: "Sim, eu quero!", onPress: () => {
+                api.delete('/deleteReview', {
+                    params: {
+                        id: review._id
+                    }
+                }).then((response) => {
+                    ToastAndroid.show("Revisão deletada com sucesso!",600)
+                }).catch((err) => {
+                    console.log(err)
+                    if (err == 'Error: Request failed with status code 500') {
+                        alert("Erro interno do servidor, tente novamente mais tarde!")
+                    } else if (err = 'Error: Network Error') {
+                        alert("Sessão expirada!")
+                        logoutContext()
+                    } else if (err = 'Error: Request failed with status code 401') {
+                        alert('Opa! Isso não deveria acontecer, entre em contato com o suporte relatando um erro do tipo NTO')
+                    } else {
+                        alert('Houve um erro ao tentar deltar sua revisão no banco de dados, tente novamente!')
+                    }
+                })
+        
+                const newData = data.filter(item => item._id != review._id)//to update flatlist
+                setData(newData)
+                setAllReviews(newData)
+        
+                const newSubjects = subjects
+                const indexSubject = subjects.findIndex(item => item._id == review.subject_id._id)
+                newSubjects[indexSubject].associatedReviews = subjects[indexSubject].associatedReviews.filter(item => review._id != item)
+                // console.log(subjects[index].associatedReviews.filter(item => review._id != item))
+        
+                const newRoutines = routines
+                const indexRoutine = routines.findIndex(item => item._id == review.routine_id._id)
+                newRoutines[indexRoutine].associatedReviews = routines[indexRoutine].associatedReviews.filter(item => review._id != item)
+        
+                setSubjects(newSubjects)
+                setRoutines(newRoutines)
+              }}
+            ],
+            { cancelable: false }
+          );
 
-        api.delete('/deleteReview', {
-            params: {
-                id: review._id
-            }
-        }).then((response) => {
-            alert("Revisão deletada com sucesso!")
-        }).catch((err) => {
-            console.log(err)
-            if (err == 'Error: Request failed with status code 500') {
-                alert("Erro interno do servidor, tente novamente mais tarde!")
-            } else if (err = 'Error: Network Error') {
-                alert("Sessão expirada!")
-                logoutContext()
-            } else if (err = 'Error: Request failed with status code 401') {
-                alert('Opa! Isso não deveria acontecer, entre em contato com o suporte relatando um erro do tipo NTO')
-            } else {
-                alert('Houve um erro ao tentar deltar sua revisão no banco de dados, tente novamente!')
-            }
-        })
-
-        const newData = data.filter(item => item._id != review._id)//to update flatlist
-        setData(newData)
-        setAllReviews(newData)
-
-        const newSubjects = subjects
-        const indexSubject = subjects.findIndex(item => item._id == review.subject_id._id)
-        newSubjects[indexSubject].associatedReviews = subjects[indexSubject].associatedReviews.filter(item => review._id != item)
-        // console.log(subjects[index].associatedReviews.filter(item => review._id != item))
-
-        const newRoutines = routines
-        const indexRoutine = routines.findIndex(item => item._id == review.routine_id._id)
-        newRoutines[indexRoutine].associatedReviews = routines[indexRoutine].associatedReviews.filter(item => review._id != item)
-
-        setSubjects(newSubjects)
-        setRoutines(newRoutines)
+        
     }
 
     function handleGoToEditScreen(screenData) {
@@ -267,7 +283,7 @@ const AllReviewsScreen = (props) => {
                         <Text style={styles.filterModalTitleOptions}>Filtrar por:</Text>
                         <View style={styles.filterModalOptionsBox}>
                             <View style={styles.filterModalSwitchItemBox}>
-                                <Text style={styles.filterModalSwitchItemText}>Matéria</Text>
+                                <Text style={styles.filterModalSwitchItemText}>Disciplina</Text>
                                 <Switch 
                                     trackColor={{ false: "#60c3eb", true: "#e74e36" }}
                                     thumbColor={isEnabled ? "#f4f3f4" : "#f4f3f4"}
@@ -298,7 +314,7 @@ const AllReviewsScreen = (props) => {
                             onChangeItem={setFilterOption}
                         />
                     }
-                    <Text style={styles.filterModalInfoText}>Selecione uma matéria ou sequência para filtrar suas revisões.</Text>
+                    <Text style={styles.filterModalInfoText}>Selecione uma disciplina ou sequência para filtrar suas revisões.</Text>
                 </CustomModal>
                 : null
             }

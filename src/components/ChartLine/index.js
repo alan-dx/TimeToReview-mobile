@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useContext} from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, Dimensions} from 'react-native';
 import { LineChart } from "react-native-chart-kit";
 import Svg, { Text, Circle} from 'react-native-svg';
@@ -10,12 +10,20 @@ const ChartLine = (props) => {
         return reviews
     }))
     const [selectLegend, setSelectLegend] = useState(null)
+    const currentDate = new Date()
 
     useEffect(() => {
-        if (props.height != 300) {
+        if (props.showLabel) {
             setSelectLegend(['Revisões/dia'])
         }
     }, [])
+
+    useEffect(() => { //to update chart when props.data is modified
+        //similar to componentDidUpdate
+        setData(props.data.map(({reviews}) => {
+            return reviews
+        }))
+    }, [props.data[currentDate.getDay()].reviews])
 
     return (
         <View >

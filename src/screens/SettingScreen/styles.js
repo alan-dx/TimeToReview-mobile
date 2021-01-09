@@ -131,7 +131,6 @@ const styles = StyleSheet.create({
         fontSize: 14,
         textAlign: 'justify',
         color: '#303030',
-
     },
     textMarker: {
         width: 6, 
@@ -151,6 +150,11 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         alignItems: 'center',
         justifyContent: 'center'
+    },
+    reportModalCustomButtonText: {
+        fontFamily: 'Poppins-Bold',
+        color: '#FFF',
+        fontSize: 19
     }
 })
 

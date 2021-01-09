@@ -79,7 +79,6 @@ const ForgotPasswordScreen = () => {
                 textAlign="center"
                 keyboardType="email-address"
             />
-
             <View style={styles.helpTextBox}>
                 <Text style={styles.helpText}>
                     Informe o email associado a sua conta, enviaremos uma mensagem com os passos para redefinir sua senha.

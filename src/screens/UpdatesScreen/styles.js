@@ -24,8 +24,8 @@ const styles = StyleSheet.create({
         marginTop: 10
     },
     updateText: {
-        fontFamily: 'Archivo',
-        fontSize: 18,
+        fontFamily: 'Archivo-Medium',
+        fontSize: 17,
         color: '#303030',
         width: '90%',
         
@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     updateItemText: {
-        fontFamily: 'Archivo',
+        fontFamily: 'Archivo-Medium',
         color: '#505050',
         fontSize: 15
     },

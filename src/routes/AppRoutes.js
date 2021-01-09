@@ -1,7 +1,6 @@
-import React, { useContext, useEffect } from 'react';
+import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import {NavigationContainer} from '@react-navigation/native';
-import AuthContext from '../contexts/auth';
 
 import HomeScreen from '../screens/HomeScreen';
 import ReviewsScreen from '../screens/ReviewsScreen';
@@ -65,7 +64,7 @@ const AppRoutes = () => {
                     component={SubjectScreen} 
                     options={{
                         headerShown: true,
-                        header: () => <Header title="MATÉRIAS" color="#F5F5F5" />
+                        header: () => <Header title="DISCIPLINAS" color="#F5F5F5" />
                     }} 
                 />
                 <Screen 

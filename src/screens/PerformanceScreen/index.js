@@ -9,7 +9,6 @@ import AuthContext from '../../contexts/auth';
 import averageCalculate from '../../utils/averageCalculate';
 import ChartOverall from '../../components/ChartOverall';
 import ScreenTutorial from '../../components/ScreenTutorial';
-import Icon from 'react-native-vector-icons/AntDesign';
 import AsyncStorage from '@react-native-community/async-storage';
 
 const PerformanceScreen = () => {
@@ -47,6 +46,7 @@ const PerformanceScreen = () => {
     </View>
 
     useEffect(() => {
+        console.log('dataReviewsChart', dataReviewsChart)
         async function checkIfItsTheFirstTime() {
             const firstTimeOnScreen = await AsyncStorage.getItem("@TTR:firstTimePerformanceScreen")
             
@@ -62,6 +62,7 @@ const PerformanceScreen = () => {
     //User tutorial
 
     useEffect(() => { //select which data to use, performance or lastWeekPerformance for each chart
+
         let tempArray = []
 
         let decisionForTimeAverage;
@@ -76,7 +77,7 @@ const PerformanceScreen = () => {
 
         lastWeekDataReviewsChart.map(item => {
             if (item != 0) {//if true => lastWeek had use
-                console.log('qnts vezes repetiu o lastweek map')
+                console.log('qnts vezes repetiu o lastweek map', averageCalculate(lastWeekDataReviewsChart))
                 setAverageReviews(Math.round(averageCalculate(lastWeekDataReviewsChart)))
                 
                 decisionForTimeAverage = true
@@ -152,7 +153,6 @@ const PerformanceScreen = () => {
         return day;
     }
     
-
     return (
         <View style={styles.container}>
             <ScrollView scrollEnabled contentContainerStyle={styles.scrollContainer}>
@@ -169,7 +169,7 @@ const PerformanceScreen = () => {
                     <Text style={styles.textBold}>DESEMPENHO DO DIA</Text>
                     <View style={styles.lineChartPieBox} />
                     <Text style={styles.subText}>Você concluiu {dataReviewsChart[new Date().getDay()]} revisões hoje! (Média = {averageReviews} revisões) </Text>
-                    <ChartOverall 
+                    <ChartOverall
                         data={{
                             reviewsAverage: averageReviews,
                             days: dataReviewsChart

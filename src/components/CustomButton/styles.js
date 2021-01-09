@@ -8,12 +8,12 @@ const styles = StyleSheet.create({
         height: 55,
         alignItems: 'center',
         justifyContent: "center",
-        borderRadius: 15
+        borderRadius: 17
     },
     buttonText: {
-        marginTop:3,
+        marginTop:5,
         fontFamily: 'Poppins-Bold',
-        fontSize: 25,
+        fontSize: 19,
         color: '#F5F5F5'
     }
 })

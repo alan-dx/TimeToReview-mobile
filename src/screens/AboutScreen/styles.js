@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
         marginVertical: 5,
     },
     aboutText: {
-        fontFamily: 'Archivo',
+        fontFamily: 'Archivo-Medium',
         fontSize: 16,
         color: '#303030',
         width: '90%',

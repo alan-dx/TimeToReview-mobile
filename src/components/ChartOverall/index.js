@@ -2,13 +2,15 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, Dimensions, StyleSheet } from 'react-native';
 import styles from './styles';
 import { ProgressChart } from 'react-native-chart-kit';
+import { TouchableHighlight } from 'react-native-gesture-handler';
 
 const ChartOverall = (props) => {
 
     const [dataChart, setDataChart] = useState(null)
     const [percent, setPercent] = useState(0)
     
-    useEffect(() => {
+    useEffect(() => { 
+
         if (props.data.reviewsAverage != 0) {
             setDataChart(
                 (props.data.days[new Date().getDay()]/props.data.reviewsAverage) > 1 ?
@@ -19,14 +21,11 @@ const ChartOverall = (props) => {
             setPercent(((props.data.days[new Date().getDay()]/props.data.reviewsAverage)*100).toFixed(0))
         }
 
-    }, [])
+    }, [props.data.reviewsAverage])
 
     const data = {
         data: [dataChart]
     };
-
-
-    // color: (opacity = 1) => `rgba(15, 129, 0, ${opacity})`, verde
 
     const chartConfig = {
         backgroundGradientFrom: "#FFFF",
@@ -58,7 +57,9 @@ const ChartOverall = (props) => {
             />
             <View style={styles.chartOverallCenter}>
                 <Text style={styles.chartOverallText}>{percent}%</Text>
-                <Text style={styles.chartOverallSubText}>de sua média diária</Text>
+                <TouchableHighlight onPress={() => {console.log(props.data.reviewsAverage)}}>
+                    <Text style={styles.chartOverallSubText}>de sua média diária</Text>
+                </TouchableHighlight>
             </View>
         </View>
     )

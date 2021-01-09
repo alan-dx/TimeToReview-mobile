@@ -1,5 +1,5 @@
 import React, { useCallback, useContext, useEffect } from 'react';
-import {View, Text, BackHandler} from 'react-native';
+import {View, Text } from 'react-native';
 import styles from './styles';
 import { BorderlessButton } from  'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/AntDesign';
@@ -13,6 +13,7 @@ const Header = (props) => {
 
     async function handleGoBack() {
         if (props.title == "REVISÕES") {
+            //logic to end cycle review when goBack to HomeScreen
             props.route?.params.onGoBack()
     
             if (props.route?.params.finishCycleActive) {
@@ -23,10 +24,10 @@ const Header = (props) => {
                 navigation.goBack()
             }
         } else {
+            //route and navigation passed in AppRoutes Screen component
             console.log('não é a tela de revisões')
             navigation.goBack()
             props.route?.params.onGoBack(props.route?.params.passData)
-            //route and navigation passed in AppRoutes
         }
     }
 

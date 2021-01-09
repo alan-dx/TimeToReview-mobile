@@ -12,6 +12,7 @@ import AuthContext from '../../contexts/auth';
 import DocumentPicker from 'react-native-document-picker';
 import UUIDGenerator from 'react-native-uuid-generator';
 import RNFetchBlob from 'rn-fetch-blob';
+import InputWLabelL from '../../components/InputWLabelL';
 
 const EditScreen = (props) => {
 
@@ -201,14 +202,14 @@ const EditScreen = (props) => {
                     </BorderlessButton>
                 </View>
                 <Text style={styles.headerText}>EDITAR REVISÃO</Text>
-                <Text style={styles.createdAtText}>Criação: {createdDate.getDate()}/{createdDate.getMonth()}/{createdDate.getFullYear()}</Text>
+                <Text style={styles.createdAtText}>Criação: {createdDate.getDate()}/{createdDate.getMonth()+1}/{createdDate.getFullYear()}</Text>
             </View>
             <View style={styles.main}>
                 <View style={styles.dntReviewBox}>
                     <View style={styles.dntReview}>
                         <View style={styles.labelIconBox}>
                             <Icon name="sync" size={20} color="#303030" style={{marginRight: 3}} />
-                            <Text style={styles.label2}>Índice de rotina atual:</Text>
+                            <Text style={styles.label2}>Índice de sequência atual:</Text>
                         </View>
                         <Text style={styles.subLabel}>{currentSequenceReview}</Text>
                     </View>
@@ -226,13 +227,15 @@ const EditScreen = (props) => {
                         <Text style={styles.subLabel}>{`${dateNextSequenceReview.getDate()}/${dateNextSequenceReview.getMonth()+1}/${dateNextSequenceReview.getFullYear()}`}</Text>
                     </View>
                 </View>
-                <View style={styles.inputBox}>
-                    <View style={styles.labelBoxL}>
-                        <View style={styles.labelFrame} />
-                        <Text style={styles.label}>Título da Revisão</Text>
-                    </View>
-                    <Input value={titleReview} secureTextEntry={false} onChangeText={setTitleReview} textAlign="center" placeholder="EDO DE BERNOULLI" />
-                </View>
+                <InputWLabelL
+                    labelTitle="Título da Revisão"
+                    value={titleReview}
+                    secureTextEntry={false}
+                    onChangeText={setTitleReview}
+                    placeholder="Ex.: EDO de Bernoulli"
+                    textAlign="center"
+                    lineColor="#e74e36"
+                />
                 <View style={styles.inputBox}>
                     <View style={styles.labelBoxR}>
                         <Text style={styles.label}>Disciplina da Revisão</Text>
@@ -252,7 +255,7 @@ const EditScreen = (props) => {
                 <View style={styles.inputBox}>
                     <View style={styles.labelBoxL}>
                         <View style={styles.labelFrame} />
-                        <Text style={styles.label}>Rotina de Revisão</Text>
+                        <Text style={styles.label}>Sequência de Revisão</Text>
                     </View>
                     <PickerInfo 
                         placeholder="1-3-5-7-21-30" 

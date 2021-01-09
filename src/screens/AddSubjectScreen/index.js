@@ -1,14 +1,13 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import { View, Text } from 'react-native';
 import styles from './styles';
 import Icon from 'react-native-vector-icons/AntDesign';
-import { BorderlessButton, TextInput } from "react-native-gesture-handler"
-import Input from '../../components/Input';
+import { BorderlessButton } from "react-native-gesture-handler"
 import { useNavigation } from '@react-navigation/native';
 import ColorPicker from '../../components/ColorPicker';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import api from '../../services/api';
 import AuthContext from '../../contexts/auth';
+import InputWLabelL from '../../components/InputWLabelL';
 
 const AddSubjectScreen = (props) => {
 
@@ -41,7 +40,7 @@ const AddSubjectScreen = (props) => {
                     alert("Sessão expirada!")
                     logoutContext()
                 } else {
-                    alert('Houve um erro ao tentar salvar sua matéria no banco de dados, tente novamente!')
+                    alert('Houve um erro ao tentar salvar sua disciplina no banco de dados, tente novamente!')
                 }
             })
         }
@@ -61,20 +60,21 @@ const AddSubjectScreen = (props) => {
                 <Text style={styles.headerText}>CRIAR DISCIPLINA</Text>
             </View>
             <View style={styles.main}>
-                    <View style={styles.inputBox}>
-                        <View style={styles.labelBoxL}>
-                            <View style={styles.labelFrame} />
-                            <Text style={styles.label}>Nome da Disciplina</Text>
-                        </View>
-                    <Input value={titleSubject} secureTextEntry={false} onChangeText={setTitleSubject} textAlign="center" placeholder="CÁLCULO III" />
+                <InputWLabelL
+                    labelTitle="Título da Revisão"
+                    value={titleSubject}
+                    secureTextEntry={false}
+                    onChangeText={setTitleSubject}
+                    placeholder="Ex.: EDO de Bernoulli"
+                    textAlign="center"
+                />
+                <View style={styles.inputBox}>
+                    <View style={styles.labelBoxR}>
+                        <Text style={styles.label}>Cor da marcação</Text>
+                        <View style={styles.labelFrame} />
                     </View>
-                    <View style={styles.inputBox}>
-                        <View style={styles.labelBoxR}>
-                            <Text style={styles.label}>Cor do Marcador</Text>
-                            <View style={styles.labelFrame} />
-                        </View>
-                        <ColorPicker markerSubject={markerSubject} setMarkerSubject={setMarkerSubject} />
-                    </View>
+                    <ColorPicker markerSubject={markerSubject} setMarkerSubject={setMarkerSubject} />
+                </View>
             </View>
         </View>
     )

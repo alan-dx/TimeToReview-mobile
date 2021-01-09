@@ -10,6 +10,8 @@ import AuthContext from '../../contexts/auth';
 
 import styles from './styles';
 import { BorderlessButton } from 'react-native-gesture-handler';
+import InputWLabelL from '../../components/InputWLabelL';
+import InputWLabelR from '../../components/InputWLabelR';
 
 const LoginScreen = () => {
 
@@ -104,39 +106,33 @@ const LoginScreen = () => {
                 scrollEnabled={true}
                 enableOnAndroid={true}              
             >
-                <View style={styles.inputBlock}>
-                    <View style={styles.labelBoxL}>
-                        <View style={styles.labelFrame} />
-                        <Text style={styles.label}>Seu Email</Text>
+                <InputWLabelL
+                    labelTitle="Seu Email"
+                    value={email}
+                    secureTextEntry={false}
+                    onChangeText={setEmail}
+                    placeholder="email@example.com"
+                    textAlign="center"
+                    keyboardType="email-address"
+                    lineColor="#e74e36"
+                />
+                <InputWLabelR
+                    labelTitle="Nova Senha"
+                    value={password}
+                    secureTextEntry={true}
+                    onChangeText={setPassword}
+                    placeholder="******"
+                    textAlign="center"
+                    lineColor="#e74e36"
+                    marginTop={10}
+                />
+                <View style={styles.buttonBox}>
+                    <CustomButton text="LOGAR" color='#e74e36' onPress={handleClickSignInButton}/>
+                    <View style={styles.forgotPasswordBox}>
+                        <BorderlessButton onPress={handleGoToForgotPassword}>
+                            <Text style={styles.forgotPasswordText}>Esqueceu a senha?</Text>
+                        </BorderlessButton>
                     </View>
-                    <TextInput
-                        style={styles.input}
-                        placeholder="email@example.com"
-                        placeholderTextColor="#565656"
-                        onChangeText={e => setEmail(e)}
-                        value={email}
-                        keyboardType="email-address"
-                    />
-                </View>
-                <View style={styles.inputBlock}>
-                    <View style={styles.labelBoxR}>
-                        <Text style={styles.label}>Sua Senha</Text>
-                        <View style={styles.labelFrame} />
-                    </View>
-                    <TextInput
-                        style={styles.input}
-                        placeholder="******"
-                        placeholderTextColor="#565656"
-                        onChangeText={e => setPassword(e)}
-                        value={password}
-                        secureTextEntry={true}
-                    />
-                </View>
-                <CustomButton text="LOGAR" color='#e74e36' onPress={handleClickSignInButton}/>
-                <View style={styles.forgotPasswordBox}>
-                    <BorderlessButton onPress={handleGoToForgotPassword}>
-                        <Text style={styles.forgotPasswordText}>Esqueceu a senha?</Text>
-                    </BorderlessButton>
                 </View>
             </KeyboardAwareScrollView>
         </View>

@@ -82,7 +82,7 @@ const NotesScreen = (props) => {
             </View>
             <View style={{marginBottom: 15}}>
                 <InputWLabelL
-                    labelTitle="Título da Anotação"
+                    labelTitle="Título da anotação"
                     value={titleNote}
                     secureTextEntry={false}
                     onChangeText={setTitleNote}

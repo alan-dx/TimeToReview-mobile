@@ -41,13 +41,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginTop: 20
     },
-    labelBoxL: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'center',
-        width: '90%',
-        alignSelf: 'flex-start',
-    },
     labelBoxR: {
         flexDirection: 'row',
         alignItems: 'center',

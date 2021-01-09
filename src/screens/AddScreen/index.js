@@ -1,10 +1,9 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import { View, Text, KeyboardAvoidingView, Alert } from 'react-native';
 import styles from './styles';
 import Icon from 'react-native-vector-icons/AntDesign';
 import Icon2 from 'react-native-vector-icons/Feather';
 import { BorderlessButton } from "react-native-gesture-handler"
-import Input from '../../components/Input';
 import { useNavigation } from '@react-navigation/native';
 import PickerInfo from '../../components/Picker';
 import api from '../../services/api';
@@ -180,7 +179,7 @@ const AddScreen = (props) => {
                         <Icon name="calendar" size={20} color="#303030" style={{marginRight: 3}} />
                         <Text style={styles.label2}>Data da primeira Revisão</Text>
                     </View>
-                    <Text style={styles.subLabel}>{dateNextSequenceReview == "" ? "GERADA AUTOMATICAMENTE AO SELECIONAR UMA ROTINA" : `${dateNextSequenceReview.getDate()}/${dateNextSequenceReview.getMonth()}/${dateNextSequenceReview.getFullYear()}` }</Text>
+                    <Text style={styles.subLabel}>{dateNextSequenceReview == "" ? "GERADA AUTOMATICAMENTE AO SELECIONAR UMA SEQUÊNCIA" : `${dateNextSequenceReview.getDate()}/${dateNextSequenceReview.getMonth()}/${dateNextSequenceReview.getFullYear()}` }</Text>
                 </View>
                 <InputWLabelL 
                     labelTitle="Título da Revisão"
@@ -205,7 +204,7 @@ const AddScreen = (props) => {
                 <View style={styles.inputBox}>
                     <View style={styles.labelBoxL}>
                         <View style={styles.labelFrame} />
-                        <Text style={styles.label}>Rotina da Revisão</Text>
+                        <Text style={styles.label}>Sequência da Revisão</Text>
                     </View>
                     <PickerInfo 
                         placeholder="1-3-5-7-21-30" 
