@@ -265,7 +265,7 @@ const AllReviewsScreen = (props) => {
             }
             {handleOpenTutorialModal ? 
                 <ScreenTutorial
-                    modalVisible={handleOpenTutorialModal}
+                    handleCloseModal={() => setHandleOpenTutorialModal(false)}
                     steps={[Step0, Step1, Step2, Step3]}
                 />
                 : null

@@ -219,13 +219,15 @@ const SettingScreen = (props) => {
               {
                 text: "Confirmar",
                 onPress: async () => {
-                    await AsyncStorage.removeItem("@TTR:firstTimeReviewsScreen")
-                    await AsyncStorage.removeItem("@TTR:firstTimeAllReviewsScreen")
-                    await AsyncStorage.removeItem("@TTR:firstTimeRoutineScreen")
-                    await AsyncStorage.removeItem("@TTR:firstTimeSubjectScreen")
-                    await AsyncStorage.removeItem("@TTR:firstTimePerformanceScreen")
-                    await AsyncStorage.removeItem("@TTR:firstTimeHomeScreen")
-                    await AsyncStorage.removeItem("@TTR:firstTimeOpenTips")
+                    await AsyncStorage.multiRemove([
+                        "@TTR:firstTimeReviewsScreen", 
+                        "@TTR:firstTimeAllReviewsScreen",
+                        "@TTR:firstTimeRoutineScreen",
+                        "@TTR:firstTimeSubjectScreen",
+                        "@TTR:firstTimePerformanceScreen",
+                        "@TTR:firstTimeHomeScreen",
+                        "@TTR:firstTimeOpenTips"
+                    ])
                 },
                 style: "cancel"
               },
@@ -365,12 +367,12 @@ const SettingScreen = (props) => {
                     handleCloseModalButton={handleCloseReportModal}
                     modalCardHeight={250}
                     modalTitle="ENTRE EM CONTATO"
+                    doNotShowCheckButton
                 >
                     <View style={styles.reportModalInfoBox}>
-                        <View style={styles.textMarker} />
                         <Text style={styles.reportModalInfoText}>
-                            Relate bugs, sugestões, agradecimentos ou qualquer problema que tenha enfrentado em nosso App. Nosso 
-                            objetivo sempre será trazer a melhor experiência possível para nossos usuários.
+                            Relate bugs, sugestões, agradecimentos ou qualquer problema que tenha enfrentado em nosso App, nosso 
+                            objetivo é promover a melhor experiência possível para nossos usuários.
                         </Text>
                     </View>
                     <TouchableHighlight style={styles.reportModalCustomButton} underlayColor={"#72c3eb"} onPress={() => {

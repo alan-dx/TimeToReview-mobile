@@ -22,6 +22,7 @@ const styles = StyleSheet.create({
     },
     doubtItemButtonBox: {
         width: '10%',
+        height: '100%',
         
         position: 'absolute',
         right: 0,

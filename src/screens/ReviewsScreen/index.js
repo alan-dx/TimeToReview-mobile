@@ -77,10 +77,10 @@ const ReviewsScreen = (props) => {
     //User tutorial
     let Step0 = <View style={stylesSteps.container}>
         <Text style={stylesSteps.desciptionText}>
-            Seja bem-vindo(a) a tela de Revisões.
+            Esta é a tela de Revisões.
             {"\n"}
             {"\n"}
-            Aqui é onde você poderá criar, editar e concluir uma revisão pendente.
+            Aqui você irá visualizar as revisões listadas para o dia e onde também poderá concluir, editar e adicionar novas revisões.
         </Text>
     </View>
     let Step1 = <View style={stylesSteps.container}>
@@ -91,7 +91,7 @@ const ReviewsScreen = (props) => {
             Esse é o botão que você ira utilizar quando desejar criar novas revisões!
             {'\n'}
             {'\n'}
-            Ao pressiona-lo, você será enviado para a tela de Adicionar Revisões.
+            Ao pressioná-lo, você será enviado para a tela de Adicionar Revisões.
         </Text>
     </View>
     let Step2 = <View style={stylesSteps.container}>
@@ -447,7 +447,8 @@ const ReviewsScreen = (props) => {
             {
             handleOpenTutorialModal ? 
                 <ScreenTutorial 
-                    modalVisible={handleOpenTutorialModal}
+                    handleCloseModal={() => setHandleOpenTutorialModal(false)}
+
                     steps={[Step0, Step1, Step2, Step3, Step4, Step5, Step6]}
                 />
                 : null

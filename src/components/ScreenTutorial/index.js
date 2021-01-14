@@ -7,7 +7,11 @@ const ScreenTutorial = (props) => {
     return (
         <StepModal 
             stepComponents={props.steps} 
-            handleCloseModal={() => {}}
+            handleCloseModal={() => {
+                if (props.handleCloseModal) {
+                    props.handleCloseModal()
+                }
+            }}
         />
     )
 }

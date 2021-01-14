@@ -39,18 +39,14 @@ const TipsModal = (props) => {
     }, [])
 
     let Tips0 = <View style={styles.container}>
-        <Text style={styles.descriptionText}>
+        <Text style={[styles.descriptionText, {fontWeight: 'bold'}]}>
             Bem vindo{"(a)"} as dicas de estudo!
             {"\n"}
             {"\n"}
             Aqui você irá encontrar dicas variadas para aprimorar a sua qualidade e desempenho nos estudos de modo geral.
             {"\n"}
             {"\n"}
-            As dicas são sorteadas aleatoriamente {"(basta selecionar a opção 'Dicas de Estudo' no menu)"}, portanto há chances de você econtrar dicas repetidas.
-            Porém, nossa equipe estará buscando e atualizando o Aplicativo com dicas novas constantemente para você.
-            {"\n"}
-            {"\n"}
-            Aproveite!
+            O reportório de revisões é constantemente atualizado, portanto lembre-se de manter o aplicativo sempre na versão mais recente.
         </Text>
     </View>
 
@@ -96,7 +92,7 @@ const TipsModal = (props) => {
 
     let Tips2_2 = <View style={styles.container}>
         <Text style={styles.descriptionText}>
-            É bem provável que durante o colegial você tenha aprendidos algumas frases "macetes"
+            É bem provável que durante o colegial você tenha aprendido algumas frases "macetes"
             ensinadas por professores, que também são acrósticos.
             {'\n'}
             {'\n'}

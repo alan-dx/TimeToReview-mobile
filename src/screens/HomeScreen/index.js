@@ -1,5 +1,5 @@
-import React, { useCallback, useContext, useEffect, useState } from 'react';
-import { View, Text, Dimensions, Alert, ActivityIndicator } from 'react-native';
+import React, { useCallback, useContext, useState } from 'react';
+import { View, Text, Dimensions, Alert, Image } from 'react-native';
 
 import styles from './styles';
 import stylesSteps from './stylesSteps';
@@ -9,10 +9,11 @@ import Icon2 from 'react-native-vector-icons/Feather';
 import MenuButton from '../../components/MenuButton';
 import Chart from '../../components/ChartLine';
 import { BorderlessButton } from 'react-native-gesture-handler';
-import { useFocusEffect, useIsFocused, useNavigation } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-community/async-storage';
 import ScreenTutorial from '../../components/ScreenTutorial';
 import TipsModal from '../../components/TipsModal';
+import logoImage from '../../assets/images/icons/logo.png';
 
 const HomeScreen = () => {
 
@@ -26,7 +27,6 @@ const HomeScreen = () => {
     const [numberOfReviews, setNumberOfReviews] = useState(0)
     const [isLoading] = useState(false)
     const [dataChart, setData] = useState(performance)
-    const [loadingChart, setLoadingChart] = useState(true)
     const [handleOpenTutorialModal, setHandleOpenTutorialModal] = useState(false)
     const [handleOpenTipsModal, setHandleOpenTipsModal] = useState(false)
     const [handelShowTips0, setHandleShowTips0] = useState(false)
@@ -47,8 +47,11 @@ const HomeScreen = () => {
 
     //User tutorial
     let Step0 = <View style={stylesSteps.container}>
+        <View style={styles.logoBox}>
+            <Image source={logoImage} style={{width: 170, height: 170}} />
+        </View>
         <Text style={stylesSteps.desciptionText}>
-            Seja bem vindo a dashboard do TimeToReview!
+            Seja bem-vindo ao TimeToReview (premium)!
             {"\n"}
             {"\n"}
             Esse é o menu do aplicativo, onde você poderá navegar pelas telas e acessar as funções do App.
@@ -58,8 +61,21 @@ const HomeScreen = () => {
         </Text>
     </View>
 
+    let Step1 = <View style={stylesSteps.container}>
+        <Text style={stylesSteps.desciptionText}>
+            TimeToReview é um aplicativo desenvolvido com o intuito de auxiliar e melhorar o desempenho de seus usuários nos estudos. 
+            {"\n"}
+            {"\n"}
+            A motivação para desenvolver essa aplicação é baseada na Curva do Esquecimento, um conceito apresentado pelo psicólogo alemão Hermann Ebbinghaus.
+            {"\n"}
+            {"\n"}
+            Se você quer saber mais sobre o assunto, verifique a sessão "Sobre" nas configurações.
+        </Text>
+    </View>
+
     async function checkIfItsTheFirstTime() { //See useFocusEffect
         const firstTimeOnScreen = await AsyncStorage.getItem("@TTR:firstTimeHomeScreen")
+        console.log('first', firstTimeOnScreen)
         if (!firstTimeOnScreen) {
             setHandleOpenTutorialModal(true)
             await AsyncStorage.setItem('@TTR:firstTimeHomeScreen', 'true')
@@ -186,7 +202,10 @@ const HomeScreen = () => {
             </View>
         </View>
         { handleOpenTutorialModal ? 
-            <ScreenTutorial steps={[Step0]} /> :
+            <ScreenTutorial 
+                steps={[Step0, Step1]} 
+                handleCloseModal={() => setHandleOpenTutorialModal(false)}
+            /> :
             null
         }
         {

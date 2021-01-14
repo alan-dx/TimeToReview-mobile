@@ -179,7 +179,12 @@ const AddScreen = (props) => {
                         <Icon name="calendar" size={20} color="#303030" style={{marginRight: 3}} />
                         <Text style={styles.label2}>Data da primeira Revisão</Text>
                     </View>
-                    <Text style={styles.subLabel}>{dateNextSequenceReview == "" ? "GERADA AUTOMATICAMENTE AO SELECIONAR UMA SEQUÊNCIA" : `${dateNextSequenceReview.getDate()}/${dateNextSequenceReview.getMonth()}/${dateNextSequenceReview.getFullYear()}` }</Text>
+                    <Text style={styles.subLabel}>{
+                        dateNextSequenceReview == "" ? "GERADA AUTOMATICAMENTE AO SELECIONAR UMA SEQUÊNCIA" 
+                        :`${dateNextSequenceReview.getDate() < 10 ? `0${dateNextSequenceReview.getDate()}` : dateNextSequenceReview.getDate()
+                        }/${dateNextSequenceReview.getMonth() < 10 ? `0${dateNextSequenceReview.getMonth()+1}` : dateNextSequenceReview.getMonth()+1
+                        }/${dateNextSequenceReview.getFullYear()}`
+                        }</Text>
                 </View>
                 <InputWLabelL 
                     labelTitle="Título da Revisão"

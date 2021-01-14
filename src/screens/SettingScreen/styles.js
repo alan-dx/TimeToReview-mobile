@@ -121,14 +121,14 @@ const styles = StyleSheet.create({
         right: 0
     },
     reportModalInfoBox: {
-        width: '90%',
+        width: '95%',
 
         marginVertical: 5,
-        flexDirection: 'row'
+        flexDirection: 'row',
     },
     reportModalInfoText: {
-        fontFamily: 'Archivo',
-        fontSize: 14,
+        fontFamily: 'Archivo-Medium',
+        fontSize: 16,
         textAlign: 'justify',
         color: '#303030',
     },

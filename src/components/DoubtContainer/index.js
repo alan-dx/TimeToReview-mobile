@@ -6,14 +6,12 @@ import styles from './styles'
 
 const DoubtContainer = (props) => {
     return (
-        <View style={styles.doubtItemBox}>
+        <RectButton style={styles.doubtItemBox} onPress={() => { props.handleOpenDoubt(props.data.key) }}>
             <Text style={styles.doubtItemText}>{props.data.title}</Text>
             <View style={styles.doubtItemButtonBox}>
-                <RectButton onPress={() => { props.handleOpenDoubt(props.data.key) }}>
-                    <Icon name="infocirlceo" size={20} color="#60c3eb" />
-                </RectButton>
+                <Icon name="infocirlceo" size={20} color="#60c3eb" />
             </View>
-        </View>
+        </RectButton>
     )
 }
 

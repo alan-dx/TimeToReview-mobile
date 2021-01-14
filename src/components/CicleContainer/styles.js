@@ -7,7 +7,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         alignSelf: 'center',
-        padding: 2,
+        padding: 3,
     },
     timerCountReviews: {
         width: 40,
@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
         height: 35,
         width: 35,
         backgroundColor: '#FFFFFF',
-        elevation: 4,
+        elevation: 3,
         borderRadius: 7,
         
         flexDirection: 'row',

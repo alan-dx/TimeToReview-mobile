@@ -138,7 +138,7 @@ const LoginScreen = () => {
                     marginTop={10}
                 />
                 <InputWLabelL
-                    labelTitle="Nova Senha"
+                    labelTitle="Crie uma Senha"
                     value={password}
                     secureTextEntry={true}
                     onChangeText={setPassword}

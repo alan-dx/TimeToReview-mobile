@@ -117,7 +117,7 @@ const LoginScreen = () => {
                     lineColor="#e74e36"
                 />
                 <InputWLabelR
-                    labelTitle="Nova Senha"
+                    labelTitle="Sua Senha"
                     value={password}
                     secureTextEntry={true}
                     onChangeText={setPassword}

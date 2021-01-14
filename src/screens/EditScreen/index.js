@@ -202,7 +202,11 @@ const EditScreen = (props) => {
                     </BorderlessButton>
                 </View>
                 <Text style={styles.headerText}>EDITAR REVISÃO</Text>
-                <Text style={styles.createdAtText}>Criação: {createdDate.getDate()}/{createdDate.getMonth()+1}/{createdDate.getFullYear()}</Text>
+                <Text style={styles.createdAtText}>Criação: {
+                createdDate.getDate() < 10 ? `0${createdDate.getDate()}` : createdDate.getDate()
+                }/{createdDate.getMonth() < 10 ? `0${createdDate.getMonth()+1}` : createdDate.getMonth()
+                }/{createdDate.getFullYear()
+                }</Text>
             </View>
             <View style={styles.main}>
                 <View style={styles.dntReviewBox}>
@@ -224,7 +228,11 @@ const EditScreen = (props) => {
                                     <Text style={styles.label2}>Próxima revisão agendada para:</Text>
                             }
                         </View>
-                        <Text style={styles.subLabel}>{`${dateNextSequenceReview.getDate()}/${dateNextSequenceReview.getMonth()+1}/${dateNextSequenceReview.getFullYear()}`}</Text>
+                        <Text style={styles.subLabel}>{
+                        `${dateNextSequenceReview.getDate() < 10 ? `0${dateNextSequenceReview.getDate()}` : dateNextSequenceReview.getDate()
+                        }/${dateNextSequenceReview.getMonth() < 10 ? `0${dateNextSequenceReview.getMonth()+1}` : dateNextSequenceReview.getMonth()+1
+                        }/${dateNextSequenceReview.getFullYear()}`
+                        }</Text>
                     </View>
                 </View>
                 <InputWLabelL

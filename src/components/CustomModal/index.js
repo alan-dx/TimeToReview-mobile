@@ -41,7 +41,7 @@ const CustomModal = (props) => {
                             <Text numberOfLines={1} style={styles.headerTitleText}>{props.modalTitle}</Text>
                         </View>
                         {
-                            !props.didNotShowCheckButton
+                            !props.doNotShowCheckButton
                                 && 
                             <TouchableHighlight style={{borderRadius: 20}}  underlayColor="#F5F5F5" onPress={handleConfirmButton}>
                                 <Icon name="check" size={25} color="#303030" />

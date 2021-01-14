@@ -11,8 +11,6 @@ const styles = StyleSheet.create({
         fontFamily: 'Archivo-Bold',
         fontSize: 15,
         textAlign: 'center',
-        
-        marginTop: 20
     },
     floatAddButton: {
         width: 75,
@@ -20,6 +18,10 @@ const styles = StyleSheet.create({
         borderRadius: 40,
         backgroundColor: '#60c3eb',
 
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    logoBox: {
         alignItems: 'center',
         justifyContent: 'center'
     },

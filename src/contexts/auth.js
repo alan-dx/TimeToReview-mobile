@@ -18,6 +18,8 @@ export const AuthProvider = (props) => {
 
     async function loadServerData() {
         const currentDate = new Date()
+        //to get the exact time system
+        currentDate.setUTCHours((-currentDate.getTimezoneOffset()/60)+1,currentDate.getMinutes())
 
         return await api.post('/listUser', {
             date: currentDate
@@ -45,7 +47,6 @@ export const AuthProvider = (props) => {
         try {
 
             const response = await api.post('/signIn', data)
-            console.log('------->', response.data)
             if (response.data) {
                 const { token } = response.data;
                 api.defaults.headers["Authorization"] = `Bearer ${token}`
@@ -59,8 +60,31 @@ export const AuthProvider = (props) => {
             if (error == 'Error: Request failed with status code 401') {
                 alert(`Senha/Email Incorretos. Verifique e tente novamente!`)
             } else if ( error == 'Error: Request failed with status code 404') {
-                alert('Usuário não encontrado! Verifique se há uma conta cadastrada ' + 
-                'com esse email, caso contrário entre em contato com nossa equipe.')
+                Alert.alert(
+                    "Usuário não encontrado!",
+                    "Não há conta associada a esse endereço de email, verifique e tente novamente",
+                    [
+                      {
+                        text: "Ok!",
+                        onPress: () => console.log("Cancel Pressed"),
+                        style: "cancel"
+                      }
+                    ],
+                    { cancelable: false }
+                  );
+            } else if ( error == 'Error: Request failed with status code 406') {
+                Alert.alert(
+                    "Conta desativada!",
+                    "Esta conta foi desativada, entre em contato com nossa equipe.",
+                    [
+                      {
+                        text: "Ok!",
+                        onPress: () => console.log("Cancel Pressed"),
+                        style: "cancel"
+                      }
+                    ],
+                    { cancelable: false }
+                  );
             }
 
         }

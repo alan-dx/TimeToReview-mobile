@@ -319,7 +319,10 @@ const RoutineScreen = (props) => {
             }
             <FloatAddButton onPress={handleOpenAddModal} />
             { handleOpenTutorialModal ? 
-               <ScreenTutorial steps={[Step0, Step1, Step2]} /> 
+               <ScreenTutorial 
+                steps={[Step0, Step1, Step2]} 
+                handleCloseModal={() => setHandleOpenTutorialModal(false)}
+               /> 
                 : null
             }
         </View>

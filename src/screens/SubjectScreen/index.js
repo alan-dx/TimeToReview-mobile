@@ -33,7 +33,7 @@ const SubjectScreen = (props) => {
             <Icon name="plus" size={20} color="#FCFCFC" />
         </View>
         <Text style={stylesSteps.desciptionText}>
-            Esse é o botão que você ira utilizar quando desejar criar uma nova disciplinas!
+            Esse é o botão que você ira utilizar quando desejar criar uma nova disciplina!
         </Text>
     </View>
     
@@ -149,7 +149,10 @@ const SubjectScreen = (props) => {
             }
             <FloatAddButton onPress={handlePressGoToAddSubjectScreen}/>
             {handleOpenTutorialModal ? 
-                <ScreenTutorial steps={[Step0, Step1, Step2]}/>    
+                <ScreenTutorial 
+                    steps={[Step0, Step1, Step2]}
+                    handleCloseModal={() => setHandleOpenTutorialModal(false)}
+                    />    
                 : null
             }
         </View>

@@ -199,7 +199,7 @@ const PerformanceScreen = () => {
             </ScrollView>
             {handleOpenTutorialModal ? 
                 <ScreenTutorial 
-                    modalVisible={handleOpenTutorialModal}
+                    handleCloseModal={() => setHandleOpenTutorialModal(false)}
                     steps={[Step0]}
                 />
                 : null
