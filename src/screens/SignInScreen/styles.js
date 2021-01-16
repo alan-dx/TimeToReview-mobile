@@ -4,7 +4,7 @@ const screenWidth = Math.round(Dimensions.get('window').width);
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#FFFFFF',
+        backgroundColor: '#FCFCFC',
     },
     topBox: {
         marginTop: 10,
@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
     },
     selectBox: {
         height: '55%',
-        backgroundColor: '#FFFFFF',
+        backgroundColor: '#FCFCFC',
         flexDirection: 'row',
         alignItems: 'center',
     },

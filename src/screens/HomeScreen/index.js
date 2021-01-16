@@ -73,6 +73,16 @@ const HomeScreen = () => {
         </Text>
     </View>
 
+    let Step2 = <View style={stylesSteps.container}>
+        <Icon2 name="clock" size={35} color="#303030" />
+        <Text style={stylesSteps.desciptionText}>
+            Lembrete de revisão!
+            {"\n"}
+            {"\n"}
+            Na tela de configurações você pode escolher o horário no qual o aplicativo irá notificá-lo.
+        </Text>
+    </View>
+
     async function checkIfItsTheFirstTime() { //See useFocusEffect
         const firstTimeOnScreen = await AsyncStorage.getItem("@TTR:firstTimeHomeScreen")
         console.log('first', firstTimeOnScreen)
@@ -168,42 +178,42 @@ const HomeScreen = () => {
         <View style={styles.menuBox}>
             <View style={styles.menuRow}>
                 <View style={styles.menuItemBox}>
-                    <MenuButton color="#FFF" textColor="#606060" onPress={handleClickGoToReviewsScreen} title="Revisões" subtitle="15 Revisões Cadastradas">
-                        <Icon name="exception1" size={23} color="#303030" />
+                    <MenuButton color="#FFF" textColor="#303030" onPress={handleClickGoToReviewsScreen} title="Revisões" subtitle="15 Revisões Cadastradas">
+                        <Icon name="exception1" size={25} color="#303030" />
                     </MenuButton>
                 </View>
                 <View style={styles.menuItemBox}>
-                    <MenuButton color="#FFF" textColor="#606060" onPress={handleClickGoToRoutineScreen} title="Sequências">
-                        <Icon name="sync" size={23} color="#303030" />
+                    <MenuButton color="#FFF" textColor="#303030" onPress={handleClickGoToRoutineScreen} title="Sequências">
+                        <Icon name="sync" size={25} color="#303030" />
                     </MenuButton>
                 </View>
                 <View style={styles.menuItemBox}>
-                    <MenuButton color="#FFF" textColor="#606060" onPress={handleClickGoToAllReviewsScreen} title="Todas Revisões">
-                        <Icon name="profile" size={23} color="#303030" />
+                    <MenuButton color="#FFF" textColor="#303030" onPress={handleClickGoToAllReviewsScreen} title="Todas Revisões">
+                        <Icon name="profile" size={25} color="#303030" />
                     </MenuButton>
                 </View>
             </View>
             <View style={styles.menuRow}>
                 <View style={styles.menuItemBox}>
-                    <MenuButton color="#FFF" textColor="#606060" onPress={handleClickGoToSubjectScreen} title="Disciplinas">
-                        <Icon name="book" size={23} color="#303030" />
+                    <MenuButton color="#FFF" textColor="#303030" onPress={handleClickGoToSubjectScreen} title="Disciplinas">
+                        <Icon name="book" size={25} color="#303030" />
                     </MenuButton>
                 </View>
                 <View style={styles.menuItemBox}>
-                    <MenuButton color="#FFF" textColor="#606060" onPress={handleOpenTips} title="Dica de Estudo">
-                        <Icon name="bulb1" size={23} color="#303030" />
+                    <MenuButton color="#FFF" textColor="#303030" onPress={handleOpenTips} title="Dica de Estudo">
+                        <Icon name="bulb1" size={25} color="#303030" />
                     </MenuButton>
                 </View>
                 <View style={styles.menuItemBox}>
-                    <MenuButton color="#FFF" textColor="#606060" onPress={handleClickGoToSettingScreen} title="Configurações">
-                        <Icon2 name="settings" size={23} color="#303030" />
+                    <MenuButton color="#FFF" textColor="#303030" onPress={handleClickGoToSettingScreen} title="Configurações">
+                        <Icon2 name="settings" size={25} color="#303030" />
                     </MenuButton>
                 </View>
             </View>
         </View>
         { handleOpenTutorialModal ? 
             <ScreenTutorial 
-                steps={[Step0, Step1]} 
+                steps={[Step0, Step1, Step2]} 
                 handleCloseModal={() => setHandleOpenTutorialModal(false)}
             /> :
             null

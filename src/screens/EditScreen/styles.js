@@ -42,8 +42,10 @@ const styles = StyleSheet.create({
         left: 5
     },
     main: {
-       flex: 1,
+        flex: 1,
         width: '100%',
+        backgroundColor: '#FCFCFC',
+
         justifyContent: "space-evenly",
     },
     dntReviewBox: {

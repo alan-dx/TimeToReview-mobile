@@ -4,7 +4,7 @@ const screenWidth = Math.round(Dimensions.get('window').width);
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#FFF',
+        backgroundColor: '#FCFCFC',
     },
     topBox: {
         marginTop: 10,
@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
     },
     selectBox: {
         flex: 1,
-        backgroundColor: '#FFF',
+        backgroundColor: '#FCFCFC',
         flexDirection: 'row',
         alignItems: 'center',
     },
@@ -46,7 +46,22 @@ const styles = StyleSheet.create({
     },
     buttonBox: {
         alignItems: 'center'
-    }
+    },
+    checkboxContainer: {
+        flexDirection: "row",
+
+        alignItems: "center",
+        justifyContent: 'center',
+        marginVertical: 5
+    },
+    checkbox: {
+        alignSelf: "center",
+    },
+    label: {
+        fontFamily: 'Archivo-Medium',
+        fontSize: 12,
+        color: '#303030'
+    },
 })
 
 export default styles;

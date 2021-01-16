@@ -19,7 +19,8 @@ export const AuthProvider = (props) => {
     async function loadServerData() {
         const currentDate = new Date()
         //to get the exact time system
-        currentDate.setUTCHours((-currentDate.getTimezoneOffset()/60)+1,currentDate.getMinutes())
+        currentDate.setUTCHours(currentDate.getTimezoneOffset()/60,currentDate.getMinutes())
+        console.log(currentDate)
 
         return await api.post('/listUser', {
             date: currentDate

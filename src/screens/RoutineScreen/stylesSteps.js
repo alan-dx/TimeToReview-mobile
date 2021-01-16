@@ -12,7 +12,8 @@ const styles = StyleSheet.create({
         fontSize: 15,
         textAlign: 'center',
         
-        marginTop: 20
+        marginTop: 20,
+        color: '#303030'
     },
     floatAddButton: {
         width: 75,

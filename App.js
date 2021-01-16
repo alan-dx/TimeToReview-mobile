@@ -7,6 +7,7 @@ import { AuthProvider } from './src/contexts/auth';
 const App = () => {
   return (
     <AuthProvider>
+      <StatusBar barStyle="dark-content" backgroundColor="#FCFCFC"/>
       <AppStack />
     </AuthProvider>
   )

@@ -22,22 +22,22 @@ const AuthRoutes = () => {
                 />
                 <Screen 
                     name="SignIn" 
-                    options={{headerShown: true, header: () => <Header title="LOGIN" color="#FFF" />}} 
+                    options={{headerShown: true, header: () => <Header title="LOGIN" color="#FCFCFC" />}} 
                     component={SignInScreen} 
                 />
                 <Screen 
                     name="SignUp" 
-                    options={{headerShown: true, header: () => <Header title="CADASTRO" color="#FFF" />}} 
+                    options={{headerShown: true, header: () => <Header title="CADASTRO" color="#FCFCFC" />}} 
                     component={SignUpScreen} 
                 />
                 <Screen 
                     name="ForgotPassword" 
-                    options={{headerShown: true, header: () => <Header title="" color="#FFF" />}} 
+                    options={{headerShown: true, header: () => <Header title="" color="#FCFCFC" />}} 
                     component={ForgotPasswordScreen} 
                 />
                 <Screen 
                     name="ResetPassword" 
-                    options={{headerShown: true, header: () => <Header title="" color="#FFF" />}} 
+                    options={{headerShown: true, header: () => <Header title="" color="#FCFCFC" />}} 
                     component={ResetPasswordScreen} 
                 />
             </Navigator>

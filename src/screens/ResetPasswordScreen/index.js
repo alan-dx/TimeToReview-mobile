@@ -148,7 +148,7 @@ const ResetPasswordScreen = (props) => {
                 textAlign="center"
                 lineColor="#e74e36"
             />
-            <View style={{width: '100%', alignItems: 'center'}}>
+            <View style={{width: '100%', alignItems: 'center', marginTop: 25}}>
                 <CustomButton text="CONFIRMAR" color='#e74e36' onPress={handleResetPassword}/>
             </View>
         </View>

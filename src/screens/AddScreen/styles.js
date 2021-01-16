@@ -33,6 +33,8 @@ const styles = StyleSheet.create({
     main: {
         flex: 1,
         width: '100%',
+        backgroundColor: '#FCFCFC',
+
         justifyContent: "space-evenly",
     },
     dntReview: {

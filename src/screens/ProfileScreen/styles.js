@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#F5F5F5',
+        backgroundColor: '#FCFCFC',
         alignItems: 'center',
     },
     header: {
@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
         width: 150,
         borderRadius: 100,
         backgroundColor: '#FFF',
-        elevation: 2,
+        elevation: 4,
         
         alignItems: 'center',
         justifyContent: 'center'
@@ -74,12 +74,13 @@ const styles = StyleSheet.create({
     menuBox: {
         flex: 1,
         width: '100%',
-        backgroundColor: '#FFF',
+        backgroundColor: '#FFFF',
 
         borderTopRightRadius: 20,
         borderTopLeftRadius: 20,
-        elevation: 4,
         paddingTop: 10,
+        
+        elevation: 20,
     },
     optionContainer: {
         height: 40,

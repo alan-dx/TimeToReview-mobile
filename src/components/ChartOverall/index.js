@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, Dimensions, StyleSheet } from 'react-native';
 import styles from './styles';
 import { ProgressChart } from 'react-native-chart-kit';
-import { TouchableHighlight } from 'react-native-gesture-handler';
 
 const ChartOverall = (props) => {
 
@@ -57,9 +56,9 @@ const ChartOverall = (props) => {
             />
             <View style={styles.chartOverallCenter}>
                 <Text style={styles.chartOverallText}>{percent}%</Text>
-                <TouchableHighlight onPress={() => {console.log(props.data.reviewsAverage)}}>
+                <View>
                     <Text style={styles.chartOverallSubText}>de sua média diária</Text>
-                </TouchableHighlight>
+                </View>
             </View>
         </View>
     )

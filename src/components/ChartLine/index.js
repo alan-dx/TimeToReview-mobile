@@ -29,10 +29,18 @@ const ChartLine = (props) => {
         <View >
             <LineChart
                 data={{
-                    labels: ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"],
+                    labels: ["Seg", "Ter", "Qua", "Qui", "Sex", "Sáb", "Dom"],
                     datasets: [
                     {
-                        data: data
+                        data: [
+                            data[1],
+                            data[2],
+                            data[3],
+                            data[4],
+                            data[5],
+                            data[6],
+                            data[0],
+                        ]
                     }
                     ],
                     legend: selectLegend

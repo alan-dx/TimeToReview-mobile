@@ -1,12 +1,11 @@
 import React, {useState, useEffect, useContext} from 'react';
-import { Animated, View, Text, TextInput, KeyboardAvoidingView, Keyboard, Alert } from 'react-native';
+import { Animated, View, Text, KeyboardAvoidingView, Keyboard, Alert, Linking } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { useNavigation } from '@react-navigation/native';
 import NetInfo from '@react-native-community/netinfo';
-
+import CheckBox from '@react-native-community/checkbox'
 import CustomButton from '../../components/CustomButton';
 import logoImage from '../../assets/images/icons/logo.png';
-
 import AuthContext from '../../contexts/auth';
 import styles from './styles';
 import InputWLabelL from '../../components/InputWLabelL';
@@ -20,6 +19,7 @@ const LoginScreen = () => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [cPassword, setCPassword] = useState('')
+    const [checkBoxIsSelected, setCheckBoxIsSelected] = useState(false)
 
     const [logo] = useState(new Animated.ValueXY({x: 250, y: 250 }))
 
@@ -150,11 +150,22 @@ const LoginScreen = () => {
                     labelTitle="Confirme a Senha"
                     value={cPassword}
                     secureTextEntry={true}
+
                     onChangeText={setCPassword}
                     placeholder="******"
                     textAlign="center"
                     marginTop={10}
                 />
+                <View style={styles.checkboxContainer}>
+                    <CheckBox
+                        value={checkBoxIsSelected}
+                        onValueChange={setCheckBoxIsSelected}
+                        style={styles.checkbox}
+                    />
+                    <Text style={styles.label}>Concordo com a
+                        <Text onPress={() => Linking.openURL("https://google.com")} style={{fontWeight: 'bold', textDecorationLine: 'underline'}}> política de privacidade e termos de uso</Text>
+                    </Text>
+                </View>
                 <View style={styles.buttonBox}>
                     <CustomButton text="CADASTRAR" color='#60c3eb' onPress={handleClickSignUpButton} />
                 </View>

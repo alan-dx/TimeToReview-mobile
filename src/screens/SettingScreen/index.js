@@ -34,6 +34,8 @@ const SettingScreen = (props) => {
             setFilePath(JSON.parse(source))
         }
 
+        console.log(user.reminderTime, new Date('1899-12-31T13:01:00.000Z'))
+
         loadStorageProfilePhoto()
     }, [])
     

@@ -13,10 +13,18 @@ const ChartBar = (props) => {
                 //ZERAR OS GRÁFICOS DE TEMPO
 
                 data={{
-                    labels: ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"],
+                    labels: ["Seg", "Ter", "Qua", "Qui", "Sex", "Sáb", "Dom"],
                     datasets: [
                     {
-                        data: props.data
+                        data: [
+                            props.data[1],
+                            props.data[2],
+                            props.data[3],
+                            props.data[4],
+                            props.data[5],
+                            props.data[6],
+                            props.data[0],
+                        ]
                     }
                     ],
                 }}

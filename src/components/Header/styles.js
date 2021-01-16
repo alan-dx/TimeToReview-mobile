@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
         position: 'absolute', 
         left: '2%', 
 
-        elevation: 4
+        elevation: 7
     },
     buttonContainer: {
         width: 35,

@@ -20,6 +20,7 @@ const SubjectScreen = (props) => {
 
     //User tutorial
     let Step0 = <View style={stylesSteps.container}>
+        <Icon name="book" size={35} color="#303030" />
         <Text style={stylesSteps.desciptionText}>
             Esta é a tela de Disciplinas!
             {"\n"}

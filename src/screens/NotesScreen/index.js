@@ -63,23 +63,6 @@ const NotesScreen = (props) => {
 
     return (
         <View style={styles.container}>
-            <View style={styles.optionsBox}>
-                <BorderlessButton onPress={handleDeleteAndGoBack}>
-                    <Icon name="trash-2" size={25} color="#303030" style={styles.iconBack} />
-                </BorderlessButton>
-                <BorderlessButton onPress={handleAddDotsOnText}>
-                    <Icon name="list" size={25} color="#303030" style={styles.iconBack} />
-                </BorderlessButton>
-                <BorderlessButton onPress={handleChangeAlignText}>
-                    <Icon name={`align-${alignText}`} size={25} color="#303030" style={styles.iconBack} />
-                </BorderlessButton>
-                <BorderlessButton onPress={() => setTextNote('')}>
-                    <Icon name="delete" size={25} color="#303030" style={styles.iconBack} />
-                </BorderlessButton>
-                <BorderlessButton onPress={handleSaveAndGoBack}>
-                    <Icon name="save" size={25} color="#303030" style={styles.iconBack} />
-                </BorderlessButton>
-            </View>
             <View style={{marginBottom: 15}}>
                 <InputWLabelL
                     labelTitle="Título da anotação"
@@ -103,6 +86,23 @@ const NotesScreen = (props) => {
                 >
 
                 </TextInput>
+            </View>
+            <View style={styles.optionsBox}>
+                <BorderlessButton onPress={handleDeleteAndGoBack}>
+                    <Icon name="trash-2" size={25} color="#303030" style={styles.iconBack} />
+                </BorderlessButton>
+                <BorderlessButton onPress={handleAddDotsOnText}>
+                    <Icon name="list" size={25} color="#303030" style={styles.iconBack} />
+                </BorderlessButton>
+                <BorderlessButton onPress={handleChangeAlignText}>
+                    <Icon name={`align-${alignText}`} size={25} color="#303030" style={styles.iconBack} />
+                </BorderlessButton>
+                <BorderlessButton onPress={() => setTextNote('')}>
+                    <Icon name="delete" size={25} color="#303030" style={styles.iconBack} />
+                </BorderlessButton>
+                <BorderlessButton onPress={handleSaveAndGoBack}>
+                    <Icon name="save" size={25} color="#303030" style={styles.iconBack} />
+                </BorderlessButton>
             </View>
         </View>
     )

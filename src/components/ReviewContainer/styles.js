@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
     alertIcon: {
         position: 'absolute',
         paddingTop: 6,
-        right: 0,
+        right: -7,
     },
     titleBox: {
         width: '85%',
@@ -66,6 +66,8 @@ const styles = StyleSheet.create({
         fontFamily: 'Poppins-Bold',
         color: '#303030',
         fontSize: 12,
+        
+        right: 10,
         alignSelf: 'center'
     },
     editButtonBox: {
@@ -73,6 +75,8 @@ const styles = StyleSheet.create({
         flex: 1,
         borderTopRightRadius: 7,
         borderTopLeftRadius: 7,
+
+        left: 10
     },
     containerButton: {
         flex: 1,
@@ -90,16 +94,18 @@ const styles = StyleSheet.create({
         flex: 1,
         borderTopRightRadius: 7,
         borderTopLeftRadius: 7,
+
+        right: 10
     },
     audioButton: {
         position: 'absolute',
-        right: 8,
-        top: 2
+        right: 4,
+        bottom: 2
     },
     noteButton: {
         position: 'absolute',
-        left: 8,
-        top: 2
+        left: 4,
+        bottom: 2
     }
     
 })

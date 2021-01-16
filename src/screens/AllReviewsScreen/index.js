@@ -9,6 +9,7 @@ import AuthContext from '../../contexts/auth';
 import AsyncStorage from '@react-native-community/async-storage';
 import ScreenTutorial from '../../components/ScreenTutorial';
 import Icon from 'react-native-vector-icons/Feather';
+import Icon2 from 'react-native-vector-icons/AntDesign';
 import { RectButton } from 'react-native-gesture-handler';
 import CustomModal from '../../components/CustomModal';
 import PickerInfo from '../../components/Picker';
@@ -33,6 +34,7 @@ const AllReviewsScreen = (props) => {
 
     //User tutorial
     let Step0 = <View style={stylesSteps.container}>
+        <Icon2 name="exception1" size={35} color="#303030" />
         <Text style={stylesSteps.desciptionText}>
             Essa é a tela que irá listar todas as suas revisões.
             {"\n"}

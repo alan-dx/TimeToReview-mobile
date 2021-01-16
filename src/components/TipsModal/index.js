@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react'
 import {View, Text, Image} from 'react-native'
 import StepModal from "react-native-step-modal"
 import styles from './styles'
+import Icon from 'react-native-vector-icons/AntDesign';
 import postIt from '../../assets/images/tips/post-it.png'
-import acrostico from '../../assets/images/tips/acrostico.png'
 import acronimo from '../../assets/images/tips/acronimo.png'
 import metas from '../../assets/images/tips/metas.png'
 import table from '../../assets/images/tips/table.png'
@@ -39,7 +39,8 @@ const TipsModal = (props) => {
     }, [])
 
     let Tips0 = <View style={styles.container}>
-        <Text style={[styles.descriptionText, {fontWeight: 'bold'}]}>
+        <Icon name="bulb1" size={35} color="#303030" />
+        <Text style={[styles.descriptionText, {fontWeight: 'bold', marginTop: 10}]}>
             Bem vindo{"(a)"} as dicas de estudo!
             {"\n"}
             {"\n"}

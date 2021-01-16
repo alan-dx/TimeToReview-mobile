@@ -23,7 +23,8 @@ const styles = StyleSheet.create({
         fontSize: 15,
         textAlign: 'center',
         
-        marginTop: 20
+        marginTop: 20,
+        color: '#303030',
     },
     timerCountReviews: {
         width: 35,
@@ -39,12 +40,16 @@ const styles = StyleSheet.create({
         color: '#F5F5F5',
         fontFamily: 'Archivo-Bold',
         fontSize: 12,
+
+        color: '#303030'
     },
     timerText2: {
         color: '#303030',
         fontFamily: 'Archivo-Bold',
         fontSize: 10,
-        textAlign: 'center'
+        textAlign: 'center',
+
+        color: '#303030'
     },
     timerBox: {
         width: '100%',

@@ -29,6 +29,7 @@ const RoutineScreen = (props) => {
 
     //User tutorial
     let Step0 = <View style={stylesSteps.container}>
+        <Icon name="sync" size={35} color="#303030" />
         <Text style={stylesSteps.desciptionText}>
             Esta é a tela de Sequências.
             {"\n"}
@@ -99,8 +100,13 @@ const RoutineScreen = (props) => {
     function handleCloseModalAndAdd() {
 
         if (sequenceRoutine) {
+            let sequenceFormated = sequenceRoutine
+            if (sequenceRoutine[sequenceRoutine.length - 1] == '-') {
+                sequenceFormated = sequenceRoutine.substr(0, sequenceRoutine.length - 1)
+            }
+
             api.post('/createRoutine', {
-                sequence: sequenceRoutine
+                sequence: sequenceFormated
             }).then((response) => {
                 console.log(response.data.routine)
                 setData([...data, response.data.routine])
@@ -119,6 +125,7 @@ const RoutineScreen = (props) => {
                     alert('Houve um erro ao tentar salvar sua sequência no banco de dados, tente novamente!')
                 }
             })
+
         } else {
             setSequenceRoutine('')
             setDataToEdit('')
@@ -171,8 +178,13 @@ const RoutineScreen = (props) => {
     function handleCloseModalAndEdit() {
 
         if (sequenceRoutine) {
+            let sequenceFormated = sequenceRoutine
+            if (sequenceRoutine[sequenceRoutine.length - 1] == '-') {
+                sequenceFormated = sequenceRoutine.substr(0, sequenceRoutine.length - 1)
+            }
+
             api.put('/editRoutine', {
-                sequence: sequenceRoutine
+                sequence: sequenceFormated
             }, {
                 params: {
                     id: dataToEdit
@@ -224,20 +236,35 @@ const RoutineScreen = (props) => {
         //previousValue don't worked
         setSequenceRoutine(() => {
 
-            if (text[text.length - 1] != ',' && text[text.length - 1] != '.' && text[text.length - 1] != '-' && text[text.length - 1] != ' ') {
-                console.log('sdas')
-                if ((text > sequenceRoutine) && (sequenceRoutine.length > 0)) {
-                    //String.replace() doesn't worked when repeat a number
-                    let text2 = `${text.substr(0, text.length - 1)}-${text.substr(-1,1)}`
-    
-                    return text2
-                } else if (text < sequenceRoutine) {
-                    
-                    return text.substr(0, text.length - 1)//this delete the last word on string
+            if (text[text.length - 1] != ',' && text[text.length - 1] != '.' && text[text.length - 1] != ' ') {
+                
+                if (text[0] == '0' && ['0','1','2','3','4','5','6','7','8','9'].includes(text[1])) {//avoid 01-***
+                    //Array.prototype.substr
+                    if (text[text.length - 1] != '-') {
+                        return text.substr(0, text.length - 1)+'-'//this delete the last word on string
+                    } else {
+                        return text
+                    }
+                } else if (text[text.length - 2] == '0' && ['0','1','2','3','4','5','6','7','8','9'].includes(text[text.length - 1])) {//avoid 12-01-**
+                    return text.substr(0, text.length - 1)+'-'
+                } else if (text[text.length - 2] == '-' && text[text.length - 1] == '-') {//avoid 1--****
+                    console.log('a')
+                    return text.substr(0, text.length - 1)
                 } else {
-                    //used when sequenceRoutine.length == 0
                     return text
                 }
+                // if ((text > sequenceRoutine) && (sequenceRoutine.length > 0)) {
+                //     //String.replace() doesn't worked when repeat a number
+                //     let text2 = `${text.substr(0, text.length - 1)}-${text.substr(-1,1)}`
+    
+                //     return text2
+                // } else if (text < sequenceRoutine) {
+                    
+                //     return text.substr(0, text.length - 1)//this delete the last word on string
+                // } else {
+                //     //used when sequenceRoutine.length == 0
+                //     return text
+                // }
             } else {
                 return text.substr(0, text.length - 1)//this delete the last word on string
             }
@@ -262,7 +289,7 @@ const RoutineScreen = (props) => {
                     modalVisible={modalAddVisible}
                     handleCloseModalButton={handleCloseAddModal} 
                     handleConfirmModalButton={handleCloseModalAndAdd}
-                    modalCardHeight={320}
+                    modalCardHeight={390}
                 >
                     <TextInput
                         style={styles.modalRoutineInput}
@@ -274,7 +301,10 @@ const RoutineScreen = (props) => {
                     />
                     <View style={styles.routineModalInfoBox}>
                         <Text style={styles.routineModalInfoText}>
-                        Insira a sequência que deseja criar, digite apenas os números, pois a formatação é feita automaticamente. <Text style={{fontWeight: 'bold'}}>Exemplo: (1-3-7-14-21-30)</Text>
+                            Insira a sequência que deseja criar, digite os números e utilize o sinal <Text style={{fontWeight: 'bold'}}>-</Text> para separá-los. <Text style={{fontWeight: 'bold'}}>Exemplo: 1-3-7-14-21-30</Text>
+                            {'\n'}
+                            {'\n'}
+                            Existe um sistema de autocorreção inputido para evitar que uma sequênica mal formatada seja criada.
                             {'\n'}
                             {'\n'}
                             Lembre-se, cada dígito indica após quantos dias, a partir da última revisão, a revisão associada será realizada, com excessão do primeiro dígito, já que
@@ -293,7 +323,7 @@ const RoutineScreen = (props) => {
                     modalVisible={modalEditVisible}
                     handleCloseModalButton={handleCloseEditModal} 
                     handleConfirmModalButton={handleCloseModalAndEdit}
-                    modalCardHeight={320}
+                    modalCardHeight={390}
                 >
                     <TextInput
                         style={styles.modalRoutineInput}
@@ -305,7 +335,10 @@ const RoutineScreen = (props) => {
                     />
                     <View style={styles.routineModalInfoBox}>
                     <Text style={styles.routineModalInfoText}>
-                            Insira a sequência que deseja criar, digite apenas os números, pois a formatação é feita automaticamente. <Text style={{fontWeight: 'bold'}}>Exemplo: (1-3-7-14-21-30)</Text>
+                            Insira a sequência que deseja criar, digite os números e utilize o sinal <Text style={{fontWeight: 'bold'}}>-</Text> para separá-los. <Text style={{fontWeight: 'bold'}}>Exemplo: 1-3-7-14-21-30</Text>
+                            {'\n'}
+                            {'\n'}
+                            Existe um sistema de autocorreção inputido para evitar que uma sequênica mal formatada seja criada.
                             {'\n'}
                             {'\n'}
                             Lembre-se, cada dígito indica após quantos dias, a partir da última revisão, a revisão associada será realizada, com excessão do primeiro dígito, já que

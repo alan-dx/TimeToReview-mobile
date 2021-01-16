@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import { View, Text, KeyboardAvoidingView, Alert } from 'react-native';
 import styles from './styles';
 import Icon from 'react-native-vector-icons/AntDesign';
-import Icon2 from 'react-native-vector-icons/Feather';
+import Icon3 from 'react-native-vector-icons/MaterialIcons';
 import { BorderlessButton } from "react-native-gesture-handler"
 import { useNavigation } from '@react-navigation/native';
 import PickerInfo from '../../components/Picker';
@@ -37,7 +37,7 @@ const AddScreen = (props) => {
 
     function handleCreateReview() {
         const currentDate = new Date()
-        
+
         if (!titleReview || !subjectReview || !routineReview) {
             alert("Preencha todos os campos!")
         } else {
@@ -226,14 +226,14 @@ const AddScreen = (props) => {
                     <View style={styles.noteAudioButton}>
                         <Text style={styles.label2}>Anotações</Text>
                         <BorderlessButton style={{marginTop: 5}} onPress={handleGoToNotesScreen}>
-                            <Icon2 name="edit" size={25} color="#303030" style={styles.iconBack} />
+                            <Icon3 name="library-books" size={25} color="#303030" style={styles.iconBack} />
                         </BorderlessButton>
                     </View>
                     <View style={styles.separator} />
                     <View style={styles.noteAudioButton}>
                         <Text style={styles.label2}>Áudio</Text>
                         <BorderlessButton style={{marginTop: 5}} onPress={handleAudioSelector}>
-                            <Icon2 name="music" size={25} color="#303030" style={styles.iconBack} />
+                            <Icon3 name="library-music" size={25} color="#303030" style={styles.iconBack} />
                         </BorderlessButton>
                     </View>
                 </View> 

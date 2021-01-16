@@ -3,6 +3,7 @@ import { View, Text, ScrollView, Dimensions } from 'react-native';
 import styles from './styles';
 import stylesSteps from './stylesSteps';
 import ChartLine from '../../components/ChartLine';
+import Icon from 'react-native-vector-icons/Feather';
 import ChartBar from '../../components/ChartBar';
 import ChartPiee from '../../components/ChartPiee';
 import AuthContext from '../../contexts/auth';
@@ -25,11 +26,12 @@ const PerformanceScreen = () => {
     const [averageReviews, setAverageReviews] = useState(Math.round(averageCalculate(dataReviewsChart)))
     const [dataChronometerChart, setDataChronometerChart] = useState([0,0,0,0,0,0,0])
     const [averageChronometer, setAverageChronometer] = useState(dataChronometerChart)
-    const [bestPerformanceDay] = useState(findBestPerformanceDay(dataReviewsChart))
+    const [bestPerformanceDay, setBestPerformanceDay] = useState(findBestPerformanceDay(dataReviewsChart))
     const [handleOpenTutorialModal, setHandleOpenTutorialModal] = useState(false)
 
     //User tutorial
     let Step0 = <View style={stylesSteps.container}>
+        <Icon name="pie-chart" size={35} color="#303030" />
         <Text style={stylesSteps.desciptionText}>
             Esta é a tela de Desempenho.
             {"\n"}
@@ -82,8 +84,8 @@ const PerformanceScreen = () => {
                 
                 decisionForTimeAverage = true
 
-                findBestPerformanceDay(lastWeekDataReviewsChart)
-
+                setBestPerformanceDay(findBestPerformanceDay(lastWeekDataReviewsChart))
+                
                 return null
             }
         })
@@ -160,8 +162,8 @@ const PerformanceScreen = () => {
                     <Text style={styles.textBold}>INFORMAÇÕES GERAIS</Text>
                     <View style={styles.lineChartPieBox} />
                     <View style={{alignItems: 'flex-start', width: '90%', paddingVertical: 10}}>
+                        <Text style={styles.subText}>Dia de maior desempenho (em geral): {bestPerformanceDay} </Text>
                         <Text style={styles.subText}>Sequência mais utilizada: {routines[mostUseRoutine].label || 'Verificando...'} </Text>
-                        <Text style={styles.subText}>Dia de maior desempenho: {bestPerformanceDay} </Text>
                         <Text style={styles.subText}>Matéria de maior uso: {subjects[mostUseSubject].label}</Text>
                     </View>
                 </View>

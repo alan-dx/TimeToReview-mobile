@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#F5F5F5'
+        backgroundColor: '#FCFCFC'
     },
     header: {
         height: '30%',
@@ -40,7 +40,7 @@ const styles = StyleSheet.create({
         marginTop: 10,
         paddingTop: 14,
 
-        elevation: 4
+        elevation: 7
     },
     optionContainer: {
         height: 40,

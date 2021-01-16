@@ -22,6 +22,7 @@ const styles = StyleSheet.create({
         fontFamily: 'Archivo-Bold',
         fontSize: 15,
         textAlign: 'center',
+        color: '#303030',
         
         marginTop: 20
     },

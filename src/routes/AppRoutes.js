@@ -40,7 +40,7 @@ const AppRoutes = () => {
                     component={HomeScreen} 
                     options={{
                         headerShown: true,
-                        header: () => <Header title="MENU" showLogout color="#F5F5F5" />
+                        header: () => <Header title="MENU" showLogout color="#FCFCFC" />
                     }}
                 />
                 <Screen 
@@ -48,7 +48,7 @@ const AppRoutes = () => {
                     component={ReviewsScreen}
                     options={({ navigation, route }) => ({
                         headerShown: true,
-                        header: () => <Header route={route} navigation={navigation} title="REVISÕES" color="#F5F5F5" />
+                        header: () => <Header route={route} navigation={navigation} title="REVISÕES" color="#FCFCFC" />
                       })}
                 />
                 <Screen 
@@ -56,7 +56,7 @@ const AppRoutes = () => {
                     component={RoutineScreen} 
                     options={{
                         headerShown: true,
-                        header: () => <Header title="SEQUÊNCIAS" color="#F5F5F5" />
+                        header: () => <Header title="SEQUÊNCIAS" color="#FCFCFC" />
                     }} 
                 />
                 <Screen 
@@ -64,7 +64,7 @@ const AppRoutes = () => {
                     component={SubjectScreen} 
                     options={{
                         headerShown: true,
-                        header: () => <Header title="DISCIPLINAS" color="#F5F5F5" />
+                        header: () => <Header title="DISCIPLINAS" color="#FCFCFC" />
                     }} 
                 />
                 <Screen 
@@ -72,7 +72,7 @@ const AppRoutes = () => {
                     component={PerformanceScreen}
                     options={{
                         headerShown: true,
-                        header: () => <Header title="DESEMPENHO" color="#F5F5F5" />
+                        header: () => <Header title="DESEMPENHO" color="#FCFCFC" />
                     }} 
                 />
                 <Screen 
@@ -80,7 +80,7 @@ const AppRoutes = () => {
                     component={SettingScreen}
                     options={{
                         headerShown: true,
-                        header: () => <Header title="CONFIGURAÇÕES" color="#F5F5F5" />
+                        header: () => <Header title="CONFIGURAÇÕES" color="#FCFCFC" />
                     }} 
                 />
                 <Screen 
@@ -88,7 +88,7 @@ const AppRoutes = () => {
                     component={UpdatesScreen}
                     options={{
                         headerShown: true,
-                        header: () => <Header title="ATUALIZAÇÕES" color="#F5F5F5" />
+                        header: () => <Header title="ATUALIZAÇÕES" color="#FCFCFC" />
                     }}
                 />
                 <Screen 
@@ -96,7 +96,7 @@ const AppRoutes = () => {
                     component={DoubtsScreen}
                     options={{
                         headerShown: true,
-                        header: () => <Header title="TIRA DÚVIDAS" color="#F5F5F5" />
+                        header: () => <Header title="TIRA DÚVIDAS" color="#FCFCFC" />
                     }}
                 />
                 <Screen 
@@ -104,7 +104,7 @@ const AppRoutes = () => {
                     component={AboutScreen}
                     options={{
                         headerShown: true,
-                        header: () => <Header title="SOBRE" color="#FFF" />
+                        header: () => <Header title="SOBRE" color="#FCFCFC" />
                     }}
                 />
                 <Screen 
@@ -112,7 +112,7 @@ const AppRoutes = () => {
                     component={ProfileScreen}
                     options={({ navigation, route }) => ({
                         headerShown: true,
-                        header: () => <Header route={route} navigation={navigation} title="SEU PERFIL" color="#F5F5F5" />
+                        header: () => <Header route={route} navigation={navigation} title="SEU PERFIL" color="#FCFCFC" />
                     })}
                 />
                 <Screen 
@@ -120,7 +120,7 @@ const AppRoutes = () => {
                     component={VerifyPassScreen}
                     options={({ navigation, route }) => ({
                         headerShown: true,
-                        header: () => <Header title="" color="#F5F5F5" />
+                        header: () => <Header title="" color="#FCFCFC" />
                     })}
                 />
                 <Screen 
@@ -128,7 +128,7 @@ const AppRoutes = () => {
                     component={ChangePassScreen}
                     options={({ navigation, route }) => ({
                         headerShown: true,
-                        header: () => <Header title="" color="#F5F5F5" />
+                        header: () => <Header title="" color="#FCFCFC" />
                     })}
                 />
                 <Screen 
@@ -136,7 +136,7 @@ const AppRoutes = () => {
                     component={BePremiumScreen}
                     options={{
                         headerShown: true,
-                        header: () => <Header title="SEJA PREMIUM" color="#F5F5F5" />
+                        header: () => <Header title="SEJA PREMIUM" color="#FCFCFC" />
                     }} 
                 />
                 <Screen 
@@ -164,7 +164,7 @@ const AppRoutes = () => {
                     component={AllReviewsScreen}
                     options={{
                         headerShown: true,
-                        header: () => <Header title="TODAS REVISÕES" color="#F5F5F5" />
+                        header: () => <Header title="TODAS REVISÕES" color="#FCFCFC" />
                     }} 
                 />
             </Navigator>

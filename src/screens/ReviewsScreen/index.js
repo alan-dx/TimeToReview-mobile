@@ -12,7 +12,8 @@ import timeFormat from '../../utils/formatDateTime';
 import AsyncStorage from '@react-native-community/async-storage';
 import ScreenTutorial from '../../components/ScreenTutorial';
 import Icon from 'react-native-vector-icons/AntDesign';
-import Icon2 from 'react-native-vector-icons/Feather';
+import Icon2 from 'react-native-vector-icons/MaterialIcons';
+import Icon3 from 'react-native-vector-icons/AntDesign';
 import TrackPlayer from 'react-native-track-player';
 import PlayerModal from '../../components/PlayerModal';
 import NotesModal from '../../components/NotesModal';
@@ -48,7 +49,6 @@ const ReviewsScreen = (props) => {
             //and to end current cycle also onGoBack
 
             if (!startController) {//I could call handleStartStopController or this
-                console.log('here')
                 handleStopCycle()
             }
 
@@ -56,7 +56,7 @@ const ReviewsScreen = (props) => {
             navigation.goBack()
 
             return true // to disable back button original action
-            // if not disable, this is will cause a double goBack()
+        // if not disable, this is will cause a double goBack()
         })
 
     }, [startController])
@@ -76,6 +76,7 @@ const ReviewsScreen = (props) => {
 
     //User tutorial
     let Step0 = <View style={stylesSteps.container}>
+        <Icon3 name="exception1" size={35} color="#303030" />
         <Text style={stylesSteps.desciptionText}>
             Esta é a tela de Revisões.
             {"\n"}
@@ -164,7 +165,7 @@ const ReviewsScreen = (props) => {
         </Text>
     </View>
     let Step4 = <View style={stylesSteps.container}> 
-        <Icon2 name="alert-triangle" size={35} color="red" />
+        <Icon2 name="date-range" size={40} color="red" />
         <Text style={stylesSteps.desciptionText}>
             Revisão em atraso!
             {"\n"}
@@ -173,7 +174,7 @@ const ReviewsScreen = (props) => {
         </Text>
     </View>
     let Step5 = <View style={stylesSteps.container}> 
-        <Icon2 name="edit" size={35} color="#303030" />
+        <Icon2 name="library-books" size={40} color="#303030" />
         <Text style={stylesSteps.desciptionText}>
             Anotações!
             {"\n"}
@@ -183,7 +184,7 @@ const ReviewsScreen = (props) => {
         </Text>
     </View>
     let Step6 = <View style={stylesSteps.container}> 
-        <Icon2 name="music" size={35} color="#303030" />
+        <Icon2 name="library-music" size={40} color="#303030" />
         <Text style={stylesSteps.desciptionText}>
             Ouvir áudio associado!
             {"\n"}

@@ -127,7 +127,9 @@ const LoginScreen = () => {
                     marginTop={10}
                 />
                 <View style={styles.buttonBox}>
-                    <CustomButton text="LOGAR" color='#e74e36' onPress={handleClickSignInButton}/>
+                    <View style={{marginTop: 25, width: '100%', alignSelf: 'center', alignItems: 'center'}}>
+                        <CustomButton text="LOGAR" color='#e74e36' onPress={handleClickSignInButton}/>
+                    </View>
                     <View style={styles.forgotPasswordBox}>
                         <BorderlessButton onPress={handleGoToForgotPassword}>
                             <Text style={styles.forgotPasswordText}>Esqueceu a senha?</Text>

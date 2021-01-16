@@ -3,6 +3,7 @@ import { StyleSheet } from 'react-native';
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        backgroundColor: '#FCFCFC'
     },
     loadingChartBox: {
         width: '95%',
@@ -16,7 +17,7 @@ const styles = StyleSheet.create({
     },
     graphBox: {
         flex: 1,
-        backgroundColor:'#F5F5F5',
+        backgroundColor:'#FCFCFC',
 
         alignItems: 'center',
         justifyContent: 'space-around',
@@ -36,7 +37,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
 
-        elevation: 4
+        elevation: 7
     },
     performanceButton: {
         backgroundColor: '#60c3eb',
@@ -61,7 +62,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 5,
         paddingBottom: 3,
 
-        elevation: 4
+        elevation: 10
     },
     menuRow: {
         flex: 1,

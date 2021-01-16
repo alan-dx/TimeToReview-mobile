@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#FFFFFF',
+        backgroundColor: '#FCFCFC',
         justifyContent: "flex-end"
     },
     topBox: {
@@ -32,6 +32,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: 'space-evenly',
         width: '90%',
+        height: 180,
         display: "flex",
     },
     devText: {

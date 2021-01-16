@@ -11,6 +11,8 @@ const styles = StyleSheet.create({
         fontFamily: 'Archivo-Bold',
         fontSize: 15,
         textAlign: 'center',
+
+        color: '#303030'
     },
     floatAddButton: {
         width: 75,

@@ -3,6 +3,7 @@ import { View, Text } from 'react-native';
 import styles from './styles';
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/AntDesign';
+import Icon2 from 'react-native-vector-icons/MaterialIcons';
 import CustomButton from '../../components/CustomButton';
 
 
@@ -37,6 +38,10 @@ const UpdatesScreen = () => {
                 <View style={styles.updateItem}>
                     <Icon name="picture" size={25} color="#303030" style={{marginRight: 5}} />
                     <Text style={styles.updateItemText}>Imagens associadas às revisões;</Text>
+                </View>
+                <View style={styles.updateItem}>
+                    <Icon2 name="library-music" size={25} color="#303030" style={{marginRight: 5}} />
+                    <Text style={styles.updateItemText}>Arquivos de áudio da internet associados às revisões;</Text>
                 </View>
             </View>
             <View style={styles.updateBox}>
