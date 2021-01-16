@@ -7,7 +7,6 @@ const styles = StyleSheet.create({
     labelBoxL: {
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'center',
         width: '90%',
         alignSelf: 'flex-start',
     },
@@ -18,8 +17,9 @@ const styles = StyleSheet.create({
     label: {
         fontFamily: 'Archivo-Bold',
         fontSize: 15,
+        color: '#303030',
+
         marginHorizontal: 3,
-        color: '#303030'
     },
     input: {
         backgroundColor: '#E8E8E8',

@@ -37,6 +37,7 @@ const AddScreen = (props) => {
 
     function handleCreateReview() {
         const currentDate = new Date()
+        currentDate.setUTCHours(5,0,0,0)
 
         if (!titleReview || !subjectReview || !routineReview) {
             alert("Preencha todos os campos!")
@@ -47,7 +48,8 @@ const AddScreen = (props) => {
                 subject_id: subjectReview._id,
                 dateNextSequenceReview: dateNextSequenceReview,
                 track: trackAudioReview,
-                notes: notesReview
+                notes: notesReview,
+                date: currentDate
             }).then((response) => {
 
                 navigation.goBack()
@@ -218,7 +220,9 @@ const AddScreen = (props) => {
                             const currentDate = new Date()
                             setRoutineReview(item)
                             const nextDate = currentDate.getDate() + Number(item.sequence[0])
-                            setDateNextSequenceReview(new Date(currentDate.getFullYear(), currentDate.getMonth(), nextDate, 3))
+                            const dateNextSequenceReviewSend = new Date(currentDate.getFullYear(), currentDate.getMonth(), nextDate, 3)
+                            dateNextSequenceReviewSend.setUTCHours(5,0,0,0)
+                            setDateNextSequenceReview(dateNextSequenceReviewSend)
                         }}
                     />
                 </View>

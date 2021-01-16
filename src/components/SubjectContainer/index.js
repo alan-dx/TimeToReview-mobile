@@ -10,7 +10,7 @@ const SubjectContainer = (props) => {
             <View style={styles.titleBox}>
                 <Text style={styles.titleSubject}>{props.data.label}</Text>
             </View>
-            <Text style={styles.label}>{props.data.associatedReviews.length} REVISÕES ASSOCIADAS</Text>
+            <Text style={styles.label}>{props.data.associatedReviews.length} {props.data.associatedReviews.length == 1 ? 'REVISÃO ASSOCIADA' : 'REVISÕES ASSOCIADAS'}</Text>
             <View style={styles.infoBox}>
                 <View style={[styles.infoButtonBox, {backgroundColor: '#60c3eb'}]}>
                     <RectButton onPress={props.onPressEdit} style={styles.containerButton}>

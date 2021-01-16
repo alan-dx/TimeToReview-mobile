@@ -111,7 +111,7 @@ const ProfileScreen = () => {
                         <Text style={styles.profileEmail}>{user.email}</Text>
                     </View>
                 </View>
-                <Text style={styles.infoText}>{allReviews.length} revisões, {routines.length} rotinas e {subjects.length} matérias cadastradas</Text>
+                <Text style={styles.infoText}>{allReviews.length} {allReviews.length == 1 ? 'revisão' : 'revisões'}, {routines.length} {routines.length == 1 ? 'rotina' : 'rotinas'} e {subjects.length} {subjects.length == 1 ? 'matéria cadastrada' : 'matérias cadastradas'}</Text>
             </View>
             <View style={styles.menuBox}>
                 <RectButton style={styles.optionContainer}  onPress={handleChangePass}>

@@ -32,16 +32,35 @@ const EditScreen = (props) => {
     const navigation = useNavigation();
 
     useEffect(() => {
-        let previousDate = new Date(dataScreen.dateNextSequenceReview)
-        let nextSequenceReview = dataScreen.routine_id.sequence[dataScreen.currentSequenceReview + 1]
-        // console.log(previousDate.getDate(), nextSequenceReview, previousDate.getDay() + nextSequenceReview)
-        previousDate.setDate(previousDate.getDate() + Number(nextSequenceReview))
+
+
+        // if ((dataScreen.routine_id.sequence.length - 1) == dataScreen.currentSequenceReview) {
+        // } else {
+        //     nextSequenceReview = dataScreen.routine_id.sequence[dataScreen.currentSequenceReview]
+        // }
+
         
         if (props.route.params.fromReviewsScreen) {
+            console.log('aa')
+            let previousDate = new Date()
+            
+            previousDate.setUTCHours(5,0,0,0)
+            
+            let nextSequenceReview = routineReview.sequence[dataScreen.currentSequenceReview + 1]
+    
+            if (dataScreen.currentSequenceReview >= (routineReview.sequence.length - 1)) {//In case the user selects a shorter sequence
+                console.log('caiu aq')
+                nextSequenceReview = routineReview.sequence[routineReview.sequence.length - 1]
+                setCurrentSequenceReview(routineReview.sequence[routineReview.sequence.length - 1])
+            }
+            
+            previousDate.setDate(previousDate.getDate() + Number(nextSequenceReview))
+
+
             setDateNextSequenceReview(previousDate)
         }
 
-    }, [])
+    }, [routineReview])
 
     function handlePressGoBack() {
         navigation.goBack()
@@ -57,8 +76,6 @@ const EditScreen = (props) => {
             notes: notesReview != dataScreen.notes ? notesReview : null
         }
 
-        console.log('editData', editData)
-        
         if (editData.title || editData.subject_id || editData.routine_id || editData.track || editData.notes) {
             api.put('/editReview', editData,
             {

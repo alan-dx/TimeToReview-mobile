@@ -11,9 +11,13 @@ const ReviewContainer = (props) => {
     
     useEffect(() => {
         setSequence(props.data.routine_id.sequence.join('-'))
-        let currentDate = new Date().setHours(0,0,0,0)
+        let currentDate = new Date()
+        currentDate.setUTCHours(0,0,0,0)
         let reviewDate = new Date(props.data.dateNextSequenceReview)
+        reviewDate.setUTCHours(0,0,0,0)
 
+        console.log(props.data.dateNextSequenceReview)
+        console.log(reviewDate, currentDate)
         if (reviewDate < currentDate) {
             setDelayed(true)
         }

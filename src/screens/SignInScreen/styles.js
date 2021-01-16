@@ -54,7 +54,8 @@ const styles = StyleSheet.create({
     forgotPasswordText: {
         fontFamily: 'Archivo-SemiBold',
         color: '#303030',
-        fontSize: 15
+        fontSize: 15,
+        textDecorationLine: 'underline'
     },
     buttonBox: {
         alignItems: 'center'

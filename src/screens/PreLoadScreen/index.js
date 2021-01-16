@@ -1,5 +1,5 @@
-import React, { useCallback, useContext, useEffect } from 'react';
-import { View, Text, ActivityIndicator } from 'react-native';
+import React, { useContext, useEffect } from 'react';
+import { View, ActivityIndicator } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import AuthContext from '../../contexts/auth';
 
@@ -12,7 +12,7 @@ const PreLoadScreen = () => {
         loadServerData().then((response) => {
             
             // const reminderTime = new Date(response.data.reminderTime)
-            console.log('sub',response.data.routines)
+            console.log('sub',response.data.reviews)
 
             setUser({
                 name: response.data.name,
@@ -53,7 +53,7 @@ const PreLoadScreen = () => {
     }, [])
 
     return (
-        <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+        <View style={{flex: 1, alignItems: 'center', justifyContent: 'center', color: '#FCFCFC'}}>
             <ActivityIndicator size="large" color="#303030" />
         </View>
     )

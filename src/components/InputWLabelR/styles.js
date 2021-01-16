@@ -7,6 +7,7 @@ const styles = StyleSheet.create({
     labelBoxR: {
         flexDirection: 'row',
         alignItems: 'center',
+        justifyContent: 'center',
         width: '90%',
         alignSelf: 'flex-end',
     },
@@ -20,7 +21,6 @@ const styles = StyleSheet.create({
         color: '#303030',
         
         marginHorizontal: 3,
-        marginTop: 3,
     },
     input: {
         backgroundColor: '#E8E8E8',

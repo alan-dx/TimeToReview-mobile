@@ -34,7 +34,7 @@ const HomeScreen = () => {
     useFocusEffect(
         useCallback(() => {
             const currentDate = new Date()
-            currentDate.setHours(3,0,0,0)
+            currentDate.setHours(5,0,0,0)
             const filteredReviews = allReviews.filter(item => new Date(item.dateNextSequenceReview) <= currentDate)
             setReviews(filteredReviews)
             setNumberOfReviews(filteredReviews.length)
@@ -162,7 +162,7 @@ const HomeScreen = () => {
 
     const homeDash = <>
         <View style={styles.graphBox}>
-            <Text style={styles.graphBoxTitle}>Você possui {numberOfReviews} revisões pendentes!</Text>
+            <Text style={styles.graphBoxTitle}>Você possui {numberOfReviews} {numberOfReviews == 1 ? 'revisão pendente!' : 'revisões pendentes!'}</Text>
             {/* NESSE GRÁFICO INDICAR A QUANTIDADE DE REVISÕES POR DIA */}
             <Chart showLabel height={Dimensions.get("window").height * 0.3} elevation={2} data={dataChart} />
             <View style={styles.performanceBox}>
@@ -196,7 +196,7 @@ const HomeScreen = () => {
             <View style={styles.menuRow}>
                 <View style={styles.menuItemBox}>
                     <MenuButton color="#FFF" textColor="#303030" onPress={handleClickGoToSubjectScreen} title="Disciplinas">
-                        <Icon name="book" size={25} color="#303030" />
+                        <Icon name="book" size={28} color="#303030" />
                     </MenuButton>
                 </View>
                 <View style={styles.menuItemBox}>

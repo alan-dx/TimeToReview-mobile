@@ -212,6 +212,7 @@ const ReviewsScreen = (props) => {
 
     async function handleConcludeReview(id) {
         const currentDate = new Date()
+        currentDate.setUTCHours(5,0,0,0)
 
         api.post('/concludeReview',null, {
             params: {
