@@ -53,35 +53,50 @@ const ReviewContainer = (props) => {
                         </RectButton>
                     </View>
                 </View>
-                {
-                    props.data.track  && props.haveExtraOptions  ? 
-                        <BorderlessButton style={styles.audioButton} onPress={props.onPressAudioButton}>
-                            <Icon name="library-music" size={22} color="#303030" />
-                        </BorderlessButton>
-                    :
-                        <BorderlessButton style={styles.audioButton} onPress={() => {
-                            if (props.haveExtraOptions) {
-                                ToastAndroid.show('Não há áudio associado!', 300)
-                            }
-                        }}>
-                            <Icon name="library-music" size={22} color="#F0F0F0" />
-                        </BorderlessButton>
-
-                }
-                { 
-                    props.data.notes.title != '' && props.haveExtraOptions  ? 
-                        <BorderlessButton style={styles.noteButton} onPress={props.onPressNotesButton}>
-                            <Icon name="library-books" size={22} color="#303030" />
-                        </BorderlessButton>
-                    :
-                        <BorderlessButton style={styles.noteButton} onPress={() => {
-                            if (props.haveExtraOptions) {
-                                ToastAndroid.show('Não há nota associada!', 300)
-                            }
-                        }}>
-                            <Icon name="library-books" size={22} color="#F0F0F0" />
-                        </BorderlessButton>
-                }
+                <View style={styles.featuresBox}>
+                    {
+                        props.data.track && props.haveExtraOptions ? 
+                            <BorderlessButton style={styles.audioButton} onPress={props.onPressAudioButton}>
+                                <Icon name="library-music" size={22} color="#303030" />
+                            </BorderlessButton>
+                        :
+                            <BorderlessButton style={styles.audioButton} onPress={() => {
+                                if (props.haveExtraOptions) {
+                                    ToastAndroid.show('Não há áudio associado!', 300)
+                                }
+                            }}>
+                                <Icon name="library-music" size={22} color="#F0F0F0" />
+                            </BorderlessButton>
+                    }
+                    {
+                        props.data.image && props.haveExtraOptions ?
+                            <BorderlessButton style={styles.imageButton} onPress={props.onPressImageButton}>
+                                <Icon name="collections" size={22} color="#303030" />
+                            </BorderlessButton>
+                        :
+                            <BorderlessButton style={styles.imageButton} onPress={() => {
+                                if (props.haveExtraOptions) {
+                                    ToastAndroid.show('Não há imagem associada!', 300)
+                                }
+                            }}>
+                                <Icon name="collections" size={22} color="#F0F0F0" />
+                            </BorderlessButton>
+                    }
+                    { 
+                        props.data.notes.title != '' && props.haveExtraOptions  ? 
+                            <BorderlessButton style={styles.noteButton} onPress={props.onPressNotesButton}>
+                                <Icon name="library-books" size={22} color="#303030" />
+                            </BorderlessButton>
+                        :
+                            <BorderlessButton style={styles.noteButton} onPress={() => {
+                                if (props.haveExtraOptions) {
+                                    ToastAndroid.show('Não há nota associada!', 300)
+                                }
+                            }}>
+                                <Icon name="library-books" size={22} color="#F0F0F0" />
+                            </BorderlessButton>
+                    }
+                </View>
             </View>
         </View>
     )

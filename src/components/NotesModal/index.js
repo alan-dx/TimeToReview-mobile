@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Text, Modal, TouchableHighlight, TextInput} from 'react-native'
+import {View, Text, Modal, TouchableHighlight} from 'react-native'
 import styles from './styles'
 import Icon from 'react-native-vector-icons/Feather'
 import { ScrollView } from 'react-native-gesture-handler';

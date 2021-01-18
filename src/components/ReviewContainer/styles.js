@@ -67,7 +67,6 @@ const styles = StyleSheet.create({
         color: '#303030',
         fontSize: 12,
         
-        right: 10,
         alignSelf: 'center'
     },
     editButtonBox: {
@@ -75,8 +74,6 @@ const styles = StyleSheet.create({
         flex: 1,
         borderTopRightRadius: 7,
         borderTopLeftRadius: 7,
-
-        left: 10
     },
     containerButton: {
         flex: 1,
@@ -94,18 +91,22 @@ const styles = StyleSheet.create({
         flex: 1,
         borderTopRightRadius: 7,
         borderTopLeftRadius: 7,
+    },
+    featuresBox: {
+        width: '100%',
+        height: '50%',
 
-        right: 10
+        flexDirection: 'row',
+        position: 'absolute',
+        justifyContent: 'space-between',
+        right: 0,
+        bottom: 3
     },
     audioButton: {
-        position: 'absolute',
-        right: 4,
-        bottom: 2
     },
     noteButton: {
-        position: 'absolute',
-        left: 4,
-        bottom: 2
+    },
+    imageButton: {
     }
     
 })

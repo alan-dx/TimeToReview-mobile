@@ -1,10 +1,9 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { View, Text, KeyboardAvoidingView } from 'react-native';
+import { View, Text, KeyboardAvoidingView, Alert } from 'react-native';
 import styles from './styles';
 import Icon from 'react-native-vector-icons/AntDesign';
-import Icon2 from 'react-native-vector-icons/Feather';
+import Icon3 from 'react-native-vector-icons/MaterialIcons';
 import { BorderlessButton } from "react-native-gesture-handler"
-import Input from '../../components/Input';
 import { useNavigation } from '@react-navigation/native';
 import PickerInfo from '../../components/Picker';
 import api from '../../services/api';
@@ -12,6 +11,7 @@ import AuthContext from '../../contexts/auth';
 import DocumentPicker from 'react-native-document-picker';
 import UUIDGenerator from 'react-native-uuid-generator';
 import RNFetchBlob from 'rn-fetch-blob';
+import ImagePicker from 'react-native-image-picker';
 import InputWLabelL from '../../components/InputWLabelL';
 
 const EditScreen = (props) => {
@@ -28,6 +28,7 @@ const EditScreen = (props) => {
     const [dateNextSequenceReview, setDateNextSequenceReview] = useState(new Date(dataScreen.dateNextSequenceReview));
     const [currentSequenceReview, setCurrentSequenceReview] = useState(dataScreen.routine_id.sequence[dataScreen.currentSequenceReview])
     const [createdDate] = useState(new Date(dataScreen.createdAt))
+    const [imageReview, setImageReview] = useState(dataScreen.image)
 
     const navigation = useNavigation();
 
@@ -41,7 +42,6 @@ const EditScreen = (props) => {
 
         
         if (props.route.params.fromReviewsScreen) {
-            console.log('aa')
             let previousDate = new Date()
             
             previousDate.setUTCHours(5,0,0,0)
@@ -73,10 +73,11 @@ const EditScreen = (props) => {
             subject_id: subjectReview._id != dataScreen.subject_id._id ? subjectReview._id : null,
             routine_id: routineReview._id != dataScreen.routine_id._id ? routineReview._id : null,
             track: trackAudioReview != dataScreen.track ? trackAudioReview : null,
-            notes: notesReview != dataScreen.notes ? notesReview : null
+            notes: notesReview != dataScreen.notes ? notesReview : null,
+            image: imageReview != dataScreen.image ? imageReview : null
         }
 
-        if (editData.title || editData.subject_id || editData.routine_id || editData.track || editData.notes) {
+        if (editData.title || editData.subject_id || editData.routine_id || editData.track || editData.notes || editData.image) {
             api.put('/editReview', editData,
             {
                 params: {
@@ -194,7 +195,6 @@ const EditScreen = (props) => {
           }
     }
 
-    
     function handleSaveNotes(note) {
         setNotesReview(note)
         console.log(note)
@@ -204,6 +204,44 @@ const EditScreen = (props) => {
         navigation.navigate("NotesScreen", {
             onGoBack: handleSaveNotes,
             screenData: notesReview
+        })
+    }
+
+    function handleImageSelector() {
+        ImagePicker.showImagePicker({
+            title: "Selecionar Foto",
+            mediaType: "photo",
+            storageOptions: {
+                skipBackup: true,
+                path: 'images',
+            },
+        }, (response) => {
+            if (response.didCancel) {
+                console.log('User cancelled image picker');
+            } else if (response.error) {
+                Alert.alert(
+                    "Precisamos dessa permissão!",
+                    "Para selecionar/tirar uma foto precisamos da permissão solicitada. Por favor, realize o procedimento novamente e aceite a solicitação.",
+                    [
+                      {
+                        text: "Ok, vamos lá!",
+                        onPress: async () => {},
+                        style: "cancel"
+                      },
+                    ],
+                    { cancelable: false }
+                );
+            } else if (response.customButton) {
+                console.log(
+                    'User tapped custom button: ',
+                    response.customButton
+                    );
+                    console.log(response.customButton);
+                } else {
+                    console.log('uri',response.path, typeof(response.path))
+                    setImageReview(response.path)
+            }
+            
         })
     }
 
@@ -297,18 +335,23 @@ const EditScreen = (props) => {
                         }}
                     />
                 </View>
-                <View style={styles.noteAudioBox}>
-                    <View style={styles.noteAudioButton}>
+                <View style={styles.featuresBox}>
+                    <View style={styles.featuresButton}>
                         <Text style={styles.label2}>Anotações</Text>
                         <BorderlessButton style={{marginTop: 5}} onPress={handleGoToNotesScreen}>
-                            <Icon2 name="edit" size={25} color="#303030" style={styles.iconBack} />
+                            <Icon3 name="library-books" size={28} color="#303030" style={styles.iconBack} />
                         </BorderlessButton>
                     </View>
-                    <View style={styles.separator} />
-                    <View style={styles.noteAudioButton}>
+                    <View style={styles.featuresButton}>
+                        <Text style={styles.label2}>Imagem</Text>
+                        <BorderlessButton style={{marginTop: 5}} onPress={handleImageSelector}>
+                            <Icon3 name="collections" size={28} color="#303030" style={styles.iconBack} />
+                        </BorderlessButton>
+                    </View>
+                    <View style={styles.featuresButton}>
                         <Text style={styles.label2}>Áudio</Text>
-                        <BorderlessButton style={{marginTop: 5}} onPress={handleAudioSelector} >
-                            <Icon2 name="music" size={25} color="#303030" style={styles.iconBack} />
+                        <BorderlessButton style={{marginTop: 5}} onPress={handleAudioSelector}>
+                            <Icon3 name="library-music" size={28} color="#303030" style={styles.iconBack} />
                         </BorderlessButton>
                     </View>
                 </View> 

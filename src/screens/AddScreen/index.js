@@ -11,6 +11,7 @@ import AuthContext from '../../contexts/auth';
 import DocumentPicker from 'react-native-document-picker';
 import UUIDGenerator from 'react-native-uuid-generator';
 import RNFetchBlob from 'rn-fetch-blob';
+import ImagePicker from 'react-native-image-picker';
 import InputWLabelL from '../../components/InputWLabelL';
 
 const AddScreen = (props) => {
@@ -27,12 +28,127 @@ const AddScreen = (props) => {
         note: '',
         align: 'left'
     })
+    const [imageReview, setImageReview] = useState(null)
 
     const navigation = useNavigation();
 
     function handlePressGoBack() {
         navigation.goBack()
         setTrackAudioReview('')
+    }
+
+    
+    async function handleAudioSelector() {
+        
+        try {
+            
+            const res = await DocumentPicker.pick({
+                type: [DocumentPicker.types.audio],
+            });
+            
+            let id;
+            let url;
+            //callback interface
+            await UUIDGenerator.getRandomUUID().then((uuid) => {
+                id = uuid
+            })
+            
+            await RNFetchBlob.fs
+            .stat(res.uri)
+            .then((stats) => {
+                console.log(stats.path)
+                url = `file://${stats.path}`
+            })
+            .catch((err) => {
+                Alert.alert(
+                    "Ops, algo de errado aconteceu, mas vamos tentar de novo!",
+                    "Não foi possível selecionar o arquivo desejado, mas você pode contornar esse problema"+
+                    " navegando entre as pastas do seu smartphone, procurando e selecionando o arquivo quando pressionar a opção novamente.\n\n"+
+                    "Esse erro costuma ocorrer em alguns dispositivos ao tentar selecionar um arquivo na aba RECENTES (a primeira tela exibida) do navegador de arquivos. \n\n"+
+                    "OBS.: Não se esqueça de ativar a opção 'Visualizar armazenamento interno' nas opções no canto superior direito do navegador de arquivos.",
+                    [
+                        {
+                            text: "Ok, vou tentar de novo.",
+                            onPress: () => console.log("Cancel Pressed"),
+                            style: "cancel"
+                        }
+                    ],
+                    { cancelable: false }
+                    );
+                });
+                
+                let track = {
+                    id: id,
+                    url: url,
+                    type: 'default',
+                    title: titleReview,
+                    artist: user.name,
+                    album: 'TTR - audios',
+                    artwork: 'https://picsum.photos/100',
+                }
+                
+                //ASSOCIAR AUDIO DIRETO DO GOOGLE DRIVE
+
+                setTrackAudioReview(track)
+                
+            } catch (err) {
+                if (DocumentPicker.isCancel(err)) {
+                    // User cancelled the picker, exit any dialogs or menus and move on
+                    console.log('cancelou')
+                } else {
+                    console.log(err)
+                alert('Houve um erro ao selecionar o arquivo, tente novamente!')
+            }
+        }
+    }
+    
+    function handleSaveNotes(note) {
+        setNotesReview(note)
+    }
+    
+    function handleGoToNotesScreen() {
+        navigation.navigate("NotesScreen", {
+            onGoBack: handleSaveNotes,
+            screenData: notesReview
+        })
+    }
+    
+    function handleImageSelector() {
+        ImagePicker.showImagePicker({
+            title: "Selecionar Foto",
+            mediaType: "photo",
+            storageOptions: {
+                skipBackup: true,
+                path: 'images',
+            },
+        }, (response) => {
+            if (response.didCancel) {
+                console.log('User cancelled image picker');
+            } else if (response.error) {
+                Alert.alert(
+                    "Precisamos dessa permissão!",
+                    "Para selecionar/tirar uma foto precisamos da permissão solicitada. Por favor, realize o procedimento novamente e aceite a solicitação.",
+                    [
+                      {
+                        text: "Ok, vamos lá!",
+                        onPress: async () => {},
+                        style: "cancel"
+                      },
+                    ],
+                    { cancelable: false }
+                );
+            } else if (response.customButton) {
+                console.log(
+                    'User tapped custom button: ',
+                    response.customButton
+                    );
+                    console.log(response.customButton);
+                } else {
+                    console.log('uri',response.path, typeof(response.path))
+                    setImageReview(response.path)
+            }
+            
+        })
     }
 
     function handleCreateReview() {
@@ -49,12 +165,13 @@ const AddScreen = (props) => {
                 dateNextSequenceReview: dateNextSequenceReview,
                 track: trackAudioReview,
                 notes: notesReview,
+                image: imageReview,
                 date: currentDate
             }).then((response) => {
 
                 navigation.goBack()
                 setAllReviews([...allReviews, response.data])
-
+                console.log(response.data)
                 subjects.forEach(item => {
                     if (item._id == subjectReview._id) {
                         item.associatedReviews.push(response.data._id)
@@ -85,82 +202,7 @@ const AddScreen = (props) => {
         }
 
     }
-
-    async function handleAudioSelector() {
-
-        try {
-            
-            const res = await DocumentPicker.pick({
-              type: [DocumentPicker.types.audio],
-            });
-
-            let id;
-            let url;
-            //callback interface
-            await UUIDGenerator.getRandomUUID().then((uuid) => {
-                id = uuid
-            })
-
-            await RNFetchBlob.fs
-            .stat(res.uri)
-            .then((stats) => {
-                console.log(stats.path)
-                url = `file://${stats.path}`
-            })
-            .catch((err) => {
-                Alert.alert(
-                    "Ops, algo de errado aconteceu, mas vamos tentar de novo!",
-                    "Não foi possível selecionar o arquivo desejado, mas você pode contornar esse problema"+
-                    " navegando entre as pastas do seu smartphone, procurando e selecionando o arquivo quando pressionar a opção novamente.\n\n"+
-                    "Esse erro costuma ocorrer em alguns dispositivos ao tentar selecionar um arquivo na aba RECENTES (a primeira tela exibida) do navegador de arquivos. \n\n"+
-                    "OBS.: Não se esqueça de ativar a opção 'Visualizar armazenamento interno' nas opções no canto superior direito do navegador de arquivos.",
-                    [
-                      {
-                        text: "Ok, vou tentar de novo.",
-                        onPress: () => console.log("Cancel Pressed"),
-                        style: "cancel"
-                      }
-                    ],
-                    { cancelable: false }
-                );
-            });
-
-            let track = {
-                id: id,
-                url: url,
-                type: 'default',
-                title: titleReview,
-                artist: user.name,
-                album: 'TTR - audios',
-                artwork: 'https://picsum.photos/100',
-            }
-
-            //ASSOCIAR AUDIO DIRETO DO GOOGLE DRIVE
-
-            setTrackAudioReview(track)
-
-          } catch (err) {
-            if (DocumentPicker.isCancel(err)) {
-              // User cancelled the picker, exit any dialogs or menus and move on
-              console.log('cancelou')
-            } else {
-                console.log(err)
-                alert('Houve um erro ao selecionar o arquivo, tente novamente!')
-            }
-          }
-    }
-
-    function handleSaveNotes(note) {
-        setNotesReview(note)
-    }
-
-    function handleGoToNotesScreen() {
-        navigation.navigate("NotesScreen", {
-            onGoBack: handleSaveNotes,
-            screenData: notesReview
-        })
-    }
-
+    
     //ADICIONAR A DATA DE QUANDO FOI CRIADA
     return (
         <KeyboardAvoidingView style={styles.container}>
@@ -226,18 +268,23 @@ const AddScreen = (props) => {
                         }}
                     />
                 </View>
-                <View style={styles.noteAudioBox}>
-                    <View style={styles.noteAudioButton}>
+                <View style={styles.featuresBox}>
+                    <View style={styles.featuresButton}>
                         <Text style={styles.label2}>Anotações</Text>
                         <BorderlessButton style={{marginTop: 5}} onPress={handleGoToNotesScreen}>
-                            <Icon3 name="library-books" size={25} color="#303030" style={styles.iconBack} />
+                            <Icon3 name="library-books" size={28} color="#303030" style={styles.iconBack} />
                         </BorderlessButton>
                     </View>
-                    <View style={styles.separator} />
-                    <View style={styles.noteAudioButton}>
+                    <View style={styles.featuresButton}>
+                        <Text style={styles.label2}>Imagem</Text>
+                        <BorderlessButton style={{marginTop: 5}} onPress={handleImageSelector}>
+                            <Icon3 name="collections" size={28} color="#303030" style={styles.iconBack} />
+                        </BorderlessButton>
+                    </View>
+                    <View style={styles.featuresButton}>
                         <Text style={styles.label2}>Áudio</Text>
                         <BorderlessButton style={{marginTop: 5}} onPress={handleAudioSelector}>
-                            <Icon3 name="library-music" size={25} color="#303030" style={styles.iconBack} />
+                            <Icon3 name="library-music" size={28} color="#303030" style={styles.iconBack} />
                         </BorderlessButton>
                     </View>
                 </View> 
