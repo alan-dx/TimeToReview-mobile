@@ -351,44 +351,24 @@ const ReviewsScreen = (props) => {
 
     async function handleStartAudioPlayer(track) {
         //ASSOCIAR AUDIO DO GOOGLE DRIVE
-
+    
         if (startController) {
             handleStartStopCycleController()
         }
-
-        try {
-            const granted = await PermissionsAndroid.requestMultiple([
-              PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
-              PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
-            ]);
-          } catch (err) {
-            alert(err)
-          }
-
-          const readGranted = await PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE); 
-          const writeGranted = await PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE);
-
-          if(!readGranted || !writeGranted) {
-
-            Alert.alert(
-                "Opa, precisamos dessa permissão!",
-                "Nosso App precisa dessa permissão para reproduzir o áudio, pois é por meio dela que o player irá ler o arquivo"+
-                [
-                  {
-                    text: "Certo, vamos tentar de novo!",
-                    onPress: () => console.log("Cancel Pressed"),
-                    style: "cancel"
-                  }
-                ],
-                { cancelable: false }
-            )
-            
-          } else {
-              setHandleOpenPlayerModal(true)
-              setTrackPlayer(track)
-          }
-
-
+    
+        await PermissionsAndroid.requestMultiple([
+            PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+            PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
+        ]).then((response) => {
+            if(response["android.permission.READ_EXTERNAL_STORAGE"] == 'denied') {
+                alert('Precisamos dessa permissão para ler o arquivo de áudio associado. Por favor realize o processo novamente!')
+            } else {
+                setHandleOpenPlayerModal(true)
+                setTrackPlayer(track)
+            }
+        }).catch((err) => {
+            console.log(err)
+        });
     }
 
     function handleStopAudioPlayer() {
@@ -410,10 +390,26 @@ const ReviewsScreen = (props) => {
 
     }
 
-    function handleShowImage(image) {
-        console.log(image)
-        setImageReview(image)
-        setHandleOpenImageModal(true)
+    async function handleShowImage(image) {
+
+        if (startController) {
+            handleStartStopCycleController()
+        }
+    
+        await PermissionsAndroid.requestMultiple([
+            PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+            PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
+        ]).then((response) => {
+            if(response["android.permission.READ_EXTERNAL_STORAGE"] == 'denied') {
+                alert('Precisamos dessa permissão para apresentar a imagem associada. Por favor realize o processo novamente!')
+            } else {
+                setImageReview(image)
+                setHandleOpenImageModal(true)
+            }
+        }).catch((err) => {
+            console.log(err)
+        });
+    
     }
 
     return (
