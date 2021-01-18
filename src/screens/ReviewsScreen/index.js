@@ -17,6 +17,7 @@ import Icon3 from 'react-native-vector-icons/AntDesign';
 import TrackPlayer from 'react-native-track-player';
 import PlayerModal from '../../components/PlayerModal';
 import NotesModal from '../../components/NotesModal';
+import ImageModal from '../../components/ImageModal';
 
 const ReviewsScreen = (props) => {
 
@@ -32,8 +33,10 @@ const ReviewsScreen = (props) => {
     const [handleOpenTutorialModal, setHandleOpenTutorialModal] = useState(false)
     const [handleOpenPlayerModal, setHandleOpenPlayerModal] = useState(false)
     const [handleOpenNotesModal, setHandleOpenNotesModal] = useState(false)
+    const [handleOpenImageModal, setHandleOpenImageModal] = useState(false)
     const [trackPlayer, setTrackPlayer] = useState('')
     const [notesToShow, setNotesToShow] = useState(null)
+    const [imageReview, setImageReview] = useState('')
 
     const cycleFlatList = useRef(null)
 
@@ -271,7 +274,6 @@ const ReviewsScreen = (props) => {
     }
 
     function handleUpdateDataOnAdd(passData) {
-        console.log('essa karalha aq, função updateDataOnAdd')
         setData([...data, passData])
     }
 
@@ -408,6 +410,12 @@ const ReviewsScreen = (props) => {
 
     }
 
+    function handleShowImage(image) {
+        console.log(image)
+        setImageReview(image)
+        setHandleOpenImageModal(true)
+    }
+
     return (
         <View style={styles.container}>
             <FlatList
@@ -439,6 +447,7 @@ const ReviewsScreen = (props) => {
                             haveExtraOptions={true}
                             onPressAudioButton={() => handleStartAudioPlayer(item.track)}
                             onPressNotesButton={() => handleShowNotes(item.notes)}
+                            onPressImageButton ={() => handleShowImage(item.image)}
                         />
                     }
                     contentContainerStyle={{paddingBottom: 160 }}
@@ -473,6 +482,16 @@ const ReviewsScreen = (props) => {
                 />
                 :
                 null
+            }
+            {
+                <ImageModal
+                    modalVisible={handleOpenImageModal}
+                    handleCloseModal={() => {
+                        setHandleOpenImageModal(false)
+                        setImageReview('')
+                    }}
+                    image={imageReview}
+                />
             }
         </View>
     )

@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
         fontSize: 10,
         color: '#ABABAB'
     },
-    noteAudioBox: {
+    featuresBox: {
         alignItems: 'center',
         justifyContent: 'center',
         flexDirection: 'row',
@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
         width: 1,
         backgroundColor: '#60c3eb',
     },
-    noteAudioButton: {
+    featuresButton: {
         alignItems: 'center',
     }
 })
